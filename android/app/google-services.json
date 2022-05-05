@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "479632547732",
+    "project_id": "soulpot-5fbe6",
+    "storage_bucket": "soulpot-5fbe6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:479632547732:android:c8a3072b20546a2d857981",
+        "android_client_info": {
+          "package_name": "com.example.soulpot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "479632547732-n795u63s0fc1r1dtlvnjbigcbiqgig6o.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.soulpot",
+            "certificate_hash": "efc85d10fd2e889f7ba022028b23bbbfcae62cd2"
+          }
+        },
+        {
+          "client_id": "479632547732-vjf0q6otuhb6250ac2hmrdvreqr2rj8c.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6G7wA478gT6rgWg_cvYxavAHx9_-r2dI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "479632547732-vjf0q6otuhb6250ac2hmrdvreqr2rj8c.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "479632547732-km2a459b1luseb70s95bsk4p7gvtamfe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.soulpot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
