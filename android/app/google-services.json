@@ -7,20 +7,12 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:479632547732:android:c8a3072b20546a2d857981",
+        "mobilesdk_app_id": "1:479632547732:android:e9e5669bf1047218857981",
         "android_client_info": {
-          "package_name": "com.example.soulpot"
+          "package_name": "com.sokaii.soulpot"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "479632547732-n795u63s0fc1r1dtlvnjbigcbiqgig6o.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.soulpot",
-            "certificate_hash": "efc85d10fd2e889f7ba022028b23bbbfcae62cd2"
-          }
-        },
         {
           "client_id": "479632547732-vjf0q6otuhb6250ac2hmrdvreqr2rj8c.apps.googleusercontent.com",
           "client_type": 3
@@ -39,10 +31,10 @@
               "client_type": 3
             },
             {
-              "client_id": "479632547732-km2a459b1luseb70s95bsk4p7gvtamfe.apps.googleusercontent.com",
+              "client_id": "479632547732-h2es5tbcl0lh3amnkn367j57m5l15let.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.soulpot"
+                "bundle_id": "com.sokaii.soulpot"
               }
             }
           ]

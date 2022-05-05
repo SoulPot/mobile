@@ -28,12 +28,12 @@ class Authentication {
 
   static Future<User?> signInWithPwd( BuildContext context, String email, String password) async {
     User? user;
-
     try {
       UserCredential userCredential =
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       user = userCredential.user!;
       print(user.email);
+      enterApp(context);
       return user;
     } on FirebaseAuthException catch (e) {
       firebaseErrorThrower(e, context);
@@ -74,7 +74,7 @@ class Authentication {
     }
   }
 
-  static Future<User?> signInWithGoogle() async {
+  static Future<User?> signInWithGoogle(BuildContext context) async {
 
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
@@ -87,9 +87,22 @@ class Authentication {
 
     var userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
 
+    enterApp(context);
     return userCredential.user;
   }
 
-
+  static void enterApp(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      PageTransition(
+          alignment: Alignment.bottomCenter,
+          curve: Curves.easeInOut,
+          duration: Duration(milliseconds: 600),
+          reverseDuration: Duration(milliseconds: 600),
+          type: PageTransitionType.fade,
+          child: HomePage(),
+          childCurrent: context.widget),
+    );
+  }
 }
 
