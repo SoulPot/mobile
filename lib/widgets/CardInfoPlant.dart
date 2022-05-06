@@ -2,37 +2,24 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CardInfoPlant extends StatefulWidget {
-  const CardInfoPlant({Key? key, required this.cardType}) : super(key: key);
-  final String cardType;
+  const CardInfoPlant(
+      {Key? key,
+      required this.label,
+      required this.value,
+      required this.backgroundColor,
+      required this.fontColor})
+      : super(key: key);
+  final String label;
+  final String value;
+  final Color backgroundColor;
+  final Color fontColor;
 
   @override
   State<CardInfoPlant> createState() => _CardInfoPlantState();
 }
 
 class _CardInfoPlantState extends State<CardInfoPlant> {
-  var types = ["luminosity", "temperature", "humidity", "analyzer"];
-  var colors = [
-    Color(0xFFEFAD06),
-    Color(0xFF46BFE3),
-    Color(0xFF0707BB),
-    Color(0xFF8D897C)
-  ];
-  var labels = ["Luminosité", "Température", "Humidité", "Analyzer"];
-  var valuesMocked = ["80%", "10°", "70%", "Batterie à 50%"];
-
   Widget build(BuildContext context) {
-    var type = 0;
-    var fontColor = Colors.black;
-    for (var i = 0; i < 4; i++) {
-      if (widget.cardType == types[i]) {
-        type = i;
-      }
-    }
-
-    if (type == 2 || type == 3) {
-      fontColor = Colors.white;
-    }
-
     return Container(
       width: MediaQuery.of(context).size.width / 2,
       height: MediaQuery.of(context).size.height / 8,
@@ -42,14 +29,14 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(valuesMocked[type],
-                  style: TextStyle(fontSize: 24, color: fontColor)),
-              Text(labels[type],
-                  style: TextStyle(fontSize: 24, color: fontColor)),
+              Text(widget.value,
+                  style: TextStyle(fontSize: 24, color: widget.fontColor)),
+              Text(widget.label,
+                  style: TextStyle(fontSize: 24, color: widget.fontColor)),
             ],
           ),
         ),
-        color: colors[type],
+        color: widget.backgroundColor,
       ),
     );
   }

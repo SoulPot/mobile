@@ -12,6 +12,15 @@ class MyPlantPage extends StatefulWidget {
 }
 
 class _MyPlantPageState extends State<MyPlantPage> {
+  var colors = [
+    Color(0xFFEFAD06),
+    Color(0xFF46BFE3),
+    Color(0xFF0707BB),
+    Color(0xFF8D897C)
+  ];
+  var labels = ["Luminosité", "Température", "Humidité", "Analyzer"];
+  var valuesMocked = ["80%", "10°", "70%", "Batterie à 50%"];
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -28,12 +37,11 @@ class _MyPlantPageState extends State<MyPlantPage> {
                       color: SoultPotTheme.SPGreen,
                     )),
                 Center(
-                  widthFactor: 1.3,
                     child: Text(
-                  "plante",
-                  style: TextStyle(fontSize: 28),
-                  textAlign: TextAlign.center,
-                )),
+                      "Nom Plante",
+                      style: TextStyle(fontSize: 28),
+                      textAlign: TextAlign.center,
+                    )),
               ],
             )),
             Center(
@@ -77,17 +85,33 @@ class _MyPlantPageState extends State<MyPlantPage> {
             ),
             Row(
               children: [
-                CardInfoPlant(cardType: "luminosity"),
-                CardInfoPlant(cardType: "temperature"),
+                CardInfoPlant(
+                  label: "Luminosité",
+                  value: "80%",
+                  backgroundColor: colors[0],
+                  fontColor: Colors.black,
+                ),
+                CardInfoPlant(
+                  label: "Température",
+                  value: "10°",
+                  backgroundColor: colors[1],
+                  fontColor: Colors.black,
+                ),
               ],
             ),
             Row(
               children: [
                 CardInfoPlant(
-                  cardType: "humidity",
+                  label: "Humidité",
+                  value: "70%",
+                  backgroundColor: colors[2],
+                  fontColor: Colors.white,
                 ),
                 CardInfoPlant(
-                  cardType: "analyzer",
+                  label: "Analyzer",
+                  value: "Batterie à 50%",
+                  backgroundColor: colors[3],
+                  fontColor: Colors.white,
                 ),
               ],
             )
