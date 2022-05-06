@@ -19,13 +19,27 @@ class _MyPlantPageState extends State<MyPlantPage> {
         child: Column(
           children: [
             Container(
-                margin: EdgeInsets.only(top: 10.0),
-                child:
-                    Text("Nom de la plante", style: TextStyle(fontSize: 28))),
+                child: Row(
+              children: [
+                IconButton(
+                    onPressed: parameters,
+                    icon: Icon(
+                      Icons.settings,
+                      color: SoultPotTheme.SPGreen,
+                    )),
+                Center(
+                  widthFactor: 1.3,
+                    child: Text(
+                  "plante",
+                  style: TextStyle(fontSize: 28),
+                  textAlign: TextAlign.center,
+                )),
+              ],
+            )),
             Center(
                 child: Image.asset(
               "assets/images/plant1.gif",
-              height: MediaQuery.of(context).size.height / 2.1,
+              height: MediaQuery.of(context).size.height / 2.2,
               width: MediaQuery.of(context).size.width,
             )),
             Padding(
@@ -42,14 +56,17 @@ class _MyPlantPageState extends State<MyPlantPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Icons.water_drop,
+                        SoultPotTheme.water,
                         color: SoultPotTheme.SPGreen,
                       ),
-                      Text(
-                        "M'arroser",
-                        style: TextStyle(
-                          fontSize: 16,
-                          color: SoultPotTheme.SPGreen,
+                      Padding(
+                        padding: const EdgeInsets.only(left: 7.0),
+                        child: Text(
+                          "M'arroser",
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: SoultPotTheme.SPGreen,
+                          ),
                         ),
                       ),
                     ],
@@ -82,5 +99,9 @@ class _MyPlantPageState extends State<MyPlantPage> {
 
   void water() {
     print("J'arrose ma plonte");
+  }
+
+  void parameters() {
+    print("Vers les paramètres");
   }
 }
