@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:soulpot/views/analyzer_page.dart';
 import 'package:soulpot/views/informations_page.dart';
 import 'package:soulpot/views/objectives_page.dart';
+import '../theme.dart';
 import 'MyPlant_page.dart';
 
 
@@ -29,8 +30,8 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: this.selectedIndex,
-        selectedItemColor: Color(0xff178C23),
-        unselectedItemColor: Color(0xffB5EF85),
+        selectedItemColor: SoultPotTheme.SPGreen,
+        unselectedItemColor: SoultPotTheme.SPPaleGreen,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.smart_toy),
