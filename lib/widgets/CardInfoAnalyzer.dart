@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:soulpot/views/AnalyzerDetails.dart';
 
 import '../theme.dart';
 
@@ -21,6 +22,7 @@ class CardInfoAnalyzer extends StatefulWidget {
 }
 
 class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
+
   Widget build(BuildContext context) {
     var iconBattery = SoultPotTheme.battery_full;
     if (widget.batteryPercentage < 70) {
@@ -33,15 +35,42 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
-
           children: [
             Padding(
               padding: const EdgeInsets.only(bottom: 12.0),
-              child: Center(
-                child: Text(
-                  widget.analyzerName,
-                  style: TextStyle(fontSize: 20),
-                ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Center(
+                    child: Text(
+                      widget.analyzerName,
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                  PopupMenuButton(
+                      child: Icon(Icons.more_vert),
+                      onSelected: popupMenuButton,
+                      itemBuilder: (context) => [
+                            PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.edit),
+                                  Text(" Modifier l'Analyzer"),
+                                ],
+                              ),
+                              value: 1,
+                            ),
+                            PopupMenuItem(
+                              child: Row(
+                                children: [
+                                  Icon(Icons.delete),
+                                  Text(" Supprimer l'Analyzer"),
+                                ],
+                              ),
+                              value: 2,
+                            )
+                          ]),
+                ],
               ),
             ),
             Row(
@@ -55,7 +84,9 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
-                            " Batterie : " + widget.batteryPercentage.toString() + "% ",
+                            " Batterie : " +
+                                widget.batteryPercentage.toString() +
+                                "% ",
                             style: TextStyle(fontSize: 16),
                             textAlign: TextAlign.start,
                           ),
@@ -90,38 +121,8 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                     ),
                   ],
                 ),
-
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 50.0, right: 50.0),
-              child: ElevatedButton(
-                onPressed: fillWater,
-                style: ElevatedButton.styleFrom(
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0),
-                  ),
-                  primary: SoultPotTheme.SPPaleGreen,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      SoultPotTheme.faucet_solid,
-                      color: SoultPotTheme.SPGreen,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Réservoir Rempli",
-                        style: TextStyle(
-                            fontSize: 16, color: SoultPotTheme.SPGreen),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )
           ],
         ),
       ),
@@ -131,4 +132,15 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
   void fillWater() {
     print("Le réservoir est rempli");
   }
+
+  void popupMenuButton(int value) {
+    if(value == 1){
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const AnalyzerDetails(nameWifi: "HotSpot3",namePlant: "Orchidée", analyzerName: "Analyzer",)),
+      );
+    }
+    print("Plus de détails");
+  }
+
 }

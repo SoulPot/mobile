@@ -68,35 +68,6 @@ class _AnalyzerPageState extends State<AnalyzerPage> {
                 ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 60.0, right: 60.0),
-              child: ElevatedButton(
-                onPressed: addNewAnalyzer,
-                style: ElevatedButton.styleFrom(
-                  shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(30.0),
-                  ),
-                  primary: SoultPotTheme.SPRed,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.delete_forever,
-                      color: Colors.white,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        "Supprimer un Analyzer",
-                        style: TextStyle(
-                            fontSize: 16, color: Colors.white),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
           ],
         ),
       ),
