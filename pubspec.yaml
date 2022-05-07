@@ -32,7 +32,7 @@ flutter:
         - asset: assets/fonts/Greenhouse-Regular.otf
           style: normal
 
-    - family: 3WaterDrop
+    - family: SoulPot
       fonts:
-        - asset: assets/fonts/3WaterDrop.ttf
+        - asset: assets/fonts/SoulPot.ttf
 

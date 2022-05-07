@@ -36,12 +36,11 @@ class _MyPlantPageState extends State<MyPlantPage> {
                       Icons.settings,
                       color: SoultPotTheme.SPGreen,
                     )),
-                Center(
-                    child: Text(
-                      "Nom Plante",
-                      style: TextStyle(fontSize: 28),
-                      textAlign: TextAlign.center,
-                    )),
+                Text(
+                  "Nom Plante",
+                  style: TextStyle(fontSize: 28),
+                  textAlign: TextAlign.center,
+                ),
               ],
             )),
             Center(
