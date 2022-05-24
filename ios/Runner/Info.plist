@@ -40,9 +40,26 @@
 				<string>com.googleusercontent.apps.479632547732-h2es5tbcl0lh3amnkn367j57m5l15let</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>fb448820460344528</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
+	<key>FacebookAppID</key>
+	<string>448820460344528</string>
+	<key>FacebookDisplayName</key>
+	<string>SoulPot</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>fbapi</string>
+		<string>fb-messenger-share-api</string>
+		<string>fbauth2</string>
+		<string>fbshareextension</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -57,8 +74,6 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -69,5 +84,15 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+    <key>NSBluetoothAlwaysUsageDescription</key>
+            <string>Need BLE permission</string>
+            <key>NSBluetoothPeripheralUsageDescription</key>
+            <string>Need BLE permission</string>
+            <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+            <string>Need Location permission</string>
+            <key>NSLocationAlwaysUsageDescription</key>
+            <string>Need Location permission</string>
+            <key>NSLocationWhenInUseUsageDescription</key>
+            <string>Need Location permission</string>
 </dict>
 </plist>

@@ -1,4 +1,4 @@
-package com.example.soulpot
+package com.sokaii.soulpot
 
 import io.flutter.embedding.android.FlutterActivity
 

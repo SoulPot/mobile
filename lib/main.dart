@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:soulpot/views/authentication/sign_in.dart';
-import 'package:soulpot/views/home_page.dart';
+import 'package:soulpot/views/analyzer_configuration/analyzer_count_picker.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +16,9 @@ class SoulPotApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'SoulPot',
-      home: SoulPotSignIn(),
+      home: AnalyzerCountPicker(),
     );
   }
 }
+
 
