@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:soulpot/theme.dart';
+import 'package:sizer/sizer.dart';
 
 void snackBarCreator(BuildContext context, String text, Color color) {
   CustomSnackBar(
@@ -10,7 +11,8 @@ void snackBarCreator(BuildContext context, String text, Color color) {
       style: TextStyle(
         color: SoulPotTheme.SPBlack,
         fontFamily: 'Greenhouse',
-        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        fontSize: 12.sp,
       ),
     ),
     backgroundColor: color,
@@ -26,8 +28,9 @@ class CustomSnackBar {
   }) {
     final SnackBar snackBar = SnackBar(
         action: snackBarAction,
+        padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 3.h),
         backgroundColor: backgroundColor,
-
+        duration: Duration(seconds: 2),
         content: content,
         behavior: SnackBarBehavior.floating);
 

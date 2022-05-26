@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soulpot/theme.dart';
+import 'package:sizer/sizer.dart';
 
 class DropdownWidget extends StatefulWidget {
   final List<String> items;
@@ -32,9 +33,9 @@ class _DropdownState extends State<DropdownWidget> {
         child: Text(
           item,
           style: TextStyle(
-            fontSize: 16,
-            fontFamily: 'Greenhouse'
-          ),
+              fontSize: 11.sp,
+              fontFamily: 'Greenhouse',
+              fontWeight: FontWeight.bold),
         ),
       ));
     }
@@ -53,13 +54,13 @@ class _DropdownState extends State<DropdownWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10),
+      margin: EdgeInsets.symmetric(vertical: 1.h),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(vertical: 3, horizontal: 15),
-            margin: EdgeInsets.only(top: 10, left: 15, right: 15),
+            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            margin: EdgeInsets.symmetric(horizontal: 4.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               color: SoulPotTheme.SPPalePurple,

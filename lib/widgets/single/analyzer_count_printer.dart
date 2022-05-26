@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 
 class AnalyzerCountPrinter extends StatelessWidget {
   AnalyzerCountPrinter({Key? key, required this.AnalyzerCount})
@@ -15,13 +16,14 @@ class AnalyzerCountPrinter extends StatelessWidget {
           padding: const EdgeInsets.all(5),
           child: Image.asset(
             "assets/images/SoulPotLogoFlower.png",
-            height: 100,
-            width: MediaQuery.of(context).size.width / 6,
+            height: 15.h,
+            width: 16.w,
           ),
         ),
       );
     }
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: analyzerVisualizer,
     );
   }

@@ -5,8 +5,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/models/Analyzer.dart';
 import 'package:soulpot/theme.dart';
 import 'package:soulpot/widgets/single/analyzer_count_printer.dart';
+import 'package:sizer/sizer.dart';
 
-import 'analyzer_bluetooth_scanner.dart';
+import 'analyzer_setup.dart';
 
 class AnalyzerCountPicker extends StatefulWidget {
   const AnalyzerCountPicker({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
                   "Bienvenue sur l'application SoulPot",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 20.sp,
                     color: SoulPotTheme.SPBlack,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Greenhouse',
@@ -42,12 +43,12 @@ class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
               ),
               Image.asset("assets/images/LogoSoulPot.png"),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: EdgeInsets.symmetric(vertical: 1.h),
                 child: Text(
                   "Commençons par la configuration de vos analyzers",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15.sp,
                     color: SoulPotTheme.SPBlack,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Greenhouse',
@@ -57,7 +58,7 @@ class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
               Padding(
                 padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Divider(
-                  thickness: 2,
+                  thickness: 1,
                   color: SoulPotTheme.SPBlack,
                 ),
               ),
@@ -67,7 +68,7 @@ class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
                   "De combien d'analyzer disposez-vous ? ",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 15.sp,
                     color: SoulPotTheme.SPBlack,
                     fontWeight: FontWeight.bold,
                     fontFamily: 'Greenhouse',
@@ -75,7 +76,7 @@ class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 20, left: 15, right: 15),
+                padding: EdgeInsets.symmetric(vertical: 2.h),
                 child: Center(
                   child: NumberStepper(
                     numbers: [1, 2, 3, 4, 5],
@@ -102,11 +103,11 @@ class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
               ),
               AnalyzerCountPrinter(AnalyzerCount: _currentAnalyzerCount + 1),
               Padding(
-                padding: const EdgeInsets.only(left: 15, right: 15, top: 20),
+                padding: EdgeInsets.symmetric(vertical: 3.h),
                 child: ElevatedButton(
                   onPressed: () async {
-                    for(int i = 0; i < _currentAnalyzerCount + 1; i++) {
-                      _analyzers.add(new Analyzer("Analyzer ${i+1}", false));
+                    for (int i = 0; i < _currentAnalyzerCount + 1; i++) {
+                      _analyzers.add(new Analyzer("Analyzer ${i + 1}", false));
                     }
                     Navigator.push(
                       context,
@@ -116,7 +117,7 @@ class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
                           duration: Duration(milliseconds: 600),
                           reverseDuration: Duration(milliseconds: 600),
                           type: PageTransitionType.fade,
-                          child: AnalyzerBluetoothScanner(
+                          child: AnalyzerSetup(
                             analyzers: _analyzers,
                           ),
                           childCurrent: context.widget),

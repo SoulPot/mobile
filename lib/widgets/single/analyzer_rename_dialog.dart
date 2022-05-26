@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soulpot/theme.dart';
+import 'package:sizer/sizer.dart';
+import 'package:soulpot/widgets/single/custom_snackbar.dart';
 
 import '../../models/Analyzer.dart';
 
@@ -10,6 +12,7 @@ class RenameDialog extends StatefulWidget {
         super(key: key);
 
   final Analyzer _analyzer;
+
   @override
   State<RenameDialog> createState() => _RenameDialogState();
 }
@@ -20,44 +23,44 @@ class _RenameDialogState extends State<RenameDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       child: Container(
-        height: MediaQuery.of(context).size.height / 3,
-        width: MediaQuery.of(context).size.width / 1.1,
+        height: 33.h,
+        width: 90.w,
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+              padding: EdgeInsets.only(top: 2.h, left: 2.5.w, right: 2.5.w),
               child: Text(
                 'Comment souhaitez-vous renommer ${widget._analyzer.name} ?',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: SoulPotTheme.SPBlack,
-                    fontSize: 20,
+                    fontSize: 15.sp,
                     fontFamily: 'Greenhouse',
                     fontWeight: FontWeight.bold),
               ),
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10),
+              padding: EdgeInsets.symmetric(horizontal: 5.w),
               child: TextField(
                 controller: _analyzerNameController,
                 decoration: InputDecoration(
                   hintText: widget._analyzer.name,
                   hintStyle: TextStyle(
                     color: SoulPotTheme.SPBlack,
-                    fontSize: 18,
+                    fontSize: 12.sp,
                     fontFamily: 'Greenhouse',
-                    fontWeight: FontWeight.w300,
+                    fontWeight: FontWeight.w600,
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12.0),
+                    borderRadius: BorderRadius.circular(30),
                   ),
                 ),
                 style: TextStyle(
                   color: SoulPotTheme.SPBlack,
-                  fontSize: 18,
+                  fontSize: 12.sp,
                   fontFamily: 'Greenhouse',
                   fontWeight: FontWeight.bold,
                 ),
@@ -65,7 +68,7 @@ class _RenameDialogState extends State<RenameDialog> {
             ),
             Spacer(),
             Padding(
-              padding: const EdgeInsets.fromLTRB(10, 0, 10, 20),
+              padding: EdgeInsets.only(bottom: 2.h),
               child: Row(
                 children: [
                   Spacer(),
@@ -76,24 +79,25 @@ class _RenameDialogState extends State<RenameDialog> {
                     child: Text(
                       "Annuler",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: SoulPotTheme.SPBlack),
+                      style: TextStyle(
+                          color: SoulPotTheme.SPBlack,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.sp),
                     ),
                     style: ElevatedButton.styleFrom(
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
                       primary: SoulPotTheme.SPPaleRed,
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                      textStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
                     ),
                   ),
                   Spacer(),
                   ElevatedButton(
                     onPressed: () async {
-                      if(_analyzerNameController.text.isNotEmpty) {
+                      if (_analyzerNameController.text.isNotEmpty &&
+                          _analyzerNameController.text.trim() != "") {
                         widget._analyzer.name = _analyzerNameController.text;
                       }
                       Navigator.of(context).pop();
@@ -101,18 +105,18 @@ class _RenameDialogState extends State<RenameDialog> {
                     child: Text(
                       "Valider",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: SoulPotTheme.SPBlack),
+                      style: TextStyle(
+                          color: SoulPotTheme.SPBlack,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.sp),
                     ),
                     style: ElevatedButton.styleFrom(
                       shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
                       primary: SoulPotTheme.SPPaleGreen,
-                      padding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                      textStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
                     ),
                   ),
                   Spacer(),
