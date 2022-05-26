@@ -40,3 +40,7 @@ flutter:
         - asset: assets/fonts/Greenhouse-Regular.otf
           style: normal
 
+    - family: SoulPot
+      fonts:
+        - asset: assets/fonts/SoulPot.ttf
+
