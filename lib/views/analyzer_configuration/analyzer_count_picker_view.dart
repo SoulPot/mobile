@@ -103,7 +103,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
               ),
               AnalyzerCountPrinter(AnalyzerCount: _currentAnalyzerCount + 1),
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 3.h),
+                padding: EdgeInsets.symmetric(vertical: 1.5.h, horizontal: 1.w),
                 child: ElevatedButton(
                   onPressed: () async {
                     for (int i = 0; i < _currentAnalyzerCount + 1; i++) {

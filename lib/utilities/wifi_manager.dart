@@ -24,9 +24,4 @@ class WifiManager {
     }
     return _scannedSSID;
   }
-
-  static Future<String?> getConnectedWifi(BuildContext context) {
-    NetworkInfo network = NetworkInfo();
-    return network.getWifiName();
-  }
 }

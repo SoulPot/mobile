@@ -12,6 +12,7 @@ class BluetoothManager {
 
   static Future<BluetoothDevice?> scanForAnalyzer(String analyzerName) async {
     BluetoothDevice? analyzerDevice;
+    print("START SCAN");
     var results = await flutterBlue.startScan(timeout: const Duration(seconds: 3));
     for (ScanResult result in results) {
       if (result.device.name.contains(analyzerName)) {

@@ -24,6 +24,7 @@ dependencies:
   loading_animation_widget: '^1.1.0+5'
   im_stepper: '^0.1.3'
   sizer: '^2.0.15'
+  battery_indicator: '^0.1.1'
 
 
 

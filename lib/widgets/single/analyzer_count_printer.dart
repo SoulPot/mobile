@@ -13,7 +13,7 @@ class AnalyzerCountPrinter extends StatelessWidget {
     for (int i = 0; i < AnalyzerCount; i++) {
       analyzerVisualizer.add(
         Padding(
-          padding: const EdgeInsets.all(5),
+          padding: EdgeInsets.symmetric(horizontal: 1.w),
           child: Image.asset(
             "assets/images/SoulPotLogoFlower.png",
             height: 15.h,

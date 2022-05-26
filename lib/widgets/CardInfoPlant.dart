@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sizer/sizer.dart';
 
 class CardInfoPlant extends StatefulWidget {
   const CardInfoPlant(
@@ -21,18 +22,28 @@ class CardInfoPlant extends StatefulWidget {
 class _CardInfoPlantState extends State<CardInfoPlant> {
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width / 2,
-      height: MediaQuery.of(context).size.height / 8,
+      width: 50.w,
+      height: 12.5.h,
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 1.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Text(widget.value,
-                  style: TextStyle(fontSize: 24, color: widget.fontColor)),
-              Text(widget.label,
-                  style: TextStyle(fontSize: 24, color: widget.fontColor)),
+              Text(
+                widget.label,
+                style: TextStyle(
+                    fontSize: 18.sp,
+                    color: widget.fontColor,
+                    fontFamily: "Greenhouse"),
+              ),
+              Text(
+                widget.value,
+                style: TextStyle(
+                    fontSize: 18.sp,
+                    color: widget.fontColor,
+                    fontFamily: "Greenhouse"),
+              ),
             ],
           ),
         ),

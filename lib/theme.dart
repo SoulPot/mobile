@@ -16,10 +16,10 @@ class SoulPotTheme {
   static const Color SPBT = Color(0xFF0082FC);
   static const Color SPRed = Color(0xFFDC2B2B);
   static const Color SPRedPale = Color(0xFFF58D8D);
-  static Map<String, Color> luminosityColors = {"Low": Color(0xFF808080), "Good": Color(0xFF98FB98), "High" : Color(0xFFffff4d)};
-  static Map<String, Color> temperatureColors = {"Cold": Color(0xFFB1F4E7), "Good": Color(0xFF98FB98), "Hot" : Color(0xFFFF3F34)};
-  static Map<String, Color> humidityColors = {"Wet": Color(0xFF4682B4), "Good": Color(0xFF98FB98), "Dry" : Color(0xFFFFE4B5)};
-  static Map<String, Color> batteryColors = {"Critical": Color(0xFFDC143C), "Low": Color(0xFFFFD700), "Good" : Color(0xFF98FB98)};
+
+  static Map<String, Color> luminosityColors = {"Low": Color(0xFF808080), "Good": SPPaleGreen, "High" : Color(0xFFffff4d)};
+  static Map<String, Color> temperatureColors = {"Cold": Color(0xFFB1F4E7), "Good": SPPaleGreen, "Hot" : Color(0xFFFF3F34)};
+  static Map<String, Color> humidityColors = {"Wet": Color(0xFF4682B4), "Good": SPPaleGreen, "Dry" : Color(0xFFFFE4B5)};
 
   static const _kFontFam = 'SoulPot';
   static const String? _kFontPkg = null;

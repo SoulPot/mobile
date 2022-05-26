@@ -43,7 +43,9 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
           getWifi().then((_) => setState(() {
                 ssids.removeWhere(
                     (element) => ["", null, false, 0].contains(element));
-                selectedSSID = ssids[0];
+                if (Platform.isAndroid) {
+                  selectedSSID = ssids[0];
+                }
               }))
         });
   }
@@ -129,18 +131,24 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                               )
                             : Column(
                                 children: [
-                                  TextField(
-                                    controller: _ssidController,
-                                    decoration: InputDecoration(
-                                      labelText: 'SSID',
-                                      border: OutlineInputBorder(),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+                                    child: TextField(
+                                      controller: _ssidController,
+                                      decoration: InputDecoration(
+                                        labelText: 'SSID',
+                                        border: OutlineInputBorder(),
+                                      ),
                                     ),
                                   ),
-                                  TextField(
-                                    controller: _wifiPassController,
-                                    decoration: InputDecoration(
-                                      labelText: 'Mot de passe',
-                                      border: OutlineInputBorder(),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+                                    child: TextField(
+                                      controller: _wifiPassController,
+                                      decoration: InputDecoration(
+                                        labelText: 'Mot de passe',
+                                        border: OutlineInputBorder(),
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -179,8 +187,8 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                   ),
                   (selectedSSID != "" && _wifiPassController.text != "")
                       ? Padding(
-                        padding: EdgeInsets.only(left: 5.w),
-                        child: ElevatedButton(
+                          padding: EdgeInsets.only(left: 5.w),
+                          child: ElevatedButton(
                             onPressed: () async {
                               wifiCredentials[0] = Platform.isAndroid
                                   ? selectedSSID
@@ -212,7 +220,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                               ),
                             ),
                           ),
-                      )
+                        )
                       : Container(
                           height: 0,
                           width: 0,
@@ -251,8 +259,6 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
     List<String> tmpSSIDs = [];
     if (Platform.isAndroid) {
       tmpSSIDs = await WifiManager.scanForWifi(context);
-    } else if (Platform.isIOS) {
-      tmpSSIDs[0] = (await WifiManager.getConnectedWifi(context))!;
     }
     setState(() {
       ssids = tmpSSIDs.toSet().toList();

@@ -1,8 +1,10 @@
+import 'package:battery_indicator/battery_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soulpot/widgets/CardInfoPlant.dart';
 
 import '../../theme.dart';
+import 'package:sizer/sizer.dart';
 
 class PlantsView extends StatefulWidget {
   const PlantsView({Key? key}) : super(key: key);
@@ -12,68 +14,112 @@ class PlantsView extends StatefulWidget {
 }
 
 class _PlantsViewState extends State<PlantsView> {
-
   // MOCKED DATAS
-  var labels = ["Luminosité", "Température", "Humidité", "Analyzer"];
-  var valuesMocked = ["80%", "10°", "70%", "Batterie à 50%"];
+  var mockedValues = {
+    "Luminosity": 75,
+    "Temperature": 10,
+    "Humidity": 0,
+    "Battery": 52
+  };
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Container(
+    return Scaffold(
+      backgroundColor: SoulPotTheme.SPBackgroundWhite,
+      body: SafeArea(
         child: Column(
           children: [
-            Container(
-                child: Row(
+            Row(
               children: [
-                IconButton(
-                    onPressed: parameters,
-                    icon: Icon(
-                      Icons.settings,
-                      color: SoulPotTheme.SPGreen,
-                    )),
-                Text(
-                  "Nom Plante",
-                  style: TextStyle(fontSize: 28),
-                  textAlign: TextAlign.center,
-                ),
-              ],
-            )),
-            Center(
-                child: Image.asset(
-              "assets/images/plant1.gif",
-              height: MediaQuery.of(context).size.height / 2.2,
-              width: MediaQuery.of(context).size.width,
-            )),
-            Padding(
-              padding: const EdgeInsets.only(left: 100.0, right: 100.0),
-              child: ElevatedButton(
-                  onPressed: water,
-                  style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                    ),
-                    primary: SoulPotTheme.SPPaleGreen,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(
-                        SoulPotTheme.water,
-                        color: SoulPotTheme.SPGreen,
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 0.5.w),
+                  child: Container(
+                    width: 75.w,
+                    child: Text(
+                      "Ceci est le nom de la plante un peu long ",
+                      style: TextStyle(
+                        fontSize: 16.sp,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Greenhouse",
                       ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Padding(
+                  padding: EdgeInsets.only(top: 1.h, right: 2.w),
+                  child: Column(
+                    children: [
                       Padding(
-                        padding: const EdgeInsets.only(left: 7.0),
+                        padding: EdgeInsets.only(bottom: 1.h),
                         child: Text(
-                          "M'arroser",
+                          "Batterie",
                           style: TextStyle(
-                            fontSize: 16,
-                            color: SoulPotTheme.SPGreen,
+                            fontSize: 12.sp,
+                            fontWeight: FontWeight.bold,
+                            fontFamily: "Greenhouse",
                           ),
                         ),
                       ),
+                      BatteryIndicator(
+                        batteryFromPhone: false,
+                        batteryLevel: mockedValues["Battery"]!,
+                        style: BatteryIndicatorStyle.skeumorphism,
+                        showPercentNum: true,
+                        size: 6.w,
+                        colorful: true,
+                      ),
                     ],
-                  )),
+                  ),
+                ),
+              ],
+            ),
+            Center(
+              child: Image.asset(
+                "assets/images/plant1.gif",
+                height: 40.h,
+                width: 100.w,
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 2.h),
+              child: Row(
+                children: [
+                  Spacer(),
+                  ElevatedButton(
+                    onPressed: water,
+                    style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(30.0),
+                      ),
+                      primary: SoulPotTheme.SPPaleGreen,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          SoulPotTheme.water,
+                          color: SoulPotTheme.SPBT,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 2.h, horizontal: 3.w),
+                          child: Text(
+                            "M'arroser",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: SoulPotTheme.SPPurple,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Spacer(),
+                ],
+              ),
             ),
             Divider(
               thickness: 2,
@@ -82,32 +128,28 @@ class _PlantsViewState extends State<PlantsView> {
               children: [
                 CardInfoPlant(
                   label: "Luminosité",
-                  value: "80%",
+                  value: "${mockedValues["Luminosity"]} lux",
                   backgroundColor: SoulPotTheme.luminosityColors["Good"]!,
                   fontColor: Colors.black,
                 ),
                 CardInfoPlant(
                   label: "Température",
-                  value: "10°",
-                  backgroundColor: SoulPotTheme.temperatureColors["Good"]!,
+                  value: "${mockedValues["Temperature"]}°C",
+                  backgroundColor: SoulPotTheme.temperatureColors["Cold"]!,
                   fontColor: Colors.black,
                 ),
               ],
             ),
             Row(
               children: [
+                Spacer(),
                 CardInfoPlant(
                   label: "Humidité",
-                  value: "70%",
-                  backgroundColor: SoulPotTheme.humidityColors["Good"]!,
+                  value: "${mockedValues["Humidity"]}%",
+                  backgroundColor: SoulPotTheme.humidityColors["Dry"]!,
                   fontColor: Colors.black,
                 ),
-                CardInfoPlant(
-                  label: "Analyzer",
-                  value: "Batterie à 50%",
-                  backgroundColor: SoulPotTheme.batteryColors["Good"]!,
-                  fontColor: Colors.black,
-                ),
+                Spacer(),
               ],
             )
           ],
