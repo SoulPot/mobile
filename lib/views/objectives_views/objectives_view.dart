@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class ObjectivePage extends StatefulWidget {
-  const ObjectivePage({Key? key}) : super(key: key);
+class ObjectivesView extends StatefulWidget {
+  const ObjectivesView({Key? key}) : super(key: key);
 
   @override
-  State<ObjectivePage> createState() => _ObjectivePageState();
+  State<ObjectivesView> createState() => _ObjectivesViewState();
 }
 
-class _ObjectivePageState extends State<ObjectivePage> {
+class _ObjectivesViewState extends State<ObjectivesView> {
 
   @override
   Widget build(BuildContext context) {

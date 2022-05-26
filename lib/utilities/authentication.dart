@@ -4,8 +4,8 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/theme.dart';
-import 'package:soulpot/views/authentication/sign_in.dart';
-import 'package:soulpot/views/home_page.dart';
+import 'package:soulpot/views/authentication/sign_in_view.dart';
+import 'package:soulpot/views/home_view.dart';
 
 import '../widgets/single/custom_snackbar.dart';
 import 'error_thrower.dart';
@@ -24,7 +24,7 @@ class Authentication {
             duration: Duration(milliseconds: 600),
             reverseDuration: Duration(milliseconds: 600),
             type: PageTransitionType.fade,
-            child: HomePage(),
+            child: HomeView(),
             childCurrent: context.widget),
       );
     }
@@ -65,7 +65,7 @@ class Authentication {
             duration: Duration(milliseconds: 600),
             reverseDuration: Duration(milliseconds: 600),
             type: PageTransitionType.fade,
-            child: SoulPotSignIn(),
+            child: SignInView(),
             childCurrent: context.widget),
       );
     } on FirebaseAuthException catch (e) {
@@ -102,7 +102,7 @@ class Authentication {
           duration: Duration(milliseconds: 600),
           reverseDuration: Duration(milliseconds: 600),
           type: PageTransitionType.fade,
-          child: HomePage(),
+          child: HomeView(),
           childCurrent: context.widget),
     );
   }

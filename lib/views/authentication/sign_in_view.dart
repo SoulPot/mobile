@@ -4,14 +4,14 @@ import 'package:soulpot/theme.dart';
 import 'package:soulpot/widgets/group/email_pwd_sign_in.dart';
 import 'package:soulpot/widgets/group/social_authentication.dart';
 
-class SoulPotSignIn extends StatefulWidget {
-  const SoulPotSignIn({Key? key}) : super(key: key);
+class SignInView extends StatefulWidget {
+  const SignInView({Key? key}) : super(key: key);
 
   @override
-  State<SoulPotSignIn> createState() => _SoulPotSignInState();
+  State<SignInView> createState() => _SignInViewState();
 }
 
-class _SoulPotSignInState extends State<SoulPotSignIn> {
+class _SignInViewState extends State<SignInView> {
 
   @override
   Widget build(BuildContext context) {

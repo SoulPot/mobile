@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/theme.dart';
 import 'package:soulpot/utilities/authentication.dart';
-import 'package:soulpot/views/authentication/sign_up.dart';
+import 'package:soulpot/views/authentication/sign_up_view.dart';
 
 class EmailPwdSignIn extends StatefulWidget {
   const EmailPwdSignIn({Key? key}) : super(key: key);
@@ -105,7 +105,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                           duration: Duration(milliseconds: 300),
                           reverseDuration: Duration(milliseconds: 300),
                           type: PageTransitionType.rightToLeftWithFade,
-                          child: SoulPotSignUp(),
+                          child: SignUpView(),
                           childCurrent: context.widget),
                     );
                   },

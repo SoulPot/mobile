@@ -7,16 +7,16 @@ import 'package:soulpot/theme.dart';
 import 'package:soulpot/widgets/single/analyzer_count_printer.dart';
 import 'package:sizer/sizer.dart';
 
-import 'analyzer_setup.dart';
+import 'analyzer_setup_view.dart';
 
-class AnalyzerCountPicker extends StatefulWidget {
-  const AnalyzerCountPicker({Key? key}) : super(key: key);
+class AnalyzerCountPickerView extends StatefulWidget {
+  const AnalyzerCountPickerView({Key? key}) : super(key: key);
 
   @override
-  State<AnalyzerCountPicker> createState() => _AnalyzerCountPickerState();
+  State<AnalyzerCountPickerView> createState() => _AnalyzerCountPickerViewState();
 }
 
-class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
+class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
   int _currentAnalyzerCount = 0;
   List<Analyzer> _analyzers = [];
 
@@ -117,7 +117,7 @@ class _AnalyzerCountPickerState extends State<AnalyzerCountPicker> {
                           duration: Duration(milliseconds: 600),
                           reverseDuration: Duration(milliseconds: 600),
                           type: PageTransitionType.fade,
-                          child: AnalyzerSetup(
+                          child: AnalyzerSetupView(
                             analyzers: _analyzers,
                           ),
                           childCurrent: context.widget),

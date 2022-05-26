@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:soulpot/theme.dart';
 
-class AnalyzerDetails extends StatefulWidget {
-  const AnalyzerDetails(
+class AnalyzerDetailsView extends StatefulWidget {
+  const AnalyzerDetailsView(
       {Key? key,
       required this.nameWifi,
       required this.namePlant,
@@ -13,10 +13,10 @@ class AnalyzerDetails extends StatefulWidget {
   final String analyzerName;
 
   @override
-  State<AnalyzerDetails> createState() => _AnalyzerDetailsState();
+  State<AnalyzerDetailsView> createState() => _AnalyzerDetailsViewState();
 }
 
-class _AnalyzerDetailsState extends State<AnalyzerDetails> {
+class _AnalyzerDetailsViewState extends State<AnalyzerDetailsView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

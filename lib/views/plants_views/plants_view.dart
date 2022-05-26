@@ -2,22 +2,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soulpot/widgets/CardInfoPlant.dart';
 
-import '../theme.dart';
+import '../../theme.dart';
 
-class MyPlantPage extends StatefulWidget {
-  const MyPlantPage({Key? key}) : super(key: key);
+class PlantsView extends StatefulWidget {
+  const PlantsView({Key? key}) : super(key: key);
 
   @override
-  State<MyPlantPage> createState() => _MyPlantPageState();
+  State<PlantsView> createState() => _PlantsViewState();
 }
 
-class _MyPlantPageState extends State<MyPlantPage> {
-  var colors = [
-    Color(0xFFEFAD06),
-    Color(0xFF46BFE3),
-    Color(0xFF0707BB),
-    Color(0xFF8D897C)
-  ];
+class _PlantsViewState extends State<PlantsView> {
+
+  // MOCKED DATAS
   var labels = ["Luminosité", "Température", "Humidité", "Analyzer"];
   var valuesMocked = ["80%", "10°", "70%", "Batterie à 50%"];
 
@@ -87,13 +83,13 @@ class _MyPlantPageState extends State<MyPlantPage> {
                 CardInfoPlant(
                   label: "Luminosité",
                   value: "80%",
-                  backgroundColor: colors[0],
+                  backgroundColor: SoulPotTheme.luminosityColors["Good"]!,
                   fontColor: Colors.black,
                 ),
                 CardInfoPlant(
                   label: "Température",
                   value: "10°",
-                  backgroundColor: colors[1],
+                  backgroundColor: SoulPotTheme.temperatureColors["Good"]!,
                   fontColor: Colors.black,
                 ),
               ],
@@ -103,14 +99,14 @@ class _MyPlantPageState extends State<MyPlantPage> {
                 CardInfoPlant(
                   label: "Humidité",
                   value: "70%",
-                  backgroundColor: colors[2],
-                  fontColor: Colors.white,
+                  backgroundColor: SoulPotTheme.humidityColors["Good"]!,
+                  fontColor: Colors.black,
                 ),
                 CardInfoPlant(
                   label: "Analyzer",
                   value: "Batterie à 50%",
-                  backgroundColor: colors[3],
-                  fontColor: Colors.white,
+                  backgroundColor: SoulPotTheme.batteryColors["Good"]!,
+                  fontColor: Colors.black,
                 ),
               ],
             )

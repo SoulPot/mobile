@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class InformationPage extends StatefulWidget {
-  const InformationPage({Key? key}) : super(key: key);
+class RecommendationsView extends StatefulWidget {
+  const RecommendationsView({Key? key}) : super(key: key);
 
   @override
-  State<InformationPage> createState() => _InformationPageState();
+  State<RecommendationsView> createState() => _RecommendationsViewState();
 }
 
-class _InformationPageState extends State<InformationPage> {
+class _RecommendationsViewState extends State<RecommendationsView> {
 
   @override
   Widget build(BuildContext context) {

@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../theme.dart';
-import '../widgets/CardInfoAnalyzer.dart';
+import '../../theme.dart';
+import '../../widgets/CardInfoAnalyzer.dart';
 
-class AnalyzerPage extends StatefulWidget {
-  const AnalyzerPage({Key? key}) : super(key: key);
+class AnalyzersView extends StatefulWidget {
+  const AnalyzersView({Key? key}) : super(key: key);
 
   @override
-  State<AnalyzerPage> createState() => _AnalyzerPageState();
+  State<AnalyzersView> createState() => _AnalyzersViewState();
 }
 
-class _AnalyzerPageState extends State<AnalyzerPage> {
+class _AnalyzersViewState extends State<AnalyzersView> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(

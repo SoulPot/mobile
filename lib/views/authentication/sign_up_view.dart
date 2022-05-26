@@ -4,18 +4,18 @@ import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/theme.dart';
 import 'package:soulpot/utilities/error_thrower.dart';
 import 'package:soulpot/utilities/fields_management.dart';
-import 'package:soulpot/views/authentication/sign_in.dart';
+import 'package:soulpot/views/authentication/sign_in_view.dart';
 
 import '../../utilities/authentication.dart';
 
-class SoulPotSignUp extends StatefulWidget {
-  const SoulPotSignUp({Key? key}) : super(key: key);
+class SignUpView extends StatefulWidget {
+  const SignUpView({Key? key}) : super(key: key);
 
   @override
-  State<SoulPotSignUp> createState() => _SoulPotSignUpState();
+  State<SignUpView> createState() => _SignUpViewState();
 }
 
-class _SoulPotSignUpState extends State<SoulPotSignUp> {
+class _SignUpViewState extends State<SignUpView> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _pwdController = TextEditingController();
   TextEditingController _confirmPwdController = TextEditingController();
@@ -133,7 +133,7 @@ class _SoulPotSignUpState extends State<SoulPotSignUp> {
                                   duration: Duration(milliseconds: 300),
                                   reverseDuration: Duration(milliseconds: 300),
                                   type: PageTransitionType.leftToRight,
-                                  child: SoulPotSignIn(),
+                                  child: SignInView(),
                                   childCurrent: context.widget),
                             );
                           },

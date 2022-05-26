@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:soulpot/views/AnalyzerDetails.dart';
+import 'package:soulpot/views/analyzers_views/analyzer_details_view.dart';
 
 import '../theme.dart';
 
@@ -137,7 +137,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
     if(value == 1){
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const AnalyzerDetails(nameWifi: "HotSpot3",namePlant: "Orchidée", analyzerName: "Analyzer",)),
+        MaterialPageRoute(builder: (context) => const AnalyzerDetailsView(nameWifi: "HotSpot3",namePlant: "Orchidée", analyzerName: "Analyzer",)),
       );
     }
     print("Plus de détails");

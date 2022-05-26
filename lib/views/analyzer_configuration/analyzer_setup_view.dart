@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/theme.dart';
-import 'package:soulpot/views/analyzer_configuration/analyzer_count_picker.dart';
-import 'package:soulpot/views/authentication/sign_in.dart';
+import 'package:soulpot/views/analyzer_configuration/analyzer_count_picker_view.dart';
+import 'package:soulpot/views/authentication/sign_in_view.dart';
 import 'package:soulpot/widgets/single/analyzer_pairing_dialog.dart';
 import 'package:soulpot/widgets/single/custom_snackbar.dart';
 import 'package:soulpot/widgets/single/analyzer_rename_dialog.dart';
@@ -11,19 +11,19 @@ import 'package:sizer/sizer.dart';
 
 import '../../models/Analyzer.dart';
 
-class AnalyzerSetup extends StatefulWidget {
-  const AnalyzerSetup({Key? key, required List<Analyzer> analyzers})
+class AnalyzerSetupView extends StatefulWidget {
+  const AnalyzerSetupView({Key? key, required List<Analyzer> analyzers})
       : _analyzers = analyzers,
         super(key: key);
 
   final List<Analyzer> _analyzers;
 
   @override
-  State<AnalyzerSetup> createState() =>
-      _AnalyzerSetupState();
+  State<AnalyzerSetupView> createState() =>
+      _AnalyzerSetupViewState();
 }
 
-class _AnalyzerSetupState extends State<AnalyzerSetup> {
+class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,7 +147,7 @@ class _AnalyzerSetupState extends State<AnalyzerSetup> {
                           await Navigator.of(context).push(
                             PageTransition(
                               type: PageTransitionType.fade,
-                              child: AnalyzerCountPicker(),
+                              child: AnalyzerCountPickerView(),
                             ),
                           );
                         },
@@ -186,7 +186,7 @@ class _AnalyzerSetupState extends State<AnalyzerSetup> {
                             await Navigator.of(context).push(
                               PageTransition(
                                 type: PageTransitionType.fade,
-                                child: SoulPotSignIn(),
+                                child: SignInView(),
                               ),
                             );
                           }

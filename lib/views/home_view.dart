@@ -1,24 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:soulpot/views/analyzer_page.dart';
-import 'package:soulpot/views/informations_page.dart';
-import 'package:soulpot/views/objectives_page.dart';
+import 'package:soulpot/views/analyzers_views/analyzers_view.dart';
+import 'package:soulpot/views/recommendations_views/recommendations_view.dart';
+import 'package:soulpot/views/objectives_views/objectives_view.dart';
 import '../theme.dart';
-import 'MyPlant_page.dart';
+import 'plants_views/plants_view.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class HomeView extends StatefulWidget {
+  const HomeView({Key? key}) : super(key: key);
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeView> createState() => _HomeViewState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
-  Widget _analyzerPage = AnalyzerPage();
-  Widget _informationPage = InformationPage();
-  Widget _mainPage = MyPlantPage();
-  Widget _objectivePage = ObjectivePage();
+  Widget _analyzerPage = AnalyzersView();
+  Widget _informationPage = RecommendationsView();
+  Widget _mainPage = PlantsView();
+  Widget _objectivePage = ObjectivesView();
 
   @override
   Widget build(BuildContext context) {
@@ -40,15 +40,17 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.monitor_heart),
-            label: "Informations",
+            label: "Recommandations",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.verified),
             label: "Objectifs",
           )
         ],
-        onTap: (int index) {
-          this.onTapHandler(index);
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
         },
       ),
     );
@@ -64,11 +66,5 @@ class _HomePageState extends State<HomePage> {
     } else {
       return this._objectivePage;
     }
-  }
-
-  void onTapHandler(int index) {
-    this.setState(() {
-      this._selectedIndex = index;
-    });
   }
 }
