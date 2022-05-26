@@ -26,7 +26,7 @@ class _AnalyzerPageState extends State<AnalyzerPage> {
                       onPressed: parameters,
                       icon: Icon(
                         Icons.settings,
-                        color: SoultPotTheme.SPGreen,
+                        color: SoulPotTheme.SPGreen,
                       )),
                   Text(
                     "Nom Plante",
@@ -47,21 +47,21 @@ class _AnalyzerPageState extends State<AnalyzerPage> {
                   shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(30.0),
                   ),
-                  primary: SoultPotTheme.SPPaleGreen,
+                  primary: SoulPotTheme.SPPaleGreen,
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Icons.add,
-                      color: SoultPotTheme.SPGreen,
+                      color: SoulPotTheme.SPGreen,
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         "Ajouter un Analyzer",
                         style: TextStyle(
-                            fontSize: 16, color: SoultPotTheme.SPGreen),
+                            fontSize: 16, color: SoulPotTheme.SPGreen),
                       ),
                     )
                   ],

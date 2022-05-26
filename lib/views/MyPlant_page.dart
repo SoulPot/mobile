@@ -34,7 +34,7 @@ class _MyPlantPageState extends State<MyPlantPage> {
                     onPressed: parameters,
                     icon: Icon(
                       Icons.settings,
-                      color: SoultPotTheme.SPGreen,
+                      color: SoulPotTheme.SPGreen,
                     )),
                 Text(
                   "Nom Plante",
@@ -57,14 +57,14 @@ class _MyPlantPageState extends State<MyPlantPage> {
                     shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0),
                     ),
-                    primary: SoultPotTheme.SPPaleGreen,
+                    primary: SoulPotTheme.SPPaleGreen,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        SoultPotTheme.water,
-                        color: SoultPotTheme.SPGreen,
+                        SoulPotTheme.water,
+                        color: SoulPotTheme.SPGreen,
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 7.0),
@@ -72,7 +72,7 @@ class _MyPlantPageState extends State<MyPlantPage> {
                           "M'arroser",
                           style: TextStyle(
                             fontSize: 16,
-                            color: SoultPotTheme.SPGreen,
+                            color: SoulPotTheme.SPGreen,
                           ),
                         ),
                       ),

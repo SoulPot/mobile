@@ -21,7 +21,7 @@ class _AnalyzerDetailsState extends State<AnalyzerDetails> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: SoultPotTheme.SPPaleGreen,
+        backgroundColor: SoulPotTheme.SPPaleGreen,
         title: Text("Détails " + widget.analyzerName),
       ),
       body: Padding(
@@ -54,12 +54,12 @@ class _AnalyzerDetailsState extends State<AnalyzerDetails> {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 CircleAvatar(
-                  backgroundColor: SoultPotTheme.SPPurple,
+                  backgroundColor: SoulPotTheme.SPPurple,
                   child: IconButton(
                       onPressed: editParameters,
                       icon: Icon(
                         Icons.mode_edit,
-                        color: SoultPotTheme.SPPalePurple,
+                        color: SoulPotTheme.SPPalePurple,
                       )),
                 )
               ],

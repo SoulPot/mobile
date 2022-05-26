@@ -30,8 +30,8 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: this.selectedIndex,
-        selectedItemColor: SoultPotTheme.SPGreen,
-        unselectedItemColor: SoultPotTheme.SPPaleGreen,
+        selectedItemColor: SoulPotTheme.SPGreen,
+        unselectedItemColor: SoulPotTheme.SPPaleGreen,
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.smart_toy),

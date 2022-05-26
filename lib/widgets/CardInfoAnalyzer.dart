@@ -24,11 +24,11 @@ class CardInfoAnalyzer extends StatefulWidget {
 class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
 
   Widget build(BuildContext context) {
-    var iconBattery = SoultPotTheme.battery_full;
+    var iconBattery = SoulPotTheme.battery_full;
     if (widget.batteryPercentage < 70) {
-      iconBattery = SoultPotTheme.battery_half;
+      iconBattery = SoulPotTheme.battery_half;
     } else if (widget.batteryPercentage < 30) {
-      iconBattery = SoultPotTheme.battery_empty;
+      iconBattery = SoulPotTheme.battery_empty;
     }
 
     return Card(
@@ -108,7 +108,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                     ),
                     Row(
                       children: [
-                        Icon(SoultPotTheme.bucket_solid),
+                        Icon(SoulPotTheme.bucket_solid),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
                           child: Text(
