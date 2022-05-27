@@ -25,7 +25,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
   Widget build(BuildContext context) {
     return Container(
       width: 50.w,
-      height: 12.5.h,
+      height: 15.h,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
@@ -37,6 +37,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
             children: [
               Text(
                 widget.label,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18.sp,
                     color: widget.fontColor,
@@ -44,6 +45,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
               ),
               Text(
                 widget.value,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 18.sp,
                     color: widget.fontColor,
@@ -51,6 +53,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
               ),
               Text(
                 "Recommandé : ${widget.recommendedValue[0]} - ${widget.recommendedValue[1]}",
+                textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 10.sp,
                     color: widget.fontColor,

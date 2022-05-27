@@ -40,7 +40,7 @@ class _HomeViewState extends State<HomeView> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.monitor_heart),
-            label: "Recommandations",
+            label: "Codex",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.verified),

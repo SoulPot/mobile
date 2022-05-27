@@ -23,8 +23,20 @@ class _AnalyzersViewState extends State<AnalyzersView> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              CardInfoAnalyzer(
+                analyzer: MockedData.analyzer1,
+              ),
+              CardInfoAnalyzer(
+                analyzer: MockedData.analyzer1,
+              ),
+              CardInfoAnalyzer(
+                analyzer: MockedData.analyzer1,
+              ),
+              CardInfoAnalyzer(
+                analyzer: MockedData.analyzer1,
+              ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.w),
+                padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 2.h),
                 child: ElevatedButton(
                   onPressed: () {
                     //TODO
@@ -57,18 +69,6 @@ class _AnalyzersViewState extends State<AnalyzersView> {
                     ],
                   ),
                 ),
-              ),
-              CardInfoAnalyzer(
-                analyzer: MockedData.analyzer1,
-              ),
-              CardInfoAnalyzer(
-                analyzer: MockedData.analyzer1,
-              ),
-              CardInfoAnalyzer(
-                analyzer: MockedData.analyzer1,
-              ),
-              CardInfoAnalyzer(
-                analyzer: MockedData.analyzer1,
               ),
             ],
           ),

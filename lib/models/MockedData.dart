@@ -10,7 +10,7 @@ class MockedData {
     humidity: 4,
     luminosity: 1002,
     wifiName: "Livebox-14A0",
-    recommendations: Recommendations([22, 27],[40, 50],[1000, 2000]),
+    recommendations: Recommendations([22, 27],[40, 50],[100000, 200000]),
   );
 
   static Analyzer analyzer2 = Analyzer(
