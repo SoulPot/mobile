@@ -49,7 +49,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
                     child: TextField(
                       controller: _emailController,
                       textAlign: TextAlign.center,
@@ -70,7 +70,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
                     child: TextField(
                       controller: _pwdController,
                       textAlign: TextAlign.center,
@@ -91,7 +91,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
                     child: TextField(
                       controller: _confirmPwdController,
                       textAlign: TextAlign.center,
@@ -112,7 +112,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
+                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 3.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -142,7 +142,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
+                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
                     child: ElevatedButton(
                       onPressed: () async {
                         if (FieldsManager.checkSignupFields(context, _emailController.text, _pwdController.text, _confirmPwdController.text)) {
