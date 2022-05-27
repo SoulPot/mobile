@@ -107,24 +107,28 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 4.w),
-                                    child: TextField(
-                                      onChanged: (_) {
-                                        setState(() {});
-                                      },
-                                      obscureText: true,
-                                      controller: _wifiPassController,
-                                      decoration: InputDecoration(
-                                        hintText: 'Mot de passe',
-                                        hintStyle: TextStyle(
-                                            fontFamily: "Greenhouse",
-                                            fontSize: 11.sp),
-                                        border: OutlineInputBorder(),
-                                      ),
-                                      style: TextStyle(
-                                        color: SoulPotTheme.SPBlack,
-                                        fontSize: 12.sp,
-                                        fontFamily: 'Greenhouse',
-                                        fontWeight: FontWeight.bold,
+                                    child: Container(
+                                      height: 5.h,
+                                      width: 80.w,
+                                      child: TextField(
+                                        onChanged: (_) {
+                                          setState(() {});
+                                        },
+                                        obscureText: true,
+                                        controller: _wifiPassController,
+                                        decoration: InputDecoration(
+                                          hintText: 'Mot de passe',
+                                          hintStyle: TextStyle(
+                                              fontFamily: "Greenhouse",
+                                              fontSize: 11.sp),
+                                          border: OutlineInputBorder(),
+                                        ),
+                                        style: TextStyle(
+                                          color: SoulPotTheme.SPBlack,
+                                          fontSize: 12.sp,
+                                          fontFamily: 'Greenhouse',
+                                          fontWeight: FontWeight.bold,
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -135,29 +139,37 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 1.w, vertical: 1.h),
-                                    child: TextField(
-                                      onChanged: (_) {
-                                        setState(() {});
-                                      },
-                                      controller: _ssidController,
-                                      decoration: InputDecoration(
-                                        labelText: 'SSID',
-                                        border: OutlineInputBorder(),
+                                    child: Container(
+                                      height: 5.h,
+                                      width: 80.w,
+                                      child: TextField(
+                                        onChanged: (_) {
+                                          setState(() {});
+                                        },
+                                        controller: _ssidController,
+                                        decoration: InputDecoration(
+                                          labelText: 'SSID',
+                                          border: OutlineInputBorder(),
+                                        ),
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 1.w, vertical: 1.h),
-                                    child: TextField(
-                                      onChanged: (_) {
-                                        setState(() {});
-                                      },
-                                      obscureText: true,
-                                      controller: _wifiPassController,
-                                      decoration: InputDecoration(
-                                        labelText: 'Mot de passe',
-                                        border: OutlineInputBorder(),
+                                    child: Container(
+                                      height: 5.h,
+                                      width: 80.w,
+                                      child: TextField(
+                                        onChanged: (_) {
+                                          setState(() {});
+                                        },
+                                        obscureText: true,
+                                        controller: _wifiPassController,
+                                        decoration: InputDecoration(
+                                          labelText: 'Mot de passe',
+                                          border: OutlineInputBorder(),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -195,7 +207,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                             padding: EdgeInsets.symmetric(
                                 horizontal: 5.w, vertical: 1.h),
                             textStyle: TextStyle(
-                              fontSize: 15,
+                              fontSize: 11.sp,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
@@ -229,7 +241,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 5.w, vertical: 1.h),
                               textStyle: TextStyle(
-                                fontSize: 15,
+                                fontSize: 11.sp,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -258,9 +270,12 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
     await BluetoothManager.scanForAnalyzerCharacteristic(
             analyzer, "96c44fd5-c309-4553-a11e-b8457810b94c")
         .then((value) => {
-              wifiCharacteristic = value,
-              showLoading = false,
-              deviceFound = true,
+              //if (value != null)
+                //{
+                  wifiCharacteristic = value,
+                  showLoading = false,
+                  deviceFound = true,
+                //}
             });
     return;
   }
