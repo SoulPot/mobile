@@ -30,11 +30,12 @@ class _PlantsViewState extends State<PlantsView> {
               children: [
                 Spacer(),
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 0.5.w),
+                  padding:
+                      EdgeInsets.symmetric(vertical: 1.h, horizontal: 0.5.w),
                   child: Container(
                     width: 75.w,
                     child: Text(
-                      "Ceci est le nom de la plante un peu long ",
+                      MockedData.analyzer1.name,
                       style: TextStyle(
                         fontSize: 16.sp,
                         fontWeight: FontWeight.bold,
@@ -85,41 +86,47 @@ class _PlantsViewState extends State<PlantsView> {
               child: Row(
                 children: [
                   Spacer(),
-                  ElevatedButton(
-                    onPressed: water,
-                    style: ElevatedButton.styleFrom(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      primary: SoulPotTheme.SPPaleGreen,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(
-                          SoulPotTheme.water,
-                          color: SoulPotTheme.SPBT,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              vertical: 2.h, horizontal: 3.w),
-                          child: Text(
-                            "M'arroser",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: SoulPotTheme.SPPurple,
+                  MockedData.analyzer1.needSprinkle
+                      ? ElevatedButton(
+                          onPressed: water,
+                          style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
                             ),
+                            primary: SoulPotTheme.SPPaleGreen,
                           ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(
+                                SoulPotTheme.water,
+                                color: SoulPotTheme.SPBT,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 2.h, horizontal: 3.w),
+                                child: Text(
+                                  "M'arroser",
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color: SoulPotTheme.SPPurple,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(
+                          width: 0.w,
+                          height: 6.2.h,
                         ),
-                      ],
-                    ),
-                  ),
                   Spacer(),
                 ],
               ),
             ),
             Divider(
               thickness: 2,
+              color: Colors.grey,
             ),
             Row(
               children: [
@@ -128,12 +135,14 @@ class _PlantsViewState extends State<PlantsView> {
                   value: "${MockedData.analyzer1.luminosity!} lux",
                   backgroundColor: getLuminosityColor(MockedData.analyzer1),
                   fontColor: Colors.black,
+                  recommendedValue: MockedData.analyzer1.recommendations!.recommendedLuminosity,
                 ),
                 CardInfoPlant(
                   label: "Température",
                   value: "${MockedData.analyzer1.temperature!}°C",
                   backgroundColor: getTemperatureColor(MockedData.analyzer1),
                   fontColor: Colors.black,
+                  recommendedValue: MockedData.analyzer1.recommendations!.recommendedTemperature,
                 ),
               ],
             ),
@@ -145,6 +154,7 @@ class _PlantsViewState extends State<PlantsView> {
                   value: "${MockedData.analyzer1.humidity!}%",
                   backgroundColor: getHumidityColor(MockedData.analyzer1),
                   fontColor: Colors.black,
+                  recommendedValue: MockedData.analyzer1.recommendations!.recommendedHumidity,
                 ),
                 Spacer(),
               ],
@@ -164,10 +174,12 @@ class _PlantsViewState extends State<PlantsView> {
   }
 
   Color getTemperatureColor(Analyzer analyzer) {
-    if(analyzer.recommendations != null && analyzer.temperature != null) {
-      if(analyzer.temperature! < analyzer.recommendations!.recommendedTemperature.reduce(min)) {
+    if (analyzer.recommendations != null && analyzer.temperature != null) {
+      if (analyzer.temperature! <
+          analyzer.recommendations!.recommendedTemperature.reduce(min)) {
         return SoulPotTheme.temperatureColors["Cold"]!;
-      } else if(analyzer.temperature! > analyzer.recommendations!.recommendedTemperature.reduce(max)) {
+      } else if (analyzer.temperature! >
+          analyzer.recommendations!.recommendedTemperature.reduce(max)) {
         return SoulPotTheme.temperatureColors["Hot"]!;
       } else {
         return SoulPotTheme.temperatureColors["Good"]!;
@@ -178,10 +190,12 @@ class _PlantsViewState extends State<PlantsView> {
   }
 
   Color getLuminosityColor(Analyzer analyzer) {
-    if(analyzer.recommendations != null && analyzer.luminosity != null) {
-      if(analyzer.luminosity! < analyzer.recommendations!.recommendedLuminosity.reduce(min)) {
+    if (analyzer.recommendations != null && analyzer.luminosity != null) {
+      if (analyzer.luminosity! <
+          analyzer.recommendations!.recommendedLuminosity.reduce(min)) {
         return SoulPotTheme.luminosityColors["Low"]!;
-      } else if(analyzer.luminosity! > analyzer.recommendations!.recommendedLuminosity.reduce(max)) {
+      } else if (analyzer.luminosity! >
+          analyzer.recommendations!.recommendedLuminosity.reduce(max)) {
         return SoulPotTheme.luminosityColors["High"]!;
       } else {
         return SoulPotTheme.luminosityColors["Good"]!;
@@ -192,10 +206,12 @@ class _PlantsViewState extends State<PlantsView> {
   }
 
   Color getHumidityColor(Analyzer analyzer) {
-    if(analyzer.recommendations != null && analyzer.humidity != null) {
-      if(analyzer.humidity! < analyzer.recommendations!.recommendedHumidity.reduce(min)) {
+    if (analyzer.recommendations != null && analyzer.humidity != null) {
+      if (analyzer.humidity! <
+          analyzer.recommendations!.recommendedHumidity.reduce(min)) {
         return SoulPotTheme.humidityColors["Dry"]!;
-      } else if(analyzer.humidity! > analyzer.recommendations!.recommendedHumidity.reduce(max)) {
+      } else if (analyzer.humidity! >
+          analyzer.recommendations!.recommendedHumidity.reduce(max)) {
         return SoulPotTheme.humidityColors["Wet"]!;
       } else {
         return SoulPotTheme.humidityColors["Good"]!;

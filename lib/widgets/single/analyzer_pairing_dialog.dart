@@ -133,7 +133,8 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                             : Column(
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 1.w, vertical: 1.h),
                                     child: TextField(
                                       onChanged: (_) {
                                         setState(() {});
@@ -146,7 +147,8 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 1.w, vertical: 1.h),
                                     child: TextField(
                                       onChanged: (_) {
                                         setState(() {});
@@ -167,34 +169,38 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
             Spacer(),
             Padding(
               padding: EdgeInsets.only(bottom: 1.h),
-              child: Row(
-                children: [
-                  Spacer(),
-                  ElevatedButton(
-                    onPressed: () async {
-                      this.dispose();
-                      Navigator.of(context).pop();
-                    },
-                    child: Text(
-                      "Annuler",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(color: SoulPotTheme.SPBlack),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      primary: SoulPotTheme.SPPaleRed,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
-                      textStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  (selectedSSID != "" && _wifiPassController.text != "")
-                      ? Padding(
+              child: showLoading
+                  ? Container(
+                      height: 0.h,
+                      width: 0.w,
+                    )
+                  : Row(
+                      children: [
+                        Spacer(),
+                        ElevatedButton(
+                          onPressed: () async {
+                            this.dispose();
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            "Annuler",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: SoulPotTheme.SPBlack),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0),
+                            ),
+                            primary: SoulPotTheme.SPPaleRed,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 5.w, vertical: 1.h),
+                            textStyle: TextStyle(
+                              fontSize: 15,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        Padding(
                           padding: EdgeInsets.only(left: 5.w),
                           child: ElevatedButton(
                             onPressed: () async {
@@ -228,14 +234,10 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                               ),
                             ),
                           ),
-                        )
-                      : Container(
-                          height: 0,
-                          width: 0,
                         ),
-                  Spacer(),
-                ],
-              ),
+                        Spacer(),
+                      ],
+                    ),
             ),
           ],
         ),

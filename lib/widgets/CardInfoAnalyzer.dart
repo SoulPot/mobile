@@ -1,146 +1,130 @@
+import 'package:battery_indicator/battery_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/views/analyzers_views/analyzer_details_view.dart';
+import 'package:sizer/sizer.dart';
+import 'package:soulpot/widgets/single/analyzer_details_dialog.dart';
 
+import '../models/Analyzer.dart';
 import '../theme.dart';
 
 class CardInfoAnalyzer extends StatefulWidget {
-  const CardInfoAnalyzer(
-      {Key? key,
-      required this.analyzerName,
-      required this.batteryPercentage,
-      required this.wifiName,
-      required this.waterLevel})
-      : super(key: key);
-  final String analyzerName;
-  final int batteryPercentage;
-  final String wifiName;
-  final String waterLevel;
+  const CardInfoAnalyzer({Key? key, required this.analyzer}) : super(key: key);
+
+  final Analyzer analyzer;
 
   @override
   State<CardInfoAnalyzer> createState() => _CardInfoAnalyzerState();
 }
 
 class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
-
   Widget build(BuildContext context) {
-    var iconBattery = SoulPotTheme.battery_full;
-    if (widget.batteryPercentage < 70) {
-      iconBattery = SoulPotTheme.battery_half;
-    } else if (widget.batteryPercentage < 30) {
-      iconBattery = SoulPotTheme.battery_empty;
-    }
-
     return Card(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 12.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            flex: 10,
+            child: Padding(
+              padding: EdgeInsets.fromLTRB(2.w, 0, 1.w, 2.h),
+              child: Column(
                 children: [
-                  Center(
-                    child: Text(
-                      widget.analyzerName,
-                      style: TextStyle(fontSize: 20),
+                  Padding(
+                    padding: EdgeInsets.only(bottom: 1.h),
+                    child: Center(
+                      child: Row(
+                        children: [
+                          Spacer(),
+                          Text(
+                            widget.analyzer.name,
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Greenhouse"),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 2.w),
+                            child: Image.asset(
+                              "assets/images/plant1.gif",
+                              height: 6.h,
+                              width: 6.w,
+                            ),
+                          ),
+                          Spacer(),
+                        ],
+                      ),
                     ),
                   ),
-                  PopupMenuButton(
-                      child: Icon(Icons.more_vert),
-                      onSelected: popupMenuButton,
-                      itemBuilder: (context) => [
-                            PopupMenuItem(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.edit),
-                                  Text(" Modifier l'Analyzer"),
-                                ],
-                              ),
-                              value: 1,
-                            ),
-                            PopupMenuItem(
-                              child: Row(
-                                children: [
-                                  Icon(Icons.delete),
-                                  Text(" Supprimer l'Analyzer"),
-                                ],
-                              ),
-                              value: 2,
-                            )
-                          ]),
+                  Padding(
+                    padding: EdgeInsets.only(left: 2.w),
+                    child: Row(
+                      children: [
+                        BatteryIndicator(
+                          batteryFromPhone: false,
+                          batteryLevel: widget.analyzer.battery!,
+                          style: BatteryIndicatorStyle.skeumorphism,
+                          showPercentNum: true,
+                          size: 2.2.w,
+                          colorful: true,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            " Charge batterie : ${widget.analyzer.battery}%",
+                            style: TextStyle(fontSize: 12.sp),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 2.w),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.wifi,
+                          color: SoulPotTheme.SPGreen,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8.0),
+                          child: Text(
+                            " Réseau Wifi : ${widget.analyzer.wifiName!}",
+                            style: TextStyle(fontSize: 12.sp),
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        Icon(iconBattery),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            " Batterie : " +
-                                widget.batteryPercentage.toString() +
-                                "% ",
-                            style: TextStyle(fontSize: 16),
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(Icons.wifi),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            " Réseau Wifi : " + widget.wifiName,
-                            style: TextStyle(fontSize: 16),
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Row(
-                      children: [
-                        Icon(SoulPotTheme.bucket_solid),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            " Eau restante : " + widget.waterLevel,
-                            style: TextStyle(fontSize: 16),
-                            textAlign: TextAlign.start,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+          ),
+          Expanded(
+            flex: 2,
+            child: Padding(
+              padding: EdgeInsets.only(right: 1.w),
+              child: IconButton(
+                icon: Icon(
+                  Icons.settings_rounded,
+                  color: SoulPotTheme.SPPurple,
                 ),
-              ],
+                onPressed: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) => AnalyzerDetailsDialog(
+                            analyzer: widget.analyzer,
+                          )).then((value) => setState(() {}));
+                },
+              ),
             ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
-
-  void fillWater() {
-    print("Le réservoir est rempli");
-  }
-
-  void popupMenuButton(int value) {
-    if(value == 1){
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => const AnalyzerDetailsView(nameWifi: "HotSpot3",namePlant: "Orchidée", analyzerName: "Analyzer",)),
-      );
-    }
-    print("Plus de détails");
-  }
-
 }
