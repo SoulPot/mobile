@@ -31,7 +31,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
           borderRadius: BorderRadius.circular(30),
         ),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
+          padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 1.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
