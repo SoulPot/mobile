@@ -22,7 +22,7 @@ class SoulPotApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'SoulPot',
-          home: AnalyzerCountPickerView(),
+          home: HomeView() //AnalyzerCountPickerView(),
         );
       },
     );

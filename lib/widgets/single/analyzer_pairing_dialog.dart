@@ -111,6 +111,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                       onChanged: (_) {
                                         setState(() {});
                                       },
+                                      obscureText: true,
                                       controller: _wifiPassController,
                                       decoration: InputDecoration(
                                         hintText: 'Mot de passe',
@@ -134,6 +135,9 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
                                     child: TextField(
+                                      onChanged: (_) {
+                                        setState(() {});
+                                      },
                                       controller: _ssidController,
                                       decoration: InputDecoration(
                                         labelText: 'SSID',
@@ -144,6 +148,10 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 1.h),
                                     child: TextField(
+                                      onChanged: (_) {
+                                        setState(() {});
+                                      },
+                                      obscureText: true,
                                       controller: _wifiPassController,
                                       decoration: InputDecoration(
                                         labelText: 'Mot de passe',

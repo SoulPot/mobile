@@ -26,11 +26,15 @@ dependencies:
   sizer: '^2.0.15'
   battery_indicator: '^0.1.1'
 
-
-
 dev_dependencies:
+  flutter_launcher_icons_maker: '^0.10.1'
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/SoulPotLogoFlower.png"
 
 flutter:
   uses-material-design: true

@@ -1,11 +1,15 @@
+import 'package:soulpot/models/Recommendations.dart';
+
 class Analyzer {
-  Analyzer(this.name, this.paired);
+  Analyzer(this.name, this.paired,
+      {this.battery, this.temperature, this.humidity, this.luminosity, this.wifiName, this.recommendations});
 
   String name;
   bool paired;
-  late int battery;
-  late int temperature;
-  late int luminosity;
-  late int humidity;
-
+  int? battery;
+  int? temperature;
+  int? luminosity;
+  int? humidity;
+  String? wifiName;
+  Recommendations? recommendations;
 }
