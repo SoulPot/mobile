@@ -34,7 +34,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                 Padding(
                   padding: EdgeInsets.only(top: 2.h),
                   child: Text(
-                    "Bienvenue sur l'application SoulPot",
+                    "Bienvenue sur l'application",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20.sp,
@@ -64,14 +64,14 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 10, right: 10),
+                  padding: EdgeInsets.only(left: 1.w, right: 1.w, top: 1.h),
                   child: Divider(
                     thickness: 1,
                     color: SoulPotTheme.SPBlack,
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(8),
+                  padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
                   child: Text(
                     "De combien d'analyzer disposez-vous ? ",
                     textAlign: TextAlign.center,
@@ -84,7 +84,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 1.h),
+                  padding: EdgeInsets.only(top: 3.h),
                   child: Center(
                     child: NumberStepper(
                       numbers: [1, 2, 3, 4, 5],
@@ -143,7 +143,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                         borderRadius: new BorderRadius.circular(30.0),
                       ),
                       primary: SoulPotTheme.SPGreen,
-                      padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
                       textStyle: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
