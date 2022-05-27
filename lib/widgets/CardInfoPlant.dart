@@ -39,7 +39,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
                 widget.label,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 16.sp,
                     color: widget.fontColor,
                     fontFamily: "Greenhouse"),
               ),
@@ -47,7 +47,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
                 widget.value,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 18.sp,
+                    fontSize: 16.sp,
                     color: widget.fontColor,
                     fontFamily: "Greenhouse"),
               ),
@@ -55,7 +55,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
                 "Recommandé : ${widget.recommendedValue[0]} - ${widget.recommendedValue[1]}",
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 10.sp,
+                    fontSize: 9.sp,
                     color: widget.fontColor,
                     fontFamily: "Greenhouse"),
               ),
