@@ -13,7 +13,8 @@ class AnalyzerCountPickerView extends StatefulWidget {
   const AnalyzerCountPickerView({Key? key}) : super(key: key);
 
   @override
-  State<AnalyzerCountPickerView> createState() => _AnalyzerCountPickerViewState();
+  State<AnalyzerCountPickerView> createState() =>
+      _AnalyzerCountPickerViewState();
 }
 
 class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
@@ -41,7 +42,9 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                   ),
                 ),
               ),
-              Image.asset("assets/images/LogoSoulPot.png"),
+              Image.asset(
+                "assets/images/LogoSoulPot.png",
+                height: 35.h,),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 1.h),
                 child: Text(

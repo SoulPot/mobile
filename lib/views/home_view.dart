@@ -32,11 +32,11 @@ class _HomeViewState extends State<HomeView> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.local_florist),
-            label: "Mes Plantes",
+            label: "Plantes",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.smart_toy),
-            label: "Mes Analyzers",
+            label: "Analyzers",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.monitor_heart),
