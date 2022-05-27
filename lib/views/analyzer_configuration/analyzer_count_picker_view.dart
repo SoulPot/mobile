@@ -30,7 +30,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.only(top: 25),
+                padding: EdgeInsets.only(top: 2.h),
                 child: Text(
                   "Bienvenue sur l'application SoulPot",
                   textAlign: TextAlign.center,
