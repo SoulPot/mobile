@@ -77,7 +77,7 @@ class _PlantsViewState extends State<PlantsView> {
             Center(
               child: Image.asset(
                 "assets/images/plant1.gif",
-                height: 34.h,
+                height: 30.h,
               ),
             ),
             Padding(
