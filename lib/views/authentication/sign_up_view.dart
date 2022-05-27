@@ -5,6 +5,7 @@ import 'package:soulpot/theme.dart';
 import 'package:soulpot/utilities/error_thrower.dart';
 import 'package:soulpot/utilities/fields_management.dart';
 import 'package:soulpot/views/authentication/sign_in_view.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../utilities/authentication.dart';
 
@@ -23,37 +24,32 @@ class _SignUpViewState extends State<SignUpView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SoulPotTheme.SPBackgroundWhite,
       body: SingleChildScrollView(
         child: GestureDetector(
           onTap: () {
             FocusScope.of(context).requestFocus(new FocusNode());
           },
           child: Container(
-            height: MediaQuery
-                .of(context)
-                .size
-                .height,
-            width: MediaQuery
-                .of(context)
-                .size
-                .width,
-            color: SoulPotTheme.SPBackgroundWhite,
+            height: 100.h,
+            width: 100.w,
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: EdgeInsets.symmetric(horizontal: 2.w),
               child: Column(
                 children: [
                   Padding(
-                    padding: const EdgeInsets.only(top: 25),
+                    padding: EdgeInsets.only(top: 5.h),
                     child: Align(
                       alignment: Alignment.topCenter,
                       child: Padding(
                         padding: const EdgeInsets.all(15),
-                        child: Image.asset('assets/images/LogoSoulPot.png'),
+                        child: Image.asset('assets/images/LogoSoulPot.png',
+                          height: 30.h,),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
                     child: TextField(
                       controller: _emailController,
                       textAlign: TextAlign.center,
@@ -61,11 +57,11 @@ class _SignUpViewState extends State<SignUpView> {
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: SoulPotTheme.SPGreen, width: 2.0),
-                            borderRadius: BorderRadius.circular(25.0),
+                                color: SoulPotTheme.SPGreen, width: 1.h),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(25.0),
+                            borderRadius: BorderRadius.circular(30),
                           ),
                           filled: true,
                           hintStyle: TextStyle(color: Colors.grey[800], fontFamily: 'Greenhouse'),
@@ -74,7 +70,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
                     child: TextField(
                       controller: _pwdController,
                       textAlign: TextAlign.center,
@@ -95,7 +91,7 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(25, 25, 25, 0),
+                    padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
                     child: TextField(
                       controller: _confirmPwdController,
                       textAlign: TextAlign.center,
@@ -116,11 +112,11 @@ class _SignUpViewState extends State<SignUpView> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Vous possédez déjà un compte ? ", style: TextStyle(fontFamily: 'Greenhouse', fontSize: 18),),
+                        Text("Vous possédez déjà un compte ? ", style: TextStyle(fontFamily: 'Greenhouse', fontSize: 12.sp),),
                         TextButton(
                           style:
                           TextButton.styleFrom(primary: SoulPotTheme.SPBlack),
@@ -139,14 +135,14 @@ class _SignUpViewState extends State<SignUpView> {
                           },
                           child: Text(
                             "Se connecter",
-                            style: TextStyle(color: SoulPotTheme.SPGreen, fontFamily: 'Greenhouse', fontSize: 18),
+                            style: TextStyle(color: SoulPotTheme.SPGreen, fontFamily: 'Greenhouse', fontSize: 12.sp),
                           ),
                         )
                       ],
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 50),
+                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
                     child: ElevatedButton(
                       onPressed: () async {
                         if (FieldsManager.checkSignupFields(context, _emailController.text, _pwdController.text, _confirmPwdController.text)) {
@@ -163,9 +159,9 @@ class _SignUpViewState extends State<SignUpView> {
                           ),
                           primary: SoulPotTheme.SPGreen,
                           padding: EdgeInsets.symmetric(
-                              horizontal: 50, vertical: 20),
+                              horizontal: 10.w, vertical: 2.h),
                           textStyle: TextStyle(
-                            fontSize: 15,
+                            fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
                           )),
                     ),

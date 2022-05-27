@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:sizer/sizer.dart';
 
 import '../single/fb_sign_in_button.dart';
 import '../single/google_sign_in_button.dart';
@@ -11,11 +12,11 @@ class SocialAuthentication extends StatelessWidget {
     return Column(
       children: <Widget>[
         Padding(
-          padding: const EdgeInsets.only(top: 10, bottom: 20),
+          padding: EdgeInsets.symmetric(vertical: 1.h),
           child: GoogleSignInButton(),
         ),
         Padding(
-          padding: const EdgeInsets.only(bottom: 15),
+          padding: EdgeInsets.symmetric(vertical: 1.h),
           child: FacebookSignInButton(),
         ),
       ],

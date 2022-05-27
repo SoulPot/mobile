@@ -18,7 +18,7 @@ class GoogleSignInButton extends StatelessWidget {
       onPressed: () {
         Authentication.signInWithGoogle(context);
       },
-      text: "Se connecter avec Google",
+      text: "Se connecter avec Google  ",
       darkMode: darkMode,
       isLoading: isLoading,
       style: AuthButtonStyle(

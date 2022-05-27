@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:soulpot/theme.dart';
 import 'package:soulpot/widgets/group/email_pwd_sign_in.dart';
 import 'package:soulpot/widgets/group/social_authentication.dart';
+import 'package:sizer/sizer.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({Key? key}) : super(key: key);
@@ -12,7 +13,6 @@ class SignInView extends StatefulWidget {
 }
 
 class _SignInViewState extends State<SignInView> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,14 +23,17 @@ class _SignInViewState extends State<SignInView> {
             FocusScope.of(context).requestFocus(new FocusNode());
           },
           child: Container(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
+            height: 100.h,
+            width: 100.w,
             color: SoulPotTheme.SPBackgroundWhite,
             child: SafeArea(
               child: Column(
                 children: [
                   Spacer(),
-                  Image.asset('assets/images/LogoSoulPot.png'),
+                  Image.asset(
+                    'assets/images/LogoSoulPot.png',
+                    height: 30.h,
+                  ),
                   Spacer(),
                   EmailPwdSignIn(),
                   Spacer(),
@@ -42,11 +45,11 @@ class _SignInViewState extends State<SignInView> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                        padding: EdgeInsets.only(left: 1.w, right: 1.w),
                         child: Text(
                           "OU",
                           style:
-                              TextStyle(fontSize: 20, fontFamily: "Greenhouse"),
+                              TextStyle(fontSize: 12.sp, fontFamily: "Greenhouse"),
                         ),
                       ),
                       Expanded(

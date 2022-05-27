@@ -4,6 +4,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/theme.dart';
 import 'package:soulpot/utilities/authentication.dart';
 import 'package:soulpot/views/authentication/sign_up_view.dart';
+import 'package:sizer/sizer.dart';
 
 class EmailPwdSignIn extends StatefulWidget {
   const EmailPwdSignIn({Key? key}) : super(key: key);
@@ -22,40 +23,41 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
       children: [
         Column(children: [
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
             child: TextField(
               controller: _emailController,
               textAlign: TextAlign.center,
               textInputAction: TextInputAction.next,
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: SoulPotTheme.SPGreen, width: 2.0),
+                    borderSide:
+                        BorderSide(color: SoulPotTheme.SPGreen, width: 1.h),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   filled: true,
-                  hintStyle: TextStyle(color: Colors.grey[800], fontFamily: 'Greenhouse'),
+                  hintStyle: TextStyle(
+                      color: Colors.grey[800], fontFamily: 'Greenhouse'),
                   hintText: "Email",
                   fillColor: SoulPotTheme.SPBackgroundWhite),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
+            padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
             child: TextField(
               controller: _passwordController,
               textAlign: TextAlign.center,
               textInputAction: TextInputAction.unspecified,
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(
-                        color: SoulPotTheme.SPGreen, width: 2.0),
-                    borderRadius: BorderRadius.circular(25.0),
+                    borderSide:
+                        BorderSide(color: SoulPotTheme.SPGreen, width: 1.h),
+                    borderRadius: BorderRadius.circular(25),
                   ),
                   border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+                    borderRadius: BorderRadius.circular(25),
                   ),
                   filled: true,
                   hintStyle: TextStyle(color: Colors.grey[800]),
@@ -64,38 +66,40 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 2.h),
             child: ElevatedButton(
               onPressed: () {
-                Authentication.signInWithPwd(context, _emailController.text, _passwordController.text);
+                Authentication.signInWithPwd(
+                    context, _emailController.text, _passwordController.text);
               },
               child: Text(
                 "Connexion",
-                style: TextStyle(fontFamily: "Greenhouse", fontSize: 18),
+                style: TextStyle(fontFamily: "Greenhouse", fontSize: 12.sp),
               ),
-              style: ButtonStyle(
-                backgroundColor:
-                    MaterialStateProperty.all<Color>(SoulPotTheme.SPGreen),
-                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                  RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
-                  ),
+              style: ElevatedButton.styleFrom(
+                shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(30.0),
+                ),
+                primary: SoulPotTheme.SPGreen,
+                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.5.h),
+                textStyle: TextStyle(
+                  fontSize: 11.sp,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 2.h),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   "Pas encore de compte ?",
-                  style: TextStyle(fontFamily: "Greenhouse", fontSize: 18),
+                  style: TextStyle(fontFamily: "Greenhouse", fontSize: 12.sp),
                 ),
                 TextButton(
-                  style:
-                  TextButton.styleFrom(primary: SoulPotTheme.SPBlack),
+                  style: TextButton.styleFrom(primary: SoulPotTheme.SPBlack),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -111,7 +115,10 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                   },
                   child: Text(
                     "S'inscrire",
-                    style: TextStyle(color: SoulPotTheme.SPGreen, fontSize: 18, fontFamily: "Greenhouse"),
+                    style: TextStyle(
+                        color: SoulPotTheme.SPGreen,
+                        fontSize: 12.sp,
+                        fontFamily: "Greenhouse"),
                   ),
                 ),
               ],

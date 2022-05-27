@@ -30,7 +30,7 @@ class CustomSnackBar {
         action: snackBarAction,
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 3.h),
         backgroundColor: backgroundColor,
-        duration: Duration(seconds: 2),
+        duration: Duration(seconds: 5),
         content: content,
         behavior: SnackBarBehavior.floating);
 
