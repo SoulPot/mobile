@@ -2,7 +2,6 @@ import 'package:battery_indicator/battery_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:soulpot/views/analyzers_views/analyzer_details_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/widgets/single/analyzer_details_dialog.dart';
 
@@ -47,10 +46,9 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(left: 2.w),
-                            child: Image.asset(
-                              "assets/images/plant1.gif",
+                            child: Image.network(
+                              "https://firebasestorage.googleapis.com/v0/b/soulpot-5fbe6.appspot.com/o/plants_gifs%2F4_Sanseveria.gif?alt=media&token=111d9522-0669-49fc-ac13-d607661aeaae",
                               height: 6.h,
-                              width: 6.w,
                             ),
                           ),
                           Spacer(),

@@ -75,8 +75,8 @@ class _PlantsViewState extends State<PlantsView> {
               ],
             ),
             Center(
-              child: Image.asset(
-                "assets/images/plant1.gif",
+              child: Image.network(
+                "https://firebasestorage.googleapis.com/v0/b/soulpot-5fbe6.appspot.com/o/plants_gifs%2F4_Sanseveria.gif?alt=media&token=111d9522-0669-49fc-ac13-d607661aeaae",
                 height: 34.h,
               ),
             ),

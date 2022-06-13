@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:soulpot/models/Analyzer.dart';
 import 'package:soulpot/views/analyzer_configuration/analyzer_count_picker_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/views/authentication/sign_in_view.dart';
-import 'package:soulpot/views/home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,7 +21,7 @@ class SoulPotApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'SoulPot',
-          home: SignInView(),
+          home: AnalyzerCountPickerView(),
         );
       },
     );

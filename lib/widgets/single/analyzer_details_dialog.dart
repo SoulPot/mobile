@@ -25,7 +25,7 @@ class AnalyzerDetailsDialog extends StatefulWidget {
 }
 
 class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
-  initState() {}
+  bool _isOn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +45,30 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                   fontWeight: FontWeight.bold,
                   fontFamily: "Greenhouse",
                 ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 1.h),
+                child: Text(
+                  _isOn ? "On" : "Off",
+                  style: TextStyle(
+                    fontSize: 11.sp,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Greenhouse",
+                  ),
+                ),
+              ),
+              Switch(
+                value: _isOn,
+                onChanged: (_) {
+                  setState(() {
+                    _isOn = !_isOn;
+                  });
+                },
+                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                activeTrackColor: Colors.grey[300],
+                activeColor: Colors.green,
+                inactiveThumbColor: Colors.red,
+                inactiveTrackColor: Colors.grey[300],
               ),
               Spacer(),
               Row(
@@ -96,10 +120,11 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                     padding: EdgeInsets.only(top: 1.h),
                     child: ElevatedButton(
                       onPressed: () async {
+                        var ssids = await getWifi();
                         showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              AnalyzerWifiModifier(),
+                              AnalyzerWifiModifier(pSsids: ssids),
                         );
                       },
                       child: Text(
@@ -152,5 +177,13 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
         ),
       ),
     );
+  }
+
+  Future<List<String>> getWifi() async {
+    List<String> tmpSSIDs = [];
+    if (Platform.isAndroid) {
+      tmpSSIDs = await WifiManager.scanForWifi(context);
+    }
+    return tmpSSIDs;
   }
 }
