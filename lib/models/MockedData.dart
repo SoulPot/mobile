@@ -1,5 +1,8 @@
+import 'package:flutter/material.dart';
 import 'package:soulpot/models/Analyzer.dart';
+import 'package:soulpot/models/Objective.dart';
 import 'package:soulpot/models/Recommendations.dart';
+import 'package:soulpot/theme.dart';
 
 class MockedData {
   static Analyzer analyzer1 = Analyzer(
@@ -10,7 +13,7 @@ class MockedData {
     humidity: 4,
     luminosity: 1002,
     wifiName: "Livebox-14A0",
-    recommendations: Recommendations([22, 27],[40, 50],[100000, 200000]),
+    recommendations: Recommendations([22, 27], [40, 50], [100000, 200000]),
   );
 
   static Analyzer analyzer2 = Analyzer(
@@ -42,4 +45,19 @@ class MockedData {
     luminosity: 50000,
     wifiName: "Livebox-14A0",
   );
+
+  static List<Objective> objectives = [
+    Objective(
+        "Analyzer Neophyte ", "Avoir 2 Analyzers en fonction", SoulPotTheme.SPRedPale,
+        SoulPotTheme.SPBlack, 2, 1, false),
+    Objective(
+        "Analyzer Pro", "Posséder 5 Analyzers", SoulPotTheme.SPRed,
+        SoulPotTheme.SPBlack, 5, 1, false),
+    Objective(
+        "Analyzer Neophyte ", "descritpzssdvgfwdfb", SoulPotTheme.SPRedPale,
+        SoulPotTheme.SPBlack, 5, 2, false),
+    Objective(
+        "Analyzer Débutant", "Posséder un Analyzer", SoulPotTheme.SPGreen,
+        Colors.white70, 1, 1, true),
+  ];
 }

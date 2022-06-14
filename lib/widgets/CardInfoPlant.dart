@@ -26,45 +26,49 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
     return Container(
       width: 50.w,
       height: 16.h,
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 1.w),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(
-                widget.label,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 16.sp,
-                    color: widget.fontColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Greenhouse"),
+      child: Column(
+        children: [
+          Card(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 1.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text(
+                    widget.label,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        color: widget.fontColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Greenhouse"),
+                  ),
+                  Text(
+                    widget.value,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 16.sp,
+                        color: widget.fontColor,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Greenhouse"),
+                  ),
+                  Text(
+                    "Recommandée : ${widget.recommendedValue[0]} - ${widget.recommendedValue[1]}",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontSize: 9.sp,
+                        color: widget.fontColor,
+                        fontFamily: "Greenhouse"),
+                  ),
+                ],
               ),
-              Text(
-                widget.value,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 16.sp,
-                    color: widget.fontColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Greenhouse"),
-              ),
-              Text(
-                "Recommandée : ${widget.recommendedValue[0]} - ${widget.recommendedValue[1]}",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 9.sp,
-                    color: widget.fontColor,
-                    fontFamily: "Greenhouse"),
-              ),
-            ],
+            ),
+            color: widget.backgroundColor,
           ),
-        ),
-        color: widget.backgroundColor,
+        ],
       ),
     );
   }
