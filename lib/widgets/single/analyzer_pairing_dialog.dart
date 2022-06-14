@@ -196,7 +196,6 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                             if(analyzer != null) {
                               analyzer!.disconnect();
                             }
-                            BluetoothManager.sendData(context, analyzer, wifiCharacteristic, "abort");
                             this.dispose();
                             Navigator.of(context).pop();
                           },
@@ -270,6 +269,10 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   }
 
   Future<void> getBluetooth() async {
+    if (Platform.isIOS) {
+      await flutterBlue.scan();
+      await flutterBlue.stopScan();
+    }
     var results = await flutterBlue.startScan(timeout: Duration(seconds: 4));
     for (ScanResult r in results) {
       if (r.advertisementData.localName.contains("SOULPOT_ESP32_")) {
