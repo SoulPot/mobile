@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:battery_indicator/battery_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:soulpot/utilities/bluetooth_manager.dart';
 import 'package:soulpot/utilities/wifi_manager.dart';

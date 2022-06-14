@@ -7,9 +7,9 @@ import 'package:soulpot/theme.dart';
 import 'package:soulpot/views/authentication/sign_in_view.dart';
 import 'package:soulpot/views/home_view.dart';
 
-import '../widgets/single/custom_snackbar.dart';
-import 'error_thrower.dart';
-import 'error_thrower.dart';
+import '../../widgets/single/custom_snackbar.dart';
+import '../error_thrower.dart';
+import '../error_thrower.dart';
 
 class Authentication {
   static Future<void> initializeFirebase(BuildContext context) async {

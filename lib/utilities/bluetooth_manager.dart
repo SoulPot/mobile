@@ -2,34 +2,34 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
-import 'package:soulpot/models/Analyzer.dart';
-
 import '../widgets/single/custom_snackbar.dart';
 import '../../theme.dart';
 
 class BluetoothManager {
   static FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
-  static Future<BluetoothDevice?> scanForAnalyzer(String analyzerName) async {
-    BluetoothDevice? analyzerDevice;
-    print("START SCAN");
-    var results = await flutterBlue.startScan(timeout: const Duration(seconds: 3));
-    for (ScanResult result in results) {
-      if (result.device.name.contains(analyzerName)) {
-        analyzerDevice = result.device;
-        break;
+  static Future<BluetoothDevice?> scanForAnalyzer() async {
+    BluetoothDevice? analyzer;
+    var results = await flutterBlue.startScan(timeout: Duration(seconds: 4));
+      for (ScanResult r in results) {
+        if (r.advertisementData.localName.contains("SOULPOT_ESP32_")) {
+          print("OUI");
+          analyzer = r.device;
+        }
       }
-    }
-    return analyzerDevice;
+    return analyzer;
   }
 
   static Future<BluetoothCharacteristic?> scanForAnalyzerCharacteristic(
       BluetoothDevice? analyzer, String characteristicToFindUUID) async {
     BluetoothCharacteristic? analyzerCharacteristic;
-    print("DEBUT SCAN");
-    await analyzer?.connect();
-    List<BluetoothService>? services = await analyzer?.discoverServices();
-    services?.forEach((service) {
+    await analyzer!.connect();
+
+    List<BluetoothService>? services = await analyzer.discoverServices();
+    if (services.isEmpty) {
+      return null;
+    }
+    services.forEach((service) {
       var characteristics = service.characteristics;
       for (BluetoothCharacteristic char in characteristics) {
         if (char.uuid.toString() == characteristicToFindUUID) {

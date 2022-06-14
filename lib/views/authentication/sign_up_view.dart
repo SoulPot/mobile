@@ -7,7 +7,7 @@ import 'package:soulpot/utilities/fields_management.dart';
 import 'package:soulpot/views/authentication/sign_in_view.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../utilities/authentication.dart';
+import '../../utilities/Firebase/authentication.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
