@@ -96,7 +96,7 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                                     ),
                                   ),
                                 ),
-                                widget._analyzers[index].paired
+                                widget._analyzers[index].paired!
                                     ? Text("Connecté")
                                     : ElevatedButton(
                                         onPressed: () async {
@@ -173,7 +173,7 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                         onPressed: () async {
                           bool allArePaired = true;
                           widget._analyzers.forEach((analyzer) {
-                            if (!analyzer.paired) {
+                            if (!analyzer.paired! || analyzer.paired == null) {
                               allArePaired = false;
                             }
                           });

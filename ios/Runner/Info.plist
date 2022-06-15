@@ -53,6 +53,10 @@
 	<string>448820460344528</string>
 	<key>FacebookDisplayName</key>
 	<string>SoulPot</string>
+    <key>FacebookAutoLogAppEventsEnabled</key>
+    <false/>
+    <key>FacebookAdvertiserIDCollectionEnabled</key>
+    <false/>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -94,5 +98,7 @@
             <string>Need Location permission</string>
             <key>NSLocationWhenInUseUsageDescription</key>
             <string>Need Location permission</string>
+	<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
 </dict>
 </plist>

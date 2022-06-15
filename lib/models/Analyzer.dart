@@ -14,7 +14,7 @@ class Analyzer {
             ? humidity! < recommendations.recommendedHumidity.reduce(min)
             : false;
   String name;
-  bool paired;
+  bool? paired;
   int? battery;
   int? temperature;
   int? luminosity;

@@ -1,9 +1,12 @@
+import 'dart:io';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/theme.dart';
+import 'package:soulpot/utilities/Firebase/analytics.dart';
 import 'package:soulpot/views/authentication/sign_in_view.dart';
 import 'package:soulpot/views/home_view.dart';
 
@@ -37,6 +40,7 @@ class Authentication {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
       user = userCredential.user!;
       print(user.email);
+      AnalyticsManager.logEmailPwdAuth();
       enterApp(context);
       return user;
     } on FirebaseAuthException catch (e) {

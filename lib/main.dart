@@ -1,14 +1,18 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
-import 'package:soulpot/views/analyzer_configuration/analyzer_count_picker_view.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/views/authentication/sign_in_view.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:soulpot/views/home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FacebookAuth.instance.autoLogAppEventsEnabled(true);
+
   await Firebase.initializeApp();
+  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
     runApp(SoulPotApp());
   });
@@ -22,7 +26,7 @@ class SoulPotApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'SoulPot',
-          home: AnalyzerCountPickerView(),
+          home: HomeView(),
         );
       },
     );
