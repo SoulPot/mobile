@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/theme.dart';
-import 'package:soulpot/utilities/authentication.dart';
+import 'package:soulpot/utilities/Firebase/authentication.dart';
 import 'package:soulpot/views/authentication/sign_up_view.dart';
 import 'package:sizer/sizer.dart';
 

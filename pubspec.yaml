@@ -26,6 +26,10 @@ dependencies:
   sizer: '^2.0.15'
   battery_indicator: '^0.1.1'
   linear_progress_bar: "^1.1.0"
+  firebase_analytics: '^9.1.9'
+  firebase_crashlytics: '^2.8.1'
+  cloud_firestore: '^3.1.17'
+
 
 dev_dependencies:
   flutter_launcher_icons_maker: '^0.10.1'

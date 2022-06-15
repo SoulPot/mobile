@@ -1,6 +1,6 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:soulpot/utilities/authentication.dart';
+import 'package:soulpot/utilities/Firebase/authentication.dart';
 
 class GoogleSignInButton extends StatelessWidget {
   const GoogleSignInButton({Key? key}) : super(key: key);

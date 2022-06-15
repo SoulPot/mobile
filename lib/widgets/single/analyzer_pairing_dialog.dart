@@ -1,10 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:soulpot/utilities/bluetooth_manager.dart';
 import 'package:soulpot/utilities/wifi_manager.dart';
+import 'package:soulpot/widgets/single/custom_snackbar.dart';
 import 'package:soulpot/widgets/single/dropdown_wifi_picker.dart';
 import 'package:sizer/sizer.dart';
 
@@ -27,7 +28,8 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   BluetoothDevice? analyzer;
   BluetoothCharacteristic? wifiCharacteristic;
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
-  bool deviceFound = false;
+
+  bool? deviceFound;
   bool showLoading = true;
 
   // WIFI
@@ -38,7 +40,6 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   TextEditingController _ssidController = TextEditingController();
 
   initState() {
-    super.initState();
     getBluetooth().then((_) => {
           getWifi().then((_) => setState(() {
                 ssids.removeWhere(
@@ -48,6 +49,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                 }
               }))
         });
+    super.initState();
   }
 
   @override
@@ -61,15 +63,15 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
           children: <Widget>[
             Padding(
               padding: EdgeInsets.fromLTRB(2.w, 2.h, 2.w, 0),
-              child: deviceFound
+              child: deviceFound != null
                   ? Text(
-                      "Analyzer trouvé",
-                      style: TextStyle(
-                          color: SoulPotTheme.SPGreen,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 15.sp,
-                          fontFamily: 'Greenhouse'),
-                    )
+                          "Analyzer trouvé",
+                          style: TextStyle(
+                              color: SoulPotTheme.SPGreen,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15.sp,
+                              fontFamily: 'Greenhouse'),
+                        )
                   : Text(
                       'Scan en cours veuillez patienter...',
                       textAlign: TextAlign.center,
@@ -191,6 +193,9 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                         Spacer(),
                         ElevatedButton(
                           onPressed: () async {
+                            if(analyzer != null) {
+                              analyzer!.disconnect();
+                            }
                             this.dispose();
                             Navigator.of(context).pop();
                           },
@@ -264,20 +269,42 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   }
 
   Future<void> getBluetooth() async {
-    await BluetoothManager.scanForAnalyzer("SOULPOT_ESP32_").then(
-      (value) => analyzer = value,
-    );
-    await BluetoothManager.scanForAnalyzerCharacteristic(
-            analyzer, "96c44fd5-c309-4553-a11e-b8457810b94c")
-        .then((value) => {
-              //if (value != null)
-                //{
-                  wifiCharacteristic = value,
-                  showLoading = false,
-                  deviceFound = true,
-                //}
-            });
-    return;
+    if (Platform.isIOS) {
+      await flutterBlue.scan();
+      await flutterBlue.stopScan();
+    }
+    var results = await flutterBlue.startScan(timeout: Duration(seconds: 4));
+    for (ScanResult r in results) {
+      if (r.advertisementData.localName.contains("SOULPOT_ESP32_")) {
+        print("ANALYZER FOUND => ${r.advertisementData.localName}");
+        analyzer = r.device;
+      }
+      r.device.disconnect();
+    }
+    flutterBlue.stopScan();
+
+    if (analyzer == null) {
+      print("ANALYZER NOT FOUND");
+      snackBarCreator(context, "Aucun analyzer trouvé", SoulPotTheme.SPPaleRed);
+      Navigator.of(context).pop();
+    } else {
+      await analyzer!.connect();
+      var services = await analyzer!.discoverServices();
+      for (BluetoothService s in services) {
+        print("OUI");
+        var characteristics = s.characteristics;
+        for (BluetoothCharacteristic c in characteristics) {
+          if (c.uuid.toString() == "96c44fd5-c309-4553-a11e-b8457810b94c") {
+            print("CHARACTERISTIC FOUND => ${c.uuid.toString()}");
+            wifiCharacteristic = c;
+            showLoading = false;
+            deviceFound = true;
+          } else {
+            print("CHARACTERISTIC NOT FOUND");
+          }
+        }
+      }
+    }
   }
 
   Future<void> getWifi() async {
