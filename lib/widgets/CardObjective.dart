@@ -43,7 +43,7 @@ class _CardObjectiveState extends State<CardObjective> {
                       fontWeight: FontWeight.bold,
                       fontFamily: "Greenhouse"),
                 ),
-                widget.objective.owned == false ? displayProgressBar() : Container(width: 0, height: 0,),
+                widget.objective.owned == true ? Container(width: 1, height: 1) : displayProgressBar(),
                 Text(
                   widget.objective.description,
                   textAlign: TextAlign.center,
@@ -67,7 +67,7 @@ class _CardObjectiveState extends State<CardObjective> {
       maxSteps: 100,
       progressType: LinearProgressBar.progressTypeLinear,
       // Use Linear progress
-      currentStep: widget.objective.stateValue,
+      currentStep: widget.objective.stateValue != null ? widget.objective.stateValue : 1,
       progressColor: SoulPotTheme.SPPaleGreen,
       backgroundColor: Colors.grey,
       semanticsLabel: "Label",
