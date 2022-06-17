@@ -66,7 +66,7 @@ class _HomeViewState extends State<HomeView> {
     if (this._selectedIndex == 0) {
       return PlantsView(widget.codex);
     } else if (this._selectedIndex == 1) {
-      return AnalyzersView();
+      return AnalyzersView(widget.codex);
     } else if (this._selectedIndex == 2) {
       return RecommendationsView();
     } else {

@@ -102,7 +102,7 @@ class _PlantViewerState extends State<PlantViewer> {
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
-                                vertical: 2.h, horizontal: 3.w),
+                                vertical: 1.h, horizontal: 3.w),
                             child: Text(
                               "M'arroser",
                               style: TextStyle(
@@ -116,7 +116,7 @@ class _PlantViewerState extends State<PlantViewer> {
                     )
                   : Container(
                       width: 0.w,
-                      height: 6.2.h,
+                      height: 5.36.h,
                     ),
               Spacer(),
             ],
