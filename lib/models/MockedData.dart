@@ -49,15 +49,15 @@ class MockedData {
   static List<Objective> objectives = [
     Objective(
         "Analyzer Neophyte ", "Avoir 2 Analyzers en fonction", SoulPotTheme.SPRedPale,
-        SoulPotTheme.SPBlack, 2, 1, false),
+        SoulPotTheme.SPBlack, 2, ),
     Objective(
         "Analyzer Pro", "Posséder 5 Analyzers", SoulPotTheme.SPRed,
-        SoulPotTheme.SPBlack, 5, 1, false),
+        SoulPotTheme.SPBlack, 5, ),
     Objective(
         "Analyzer Neophyte ", "descritpzssdvgfwdfb", SoulPotTheme.SPRedPale,
-        SoulPotTheme.SPBlack, 5, 2, false),
+        SoulPotTheme.SPBlack, 5, ),
     Objective(
         "Analyzer Débutant", "Posséder un Analyzer", SoulPotTheme.SPGreen,
-        Colors.white70, 1, 1, true),
+        Colors.white70, 1, ),
   ];
 }
