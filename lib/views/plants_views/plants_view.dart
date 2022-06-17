@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_view_indicators/page_view_indicators.dart';
 import 'package:soulpot/utilities/Firebase/firestore.dart';
 import 'package:soulpot/widgets/single/plant_viewer.dart';
 
@@ -23,20 +24,14 @@ class PlantsView extends StatefulWidget {
 
 class _PlantsViewState extends State<PlantsView> {
   // MOCKED DATAS
-
+  List<Analyzer> userAnalyzers = [];
+  List<Widget> viewers = [];
+  PageController _pageController = PageController();
   List<Plant> userPlants = [];
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  ValueNotifier<int> _pageNotifier = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
-    List<Analyzer> userAnalyzers = [];
-    List<Widget> viewers = [];
-    PageController _pageController = PageController(initialPage: 0);
-
     return Scaffold(
       backgroundColor: SoulPotTheme.SPBackgroundWhite,
       body: SafeArea(
@@ -53,24 +48,51 @@ class _PlantsViewState extends State<PlantsView> {
                   controller: _pageController,
                   scrollDirection: Axis.horizontal,
                   itemCount: snapshot.data?.docs.length,
+                  pageSnapping: false,
+                  onPageChanged: (index) {
+                    _pageNotifier.value = index;
+                  },
                   itemBuilder: (context, position) {
                     final document = snapshot.data!.docs[position];
                     Plant plant = widget._codex
                         .where(
                             (element) => element.plantID == document["plantID"])
                         .first;
-                    return PlantViewer(
-                      Analyzer(
-                        document.id,
-                        true,
-                        battery: document["battery"],
-                        temperature: document["temperature"],
-                        humidity: document["humidity"],
-                        luminosity: document["luminosity"],
-                        wifiName: document["wifiName"],
-                        imageURL: plant.gif_url,
-                        recommendations: plant.recommendations,
-                      ),
+                    return Column(
+                      children: [
+                        PlantViewer(
+                          Analyzer(
+                            document.id,
+                            true,
+                            battery: document["battery"],
+                            temperature: document["temperature"],
+                            humidity: document["humidity"],
+                            luminosity: document["luminosity"],
+                            wifiName: document["wifiName"],
+                            imageURL: plant.gif_url,
+                            recommendations: plant.recommendations,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10,
+                          ),
+                          child: Row(
+                            children: [
+                              Spacer(),
+                              CirclePageIndicator(
+                                currentPageNotifier: _pageNotifier,
+                                itemCount: snapshot.data!.docs.length,
+                                size: 10,
+                                selectedSize: 12,
+                                selectedDotColor: SoulPotTheme.SPGreen,
+                                dotColor: Colors.grey,
+                              ),
+                              Spacer(),
+                            ],
+                          ),
+                        ),
+                      ],
                     );
                   },
                 );

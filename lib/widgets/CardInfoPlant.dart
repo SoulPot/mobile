@@ -25,7 +25,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
   Widget build(BuildContext context) {
     return Container(
       width: 50.w,
-      height: 16.h,
+      height: 14.h,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
