@@ -47,18 +47,17 @@ class MockedData {
   );
 
   static List<Objective> objectives = [
-    Objective(
+    Objective( "1",
         "Analyzer Neophyte ", "Avoir 2 Analyzers en fonction", SoulPotTheme.SPRedPale,
         SoulPotTheme.SPBlack, 2, ),
-    Objective(
+    Objective( "2",
         "Analyzer Pro", "Posséder 5 Analyzers", SoulPotTheme.SPRed,
         SoulPotTheme.SPBlack, 5, ),
-    Objective(
+    Objective( "3",
         "Analyzer Neophyte ", "descritpzssdvgfwdfb", SoulPotTheme.SPRedPale,
         SoulPotTheme.SPBlack, 5, ),
-    Objective(
+    Objective( "4",
         "Analyzer Débutant", "Posséder un Analyzer", SoulPotTheme.SPGreen,
         Colors.white70, 1, ),
   ];
 }
-*/

@@ -5,16 +5,19 @@ import 'package:soulpot/views/analyzers_views/analyzers_view.dart';
 import 'package:soulpot/views/recommendations_views/recommendations_view.dart';
 import 'package:soulpot/views/objectives_views/objectives_view.dart';
 import '../models/Analyzer.dart';
+import '../models/Objective.dart';
 import '../models/Plant.dart';
 import '../theme.dart';
 import 'plants_views/plants_view.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView(List<Plant> codex, {Key? key})
+  const HomeView(List<Plant> codex, List<Objective> objectives,{Key? key})
       : this.codex = codex,
+        this.objectives = objectives,
         super(key: key);
 
   final List<Plant> codex;
+  final List<Objective> objectives;
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -67,7 +70,7 @@ class _HomeViewState extends State<HomeView> {
     } else if (this._selectedIndex == 2) {
       return RecommendationsView();
     } else {
-      return ObjectivesView();
+      return ObjectivesView(widget.objectives);
     }
   }
 }

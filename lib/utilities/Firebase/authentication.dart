@@ -12,6 +12,7 @@ import 'package:soulpot/views/authentication/sign_in_view.dart';
 import 'package:soulpot/views/home_view.dart';
 
 import '../../models/Analyzer.dart';
+import '../../models/Objective.dart';
 import '../../models/Plant.dart';
 import '../../widgets/single/custom_snackbar.dart';
 import '../error_thrower.dart';
@@ -23,8 +24,9 @@ class AuthenticationManager {
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
+      List<Objective> objectives = await FirestoreManager.getStaticObjectives();
       List<Plant> codex = await FirestoreManager.getCodex();
-      return HomeView(codex);
+      return HomeView(codex, objectives);
     }
     return SignInView();
   }
@@ -95,6 +97,7 @@ class AuthenticationManager {
 
   static Future<void> enterApp(BuildContext context) async{
     List<Plant> codex = await FirestoreManager.getCodex();
+    List<Objective> objectives = await FirestoreManager.getStaticObjectives();
     Navigator.pushReplacement(
       context,
       PageTransition(
@@ -103,7 +106,7 @@ class AuthenticationManager {
           duration: Duration(milliseconds: 600),
           reverseDuration: Duration(milliseconds: 600),
           type: PageTransitionType.fade,
-          child: HomeView(codex),
+          child: HomeView(codex, objectives),
           childCurrent: context.widget),
     );
   }
