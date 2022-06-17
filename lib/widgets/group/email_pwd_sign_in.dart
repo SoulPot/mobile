@@ -69,7 +69,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
             padding: EdgeInsets.only(top: 2.h),
             child: ElevatedButton(
               onPressed: () {
-                Authentication.signInWithPwd(
+                AuthenticationManager.signInWithPwd(
                     context, _emailController.text, _passwordController.text);
               },
               child: Text(

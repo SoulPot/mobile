@@ -1,13 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:soulpot/utilities/Firebase/firestore.dart';
 import 'package:soulpot/views/analyzers_views/analyzers_view.dart';
 import 'package:soulpot/views/recommendations_views/recommendations_view.dart';
 import 'package:soulpot/views/objectives_views/objectives_view.dart';
+import '../models/Analyzer.dart';
+import '../models/Plant.dart';
 import '../theme.dart';
 import 'plants_views/plants_view.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView(List<Plant> codex, {Key? key})
+      : this.codex = codex,
+        super(key: key);
+
+  final List<Plant> codex;
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -15,10 +22,6 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   int _selectedIndex = 0;
-  Widget _analyzerPage = AnalyzersView();
-  Widget _informationPage = RecommendationsView();
-  Widget _mainPage = PlantsView();
-  Widget _objectivePage = ObjectivesView();
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +61,13 @@ class _HomeViewState extends State<HomeView> {
 
   Widget getBody() {
     if (this._selectedIndex == 0) {
-      return this._mainPage;
+      return PlantsView(widget.codex);
     } else if (this._selectedIndex == 1) {
-      return this._analyzerPage;
+      return AnalyzersView();
     } else if (this._selectedIndex == 2) {
-      return this._informationPage;
+      return RecommendationsView();
     } else {
-      return this._objectivePage;
+      return ObjectivesView();
     }
   }
 }

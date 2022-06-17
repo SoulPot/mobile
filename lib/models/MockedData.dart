@@ -1,6 +1,6 @@
 import 'package:soulpot/models/Analyzer.dart';
 import 'package:soulpot/models/Recommendations.dart';
-
+/*
 class MockedData {
   static Analyzer analyzer1 = Analyzer(
     "Analyzer Acacia",
@@ -43,3 +43,4 @@ class MockedData {
     wifiName: "Livebox-14A0",
   );
 }
+*/
