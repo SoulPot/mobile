@@ -7,30 +7,26 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/theme.dart';
 import 'package:soulpot/utilities/Firebase/analytics.dart';
+import 'package:soulpot/utilities/Firebase/firestore.dart';
 import 'package:soulpot/views/authentication/sign_in_view.dart';
 import 'package:soulpot/views/home_view.dart';
 
+import '../../models/Analyzer.dart';
+import '../../models/Plant.dart';
 import '../../widgets/single/custom_snackbar.dart';
 import '../error_thrower.dart';
 import '../error_thrower.dart';
 
-class Authentication {
-  static Future<void> initializeFirebase(BuildContext context) async {
+class AuthenticationManager {
+
+  static Future<Widget> initializeFirebase(BuildContext context) async{
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user != null) {
-      Navigator.pushReplacement(
-        context,
-        PageTransition(
-            alignment: Alignment.bottomCenter,
-            curve: Curves.easeInOut,
-            duration: Duration(milliseconds: 600),
-            reverseDuration: Duration(milliseconds: 600),
-            type: PageTransitionType.fade,
-            child: HomeView(),
-            childCurrent: context.widget),
-      );
+      List<Plant> codex = await FirestoreManager.getCodex();
+      return HomeView(codex);
     }
+    return SignInView();
   }
 
   static Future<User?> signInWithPwd( BuildContext context, String email, String password) async {
@@ -97,7 +93,8 @@ class Authentication {
     return user;
   }
 
-  static void enterApp(BuildContext context) {
+  static Future<void> enterApp(BuildContext context) async{
+    List<Plant> codex = await FirestoreManager.getCodex();
     Navigator.pushReplacement(
       context,
       PageTransition(
@@ -106,7 +103,7 @@ class Authentication {
           duration: Duration(milliseconds: 600),
           reverseDuration: Duration(milliseconds: 600),
           type: PageTransitionType.fade,
-          child: HomeView(),
+          child: HomeView(codex),
           childCurrent: context.widget),
     );
   }

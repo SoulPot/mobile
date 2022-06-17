@@ -9,6 +9,7 @@ class Analyzer {
       this.humidity,
       this.luminosity,
       this.wifiName,
+      this.imageURL,
       this.recommendations})
       : needSprinkle = recommendations != null
             ? humidity! < recommendations.recommendedHumidity.reduce(min)
@@ -19,6 +20,7 @@ class Analyzer {
   int? temperature;
   int? luminosity;
   int? humidity;
+  String? imageURL;
   String? wifiName;
   Recommendations? recommendations =
       Recommendations([20, 25], [40, 50], [1000, 2000]);

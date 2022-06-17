@@ -16,7 +16,7 @@ class FacebookSignInButton extends StatelessWidget {
 
     return FacebookAuthButton(
       onPressed: () {
-        Authentication.signInWithFacebook(context);
+        AuthenticationManager.signInWithFacebook(context);
       },
       text: "Se connecter avec Facebook",
       darkMode: darkMode,
