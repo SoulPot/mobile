@@ -40,7 +40,8 @@ class _CardObjectiveState extends State<CardObjective> {
       child: widget,
       builder: (context, widget) {
         final isUnder = (ValueKey(buildFront) != widget?.key);
-        final value = isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
+        final value =
+        isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
         return Transform(
           transform: Matrix4.rotationY(value),
           child: widget,
@@ -61,11 +62,11 @@ class _CardObjectiveState extends State<CardObjective> {
     );
   }
 
-  Widget buildFront(){
+  Widget buildFront() {
     return buildCard(ValueKey(true));
   }
 
-  Widget buildBack(){
+  Widget buildBack() {
     return buildCard(ValueKey(false));
   }
 
@@ -75,7 +76,6 @@ class _CardObjectiveState extends State<CardObjective> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-
       child: Container(
         width: 35.w,
         height: 20.h,
@@ -84,7 +84,8 @@ class _CardObjectiveState extends State<CardObjective> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              displayFront ? Text(
+              displayFront
+                  ? Text(
                 widget.objective.label,
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -92,7 +93,8 @@ class _CardObjectiveState extends State<CardObjective> {
                     color: widget.objective.fontColor,
                     fontWeight: FontWeight.bold,
                     fontFamily: "Greenhouse"),
-              ) : Text(
+              )
+                  : Text(
                 widget.objective.description,
                 textAlign: TextAlign.center,
                 style: TextStyle(
@@ -100,9 +102,12 @@ class _CardObjectiveState extends State<CardObjective> {
                     color: widget.objective.fontColor,
                     fontFamily: "Greenhouse"),
               ),
-              widget.objective.owned == true || !displayFront
-                  ? Container(width: 0, height: 0)
-                  : displayProgressBar(),
+              widget.objective.owned == false || !displayFront
+                  ? Container(
+                width: 0,
+                height: 0,
+              ) : displayProgressBar(),
+              !displayFront ? displayObjectiveType() : Container(),
             ],
           ),
         ),
@@ -117,12 +122,37 @@ class _CardObjectiveState extends State<CardObjective> {
       progressType: LinearProgressBar.progressTypeLinear,
       // Use Linear progress
       currentStep:
-          widget.objective.stateValue != null ? widget.objective.stateValue : 0,
+      widget.objective.stateValue != null ? widget.objective.stateValue : 0,
       progressColor: SoulPotTheme.SPPaleGreen,
       backgroundColor: Colors.grey,
       semanticsLabel: "Label",
       semanticsValue: "Value",
     );
+  }
+
+  displayObjectiveType() {
+    var star_counter = 0;
+
+    if (widget.objective.type == "easy") {
+      return Icon(Icons.star_border_outlined);
+    } else if (widget.objective.type == "advanced") {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.star_border_outlined),
+          Icon(Icons.star_border_outlined),
+        ],
+      );
+    } else if (widget.objective.type == "hard") {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Icons.star_border_outlined),
+          Icon(Icons.star_border_outlined),
+          Icon(Icons.star_border_outlined)
+        ],
+      );
+    }
   }
 
   onChanged() {}

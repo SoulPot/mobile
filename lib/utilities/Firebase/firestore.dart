@@ -28,7 +28,7 @@ class FirestoreManager {
           fontColor = SoulPotTheme.SPBlack;
         }
 
-        Objective o = Objective(element.id, element["nom"], element["description"], backgroundColor, fontColor, element["objective_value"]);
+        Objective o = Objective(element.id, element["nom"], element["description"], backgroundColor, fontColor, element["objective_value"], element["type"]);
         objectivesStatic.add(o);
       });
     });
