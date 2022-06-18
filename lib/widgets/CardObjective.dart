@@ -1,4 +1,5 @@
 import 'dart:ffi';
+import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class CardObjective extends StatefulWidget {
 }
 
 class _CardObjectiveState extends State<CardObjective> {
+  bool displayFront = true;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,40 +28,86 @@ class _CardObjectiveState extends State<CardObjective> {
       height: 25.h,
       child: GestureDetector(
         onTap: () => {},
-        child: Card(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+        child: _buildFlipAnimation(),
+      ),
+    );
+  }
+
+  Widget __transitionBuilder(Widget widget, Animation<double> animation) {
+    final rotateAnim = Tween(begin: pi, end: 0.0).animate(animation);
+    return AnimatedBuilder(
+      animation: rotateAnim,
+      child: widget,
+      builder: (context, widget) {
+        final isUnder = (ValueKey(buildFront) != widget?.key);
+        final value = isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
+        return Transform(
+          transform: Matrix4.rotationY(value),
+          child: widget,
+          alignment: Alignment.center,
+        );
+      },
+    );
+  }
+
+  Widget _buildFlipAnimation() {
+    return GestureDetector(
+      onTap: () => setState(() => displayFront = !displayFront),
+      child: AnimatedSwitcher(
+        transitionBuilder: __transitionBuilder,
+        duration: Duration(milliseconds: 600),
+        child: displayFront ? buildFront() : buildBack(),
+      ),
+    );
+  }
+
+  Widget buildFront(){
+    return buildCard(ValueKey(true));
+  }
+
+  Widget buildBack(){
+    return buildCard(ValueKey(false));
+  }
+
+  Widget buildCard(Key key) {
+    return Card(
+      key: key,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(30),
+      ),
+
+      child: Container(
+        width: 35.w,
+        height: 20.h,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              displayFront ? Text(
+                widget.objective.label,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 14.sp,
+                    color: widget.objective.fontColor,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Greenhouse"),
+              ) : Text(
+                widget.objective.description,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    fontSize: 12.sp,
+                    color: widget.objective.fontColor,
+                    fontFamily: "Greenhouse"),
+              ),
+              widget.objective.owned == true || !displayFront
+                  ? Container(width: 0, height: 0)
+                  : displayProgressBar(),
+            ],
           ),
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 1.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Text(
-                  widget.objective.label,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 15.sp,
-                      color: widget.objective.fontColor,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Greenhouse"),
-                ),
-                widget.objective.owned == true ? Container(width: 1, height: 1) : displayProgressBar(),
-                Text(
-                  widget.objective.description,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontSize: 11.sp,
-                      color: widget.objective.fontColor,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Greenhouse"),
-                ),
-              ],
-            ),
-          ),
-          color: widget.objective.backgroundColor,
         ),
       ),
+      color: widget.objective.backgroundColor,
     );
   }
 
@@ -67,7 +116,8 @@ class _CardObjectiveState extends State<CardObjective> {
       maxSteps: 100,
       progressType: LinearProgressBar.progressTypeLinear,
       // Use Linear progress
-      currentStep: widget.objective.stateValue != null ? widget.objective.stateValue : 1,
+      currentStep:
+          widget.objective.stateValue != null ? widget.objective.stateValue : 0,
       progressColor: SoulPotTheme.SPPaleGreen,
       backgroundColor: Colors.grey,
       semanticsLabel: "Label",
