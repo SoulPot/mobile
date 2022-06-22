@@ -4,13 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sizer/sizer.dart';
-import 'package:soulpot/models/MockedData.dart';
 import 'package:soulpot/models/Objective.dart';
-import 'package:soulpot/theme.dart';
-import 'package:soulpot/widgets/CardObjective.dart';
-import 'package:soulpot/utilities/Firebase/firestore.dart';
+import 'package:soulpot/objectives_viewer/widgets/objective_card.dart';
 
 class ObjectivesView extends StatefulWidget {
   const ObjectivesView(List<Objective> objectives, {Key? key})
@@ -123,9 +119,9 @@ class _ObjectivesViewState extends State<ObjectivesView> {
 
     for (int i = 0; i < data.length; i += 2) {
       var card, cardBis;
-      card = CardObjective(data[i]);
+      card = ObjectiveCard(data[i]);
       if (i + 1 < data.length) {
-        cardBis = CardObjective(data[i + 1]);
+        cardBis = ObjectiveCard(data[i + 1]);
       } else {
         //Yen a pas
         cardBis = Container();
@@ -146,9 +142,9 @@ class _ObjectivesViewState extends State<ObjectivesView> {
 
     for (int i = 0; i < data.length; i += 2) {
       var card, cardBis;
-      card = CardObjective(data[i]);
+      card = ObjectiveCard(data[i]);
       if (i + 1 < data.length) {
-        cardBis = CardObjective(data[i+1]);
+        cardBis = ObjectiveCard(data[i+1]);
       } else {
         //Yen a pas
         cardBis = Container();

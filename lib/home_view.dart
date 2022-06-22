@@ -1,14 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:soulpot/utilities/Firebase/firestore.dart';
-import 'package:soulpot/views/analyzers_views/analyzers_view.dart';
-import 'package:soulpot/views/recommendations_views/recommendations_view.dart';
-import 'package:soulpot/views/objectives_views/objectives_view.dart';
-import '../models/Analyzer.dart';
+import 'package:soulpot/plants_viewer/views/plants_view.dart';
 import '../models/Objective.dart';
 import '../models/Plant.dart';
-import '../theme.dart';
-import 'plants_views/plants_view.dart';
+import 'analyzers_viewer/views/analyzers_view.dart';
+import 'codex_viewer/views/codex_view.dart';
+import 'global/utilities/theme.dart';
+import 'objectives_viewer/views/objectives_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView(List<Plant> codex, List<Objective> objectives,{Key? key})

@@ -6,19 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/models/Objective.dart';
-import 'package:soulpot/theme.dart';
 
-class CardObjective extends StatefulWidget {
-  const CardObjective(Objective objective, {Key? key})
+import '../../global/utilities/theme.dart';
+
+class ObjectiveCard extends StatefulWidget {
+  const ObjectiveCard(Objective objective, {Key? key})
       : this.objective = objective,
         super(key: key);
   final Objective objective;
 
   @override
-  State<CardObjective> createState() => _CardObjectiveState();
+  State<ObjectiveCard> createState() => _ObjectiveCardState();
 }
 
-class _CardObjectiveState extends State<CardObjective> {
+class _ObjectiveCardState extends State<ObjectiveCard> {
   bool displayFront = true;
 
   @override

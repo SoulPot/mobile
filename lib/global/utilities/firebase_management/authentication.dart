@@ -11,11 +11,9 @@ import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 import 'package:soulpot/home_view.dart';
 
-import '../../models/Analyzer.dart';
-import '../../models/Objective.dart';
-import '../../models/Plant.dart';
-import '../../widgets/single/custom_snackbar.dart';
-import '../error_thrower.dart';
+import '../../../models/Objective.dart';
+import '../../../models/Plant.dart';
+import '../custom_snackbar.dart';
 import '../error_thrower.dart';
 
 
