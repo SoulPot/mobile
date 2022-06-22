@@ -51,7 +51,7 @@ class _PlantViewerState extends State<PlantViewer> {
                     child: Text(
                       "Batterie",
                       style: TextStyle(
-                        fontSize: 12.sp,
+                        fontSize: 11.sp,
                         fontWeight: FontWeight.bold,
                         fontFamily: "Greenhouse",
                       ),
@@ -62,7 +62,7 @@ class _PlantViewerState extends State<PlantViewer> {
                     batteryLevel: widget.analyzer.battery!,
                     style: BatteryIndicatorStyle.skeumorphism,
                     showPercentNum: true,
-                    size: 6.w,
+                    size: 5.w,
                     colorful: true,
                   ),
                 ],
