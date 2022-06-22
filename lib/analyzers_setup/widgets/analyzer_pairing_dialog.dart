@@ -308,6 +308,10 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
     List<String> tmpSSIDs = [];
     if (Platform.isAndroid) {
       tmpSSIDs = await WifiManager.scanForWifi(context);
+      if (tmpSSIDs.isEmpty) {
+        if(!mounted) return;
+        snackBarCreator(context, "Une erreur est survenue !", SoulPotTheme.spPaleRed);
+      }
     }
     setState(() {
       ssids = tmpSSIDs.toSet().toList();

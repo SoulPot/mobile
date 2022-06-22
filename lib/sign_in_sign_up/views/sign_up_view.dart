@@ -145,7 +145,21 @@ class _SignUpViewState extends State<SignUpView> {
                     child: ElevatedButton(
                       onPressed: () async {
                         if (FieldsManager.checkSignupFields(context, _emailController.text, _pwdController.text, _confirmPwdController.text)) {
-                          AuthenticationManager.signUp(context, _emailController.text.trim(), _pwdController.text.trim());
+                          bool registered = await AuthenticationManager.signUp(context, _emailController.text.trim(), _pwdController.text.trim());
+                          if (registered) {
+                            if (!mounted) return;
+                            Navigator.pushReplacement(
+                              context,
+                              PageTransition(
+                                  alignment: Alignment.bottomCenter,
+                                  curve: Curves.easeInOut,
+                                  duration: const Duration(milliseconds: 600),
+                                  reverseDuration: const Duration(milliseconds: 600),
+                                  type: PageTransitionType.fade,
+                                  child: const SignInView(),
+                                  childCurrent: context.widget),
+                            );
+                          }
                         }
                       },
                       style: ElevatedButton.styleFrom(

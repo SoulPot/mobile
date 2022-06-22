@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:soulpot/global/utilities/theme.dart';
-import 'package:soulpot/global/utilities/custom_snackbar.dart';
 import 'package:wifi_scan/wifi_scan.dart';
 
 class WifiManager {
@@ -14,7 +12,7 @@ class WifiManager {
     final result =
         await WiFiScan.instance.getScannedResults();
     if (result.hasError) {
-      snackBarCreator(context, result.error.toString(), SoulPotTheme.spPaleRed);
+      return [];
     } else {
       final accessPoints = result.value;
       for (var element in accessPoints!) {

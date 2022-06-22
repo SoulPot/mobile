@@ -5,6 +5,10 @@ import 'package:soulpot/sign_in_sign_up/views/sign_up_view.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../global/utilities/firebase_management/authentication.dart';
+import '../../global/utilities/firebase_management/firestore.dart';
+import '../../home_view.dart';
+import '../../models/objective.dart';
+import '../../models/plant.dart';
 
 class EmailPwdSignIn extends StatefulWidget {
   const EmailPwdSignIn({Key? key}) : super(key: key);
@@ -68,16 +72,34 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
           Padding(
             padding: EdgeInsets.only(top: 2.h),
             child: ElevatedButton(
-              onPressed: () {
-                AuthenticationManager.signInWithPwd(
+              onPressed: () async {
+                bool connected = await AuthenticationManager.signInWithPwd(
                     context, _emailController.text, _passwordController.text);
+                if (connected) {
+                  List<Plant> codex = await FirestoreManager.getCodex();
+                  List<Objective> objectives =
+                      await FirestoreManager.getStaticObjectives();
+                  if (!mounted) return;
+                  Navigator.pushReplacement(
+                    context,
+                    PageTransition(
+                        alignment: Alignment.bottomCenter,
+                        curve: Curves.easeInOut,
+                        duration: const Duration(milliseconds: 600),
+                        reverseDuration: const Duration(milliseconds: 600),
+                        type: PageTransitionType.fade,
+                        child: HomeView(codex: codex, objectives: objectives),
+                        childCurrent: context.widget),
+                  );
+                }
               },
               style: ElevatedButton.styleFrom(
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30.0),
                 ),
                 primary: SoulPotTheme.spGreen,
-                padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.5.h),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.5.h),
                 textStyle: TextStyle(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.bold,

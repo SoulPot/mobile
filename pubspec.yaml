@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   intl: ^0.17.0
-  google_sign_in: ^4.5.1
+  google_sign_in: ^5.3.3
   auth_buttons: ^2.0.4
   cupertino_icons: ^1.0.2
   firebase_core: ^1.15.0
