@@ -49,7 +49,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
           Row(
             children: [
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(2.w, 0, 1.w, 2.h),
                   child: Column(
@@ -78,7 +78,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 2.w),
+                        padding: EdgeInsets.only(left: 2.w, top: 1.h),
                         child: Row(
                           children: [
                             const Icon(
@@ -103,7 +103,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
               Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 3.h),
+                  padding: EdgeInsets.only(bottom: 3.h, right: 6.w),
                   child: CachedNetworkImage(
                     imageUrl: widget.analyzer.imageURL!,
                     height: 10.h,

@@ -120,9 +120,14 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
                           fontFamily: "Greenhouse"),
                     ),
               widget.objective.owned == true || !displayFront
-                  ? const SizedBox(
-                      width: 0,
-                      height: 0,
+                  ? Text(
+                     "Obtenu le ${widget.objective.ownedDate}",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          color: widget.objective.fontColor,
+                          fontFamily: "Greenhouse",
+                          fontWeight: FontWeight.w500),
                     )
                   : Text(
                       widget.objective.stateValue! == 0

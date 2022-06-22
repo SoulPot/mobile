@@ -1,9 +1,12 @@
 import 'dart:ui';
 
 class Objective{
-  Objective(this.id, this.label, this.description, this.backgroundColor, this.fontColor, this.objectiveValue, this.type, {int? pStateValue, this.owned}) {
+  Objective(this.id, this.label, this.description, this.backgroundColor, this.fontColor, this.objectiveValue, this.type, {int? pStateValue, String? ownedDate, this.owned}) {
     stateValue = pStateValue ?? 0;
     owned = owned ?? false;
+    if (owned == true) {
+      ownedDate = ownedDate;
+    }
   }
 
   final String id;
@@ -13,6 +16,7 @@ class Objective{
   final Color fontColor;
   final int objectiveValue;
   final String type;
+  String? ownedDate;
   int? stateValue;
   bool? owned;
 }

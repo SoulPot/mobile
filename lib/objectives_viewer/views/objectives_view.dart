@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/models/objective.dart';
 import 'package:soulpot/objectives_viewer/widgets/objective_card.dart';
@@ -56,6 +57,8 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                         widget.objectives[i].owned =
                             userObjectiveData[element]["owned"];
                         if (widget.objectives[i].owned!) {
+                          widget.objectives[i].ownedDate = timestampToFormattedDateString(userObjectiveData[element]
+                              ["ownedDate"] as Timestamp);
                           widget.objectives[i].stateValue = userObjectiveData[
                           element]["status"];
                           ownedObjectives.add(widget.objectives[i]);
@@ -107,5 +110,11 @@ class _ObjectivesViewState extends State<ObjectivesView> {
         ),
       ),
     );
+  }
+
+  String timestampToFormattedDateString(Timestamp timestamp) {
+    DateTime date = timestamp.toDate();
+    String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+    return formattedDate;
   }
 }
