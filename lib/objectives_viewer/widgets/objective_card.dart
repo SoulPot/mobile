@@ -74,10 +74,28 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      color: widget.objective.backgroundColor,
-      child: SizedBox(
+      child: Container(
         width: 35.w,
-        height: 20.h,
+        height: 15.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          gradient: LinearGradient(
+            colors: [
+              Colors.grey.shade300,
+              Colors.grey.shade300,
+              widget.objective.backgroundColor,
+              widget.objective.backgroundColor,
+            ],
+            stops: [
+              0.0,
+              (100 - widget.objective.stateValue!) / 100,
+              (100 - widget.objective.stateValue!) / 100,
+              1.0
+            ],
+            end: Alignment.bottomCenter,
+            begin: Alignment.topCenter,
+          ),
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
           child: Column(
@@ -101,29 +119,27 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
                           color: widget.objective.fontColor,
                           fontFamily: "Greenhouse"),
                     ),
-              widget.objective.owned == false || !displayFront
+              widget.objective.owned == true || !displayFront
                   ? const SizedBox(
                       width: 0,
                       height: 0,
                     )
-                  : displayProgressBar(),
+                  : Text(
+                      widget.objective.stateValue! == 0
+                          ? "Non commencé"
+                          : "Complété à ${widget.objective.stateValue}%",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          color: widget.objective.fontColor,
+                          fontFamily: "Greenhouse",
+                          fontWeight: FontWeight.w500),
+                    ),
               !displayFront ? displayObjectiveType() : Container(),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  displayProgressBar() {
-    return LinearProgressBar(
-      maxSteps: 100,
-      progressType: LinearProgressBar.progressTypeLinear,
-      currentStep: widget.objective.stateValue ?? 0,
-      progressColor: SoulPotTheme.spGreen,
-      backgroundColor: Colors.grey,
-      semanticsLabel: "Label",
-      semanticsValue: "Value",
     );
   }
 

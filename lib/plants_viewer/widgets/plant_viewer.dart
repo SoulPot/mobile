@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:battery_indicator/battery_indicator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -70,9 +71,12 @@ class _PlantViewerState extends State<PlantViewer> {
           ],
         ),
         Center(
-          child: Image.network(
-            widget.analyzer.imageURL!,
+          child: CachedNetworkImage(
+            imageUrl: widget.analyzer.imageURL!,
             height: 34.h,
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                Center(child: CircularProgressIndicator(value: downloadProgress.progress, color: SoulPotTheme.spGreen, strokeWidth: 1.w)),
+            errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
           ),
         ),
         Padding(

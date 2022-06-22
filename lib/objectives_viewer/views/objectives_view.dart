@@ -56,6 +56,8 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                         widget.objectives[i].owned =
                             userObjectiveData[element]["owned"];
                         if (widget.objectives[i].owned!) {
+                          widget.objectives[i].stateValue = userObjectiveData[
+                          element]["status"];
                           ownedObjectives.add(widget.objectives[i]);
                         }
                         widget.objectives[i].stateValue =
@@ -71,7 +73,7 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                   return Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2.h),
+                        padding: EdgeInsets.symmetric(vertical: 1.h),
                         child: Text(
                           "Objectifs non complétés",
                           style: TextStyle(
