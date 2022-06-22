@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/global/utilities/theme.dart';
@@ -17,20 +16,20 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _pwdController = TextEditingController();
-  TextEditingController _confirmPwdController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _pwdController = TextEditingController();
+  final TextEditingController _confirmPwdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SoulPotTheme.SPBackgroundWhite,
+      backgroundColor: SoulPotTheme.spBackgroundWhite,
       body: SingleChildScrollView(
         child: GestureDetector(
           onTap: () {
-            FocusScope.of(context).requestFocus(new FocusNode());
+            FocusScope.of(context).requestFocus(FocusNode());
           },
-          child: Container(
+          child: SizedBox(
             height: 100.h,
             width: 100.w,
             child: Padding(
@@ -57,7 +56,7 @@ class _SignUpViewState extends State<SignUpView> {
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: BorderSide(
-                                color: SoulPotTheme.SPGreen, width: 1.h),
+                                color: SoulPotTheme.spGreen, width: 1.h),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           border: OutlineInputBorder(
@@ -66,7 +65,7 @@ class _SignUpViewState extends State<SignUpView> {
                           filled: true,
                           hintStyle: TextStyle(color: Colors.grey[800], fontFamily: 'Greenhouse'),
                           hintText: "Email",
-                          fillColor: SoulPotTheme.SPBackgroundWhite),
+                          fillColor: SoulPotTheme.spBackgroundWhite),
                     ),
                   ),
                   Padding(
@@ -77,8 +76,8 @@ class _SignUpViewState extends State<SignUpView> {
                       textInputAction: TextInputAction.unspecified,
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: SoulPotTheme.SPGreen, width: 2.0),
+                            borderSide: const BorderSide(
+                                color: SoulPotTheme.spGreen, width: 2.0),
                             borderRadius: BorderRadius.circular(25.0),
                           ),
                           border: OutlineInputBorder(
@@ -87,7 +86,7 @@ class _SignUpViewState extends State<SignUpView> {
                           filled: true,
                           hintStyle: TextStyle(color: Colors.grey[800]),
                           hintText: "Mot de passe",
-                          fillColor: SoulPotTheme.SPBackgroundWhite),
+                          fillColor: SoulPotTheme.spBackgroundWhite),
                     ),
                   ),
                   Padding(
@@ -98,8 +97,8 @@ class _SignUpViewState extends State<SignUpView> {
                       textInputAction: TextInputAction.unspecified,
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: SoulPotTheme.SPGreen, width: 2.0),
+                            borderSide: const BorderSide(
+                                color: SoulPotTheme.spGreen, width: 2.0),
                             borderRadius: BorderRadius.circular(25.0),
                           ),
                           border: OutlineInputBorder(
@@ -108,7 +107,7 @@ class _SignUpViewState extends State<SignUpView> {
                           filled: true,
                           hintStyle: TextStyle(color: Colors.grey[800]),
                           hintText: "Validation mot de passe",
-                          fillColor: SoulPotTheme.SPBackgroundWhite),
+                          fillColor: SoulPotTheme.spBackgroundWhite),
                     ),
                   ),
                   Padding(
@@ -119,23 +118,23 @@ class _SignUpViewState extends State<SignUpView> {
                         Text("Vous possédez déjà un compte ? ", style: TextStyle(fontFamily: 'Greenhouse', fontSize: 12.sp),),
                         TextButton(
                           style:
-                          TextButton.styleFrom(primary: SoulPotTheme.SPBlack),
+                          TextButton.styleFrom(primary: SoulPotTheme.spBlack),
                           onPressed: () {
                             Navigator.pop(
                               context,
                               PageTransition(
                                   alignment: Alignment.bottomCenter,
                                   curve: Curves.easeInOut,
-                                  duration: Duration(milliseconds: 300),
-                                  reverseDuration: Duration(milliseconds: 300),
+                                  duration: const Duration(milliseconds: 300),
+                                  reverseDuration: const Duration(milliseconds: 300),
                                   type: PageTransitionType.leftToRight,
-                                  child: SignInView(),
+                                  child: const SignInView(),
                                   childCurrent: context.widget),
                             );
                           },
                           child: Text(
                             "Se connecter",
-                            style: TextStyle(color: SoulPotTheme.SPGreen, fontFamily: 'Greenhouse', fontSize: 12.sp),
+                            style: TextStyle(color: SoulPotTheme.spGreen, fontFamily: 'Greenhouse', fontSize: 12.sp),
                           ),
                         )
                       ],
@@ -149,21 +148,21 @@ class _SignUpViewState extends State<SignUpView> {
                           AuthenticationManager.signUp(context, _emailController.text.trim(), _pwdController.text.trim());
                         }
                       },
-                      child: Text(
-                        "S'inscrire",
-                        style: TextStyle(color: Colors.white),
-                      ),
                       style: ElevatedButton.styleFrom(
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          primary: SoulPotTheme.SPGreen,
+                          primary: SoulPotTheme.spGreen,
                           padding: EdgeInsets.symmetric(
                               horizontal: 10.w, vertical: 2.h),
                           textStyle: TextStyle(
                             fontSize: 12.sp,
                             fontWeight: FontWeight.bold,
                           )),
+                      child: const Text(
+                        "S'inscrire",
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ],

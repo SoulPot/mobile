@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:soulpot/models/Analyzer.dart';
-import 'package:soulpot/models/Objective.dart';
-import 'package:soulpot/models/Recommendations.dart';
-import 'package:soulpot/theme.dart';
+
+import 'analyzer.dart';
+import 'objective.dart';
+import 'recommendations.dart';
+
+import '../global/utilities/theme.dart';
 
 class MockedData {
   static Analyzer analyzer1 = Analyzer(
@@ -48,16 +50,16 @@ class MockedData {
 
   static List<Objective> objectives = [
     Objective( "1",
-        "Analyzer Neophyte ", "Avoir 2 Analyzers en fonction", SoulPotTheme.SPRedPale,
-        SoulPotTheme.SPBlack, 2, "easy"),
+        "Analyzer Neophyte ", "Avoir 2 Analyzers en fonction", SoulPotTheme.spRedPale,
+        SoulPotTheme.spBlack, 2, "easy"),
     Objective( "2",
-        "Analyzer Pro", "Posséder 5 Analyzers", SoulPotTheme.SPRed,
-        SoulPotTheme.SPBlack, 5, "hard"),
+        "Analyzer Pro", "Posséder 5 Analyzers", SoulPotTheme.spRed,
+        SoulPotTheme.spBlack, 5, "hard"),
     Objective( "3",
-        "Analyzer Neophyte ", "descritpzssdvgfwdfb", SoulPotTheme.SPRedPale,
-        SoulPotTheme.SPBlack, 5, "advanced"),
+        "Analyzer Neophyte ", "descritpzssdvgfwdfb", SoulPotTheme.spRedPale,
+        SoulPotTheme.spBlack, 5, "advanced"),
     Objective( "4",
-        "Analyzer Débutant", "Posséder un Analyzer", SoulPotTheme.SPGreen,
+        "Analyzer Débutant", "Posséder un Analyzer", SoulPotTheme.spGreen,
         Colors.white70, 1, "easy"),
   ];
 }

@@ -9,7 +9,7 @@ void snackBarCreator(BuildContext context, String text, Color color) {
       text,
       textAlign: TextAlign.center,
       style: TextStyle(
-        color: SoulPotTheme.SPBlack,
+        color: SoulPotTheme.spBlack,
         fontFamily: 'Greenhouse',
         fontWeight: FontWeight.bold,
         fontSize: 12.sp,
@@ -30,7 +30,7 @@ class CustomSnackBar {
         action: snackBarAction,
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 3.h),
         backgroundColor: backgroundColor,
-        duration: Duration(seconds: 5),
+        duration: const Duration(seconds: 5),
         content: content,
         behavior: SnackBarBehavior.floating);
 

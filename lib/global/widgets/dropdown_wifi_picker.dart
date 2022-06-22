@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:sizer/sizer.dart';
@@ -8,11 +7,12 @@ class DropdownWidget extends StatefulWidget {
   final ValueChanged<String> itemCallBack;
   final String currentItem;
 
-  DropdownWidget({
+  const DropdownWidget({
+    Key? key,
     required this.items,
     required this.itemCallBack,
     required this.currentItem,
-  });
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _DropdownState(currentItem);
@@ -43,9 +43,9 @@ class _DropdownState extends State<DropdownWidget> {
 
   @override
   void didUpdateWidget(DropdownWidget oldWidget) {
-    if (this.currentItem != widget.currentItem) {
+    if (currentItem != widget.currentItem) {
       setState(() {
-        this.currentItem = widget.currentItem;
+        currentItem = widget.currentItem;
       });
     }
     super.didUpdateWidget(oldWidget);
@@ -63,7 +63,7 @@ class _DropdownState extends State<DropdownWidget> {
             margin: EdgeInsets.symmetric(horizontal: 4.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: SoulPotTheme.SPPalePurple,
+              color: SoulPotTheme.spPalePurple,
             ),
             child: DropdownButtonHideUnderline(
               child: DropdownButton(

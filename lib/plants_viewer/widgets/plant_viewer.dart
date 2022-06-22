@@ -1,21 +1,17 @@
 import 'dart:math';
 
 import 'package:battery_indicator/battery_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../models/Analyzer.dart';
-import '../../models/Plant.dart';
+import '../../models/analyzer.dart';
 import '../../global/utilities/theme.dart';
 import 'plant_infos_card.dart';
 
 class PlantViewer extends StatefulWidget {
-  const PlantViewer(Analyzer analyzer, {Key? key})
-      : this._analyzer = analyzer,
-        super(key: key);
+  const PlantViewer({Key? key, required this.analyzer}) : super(key: key);
 
-  final Analyzer _analyzer;
+  final Analyzer analyzer;
 
   @override
   State<PlantViewer> createState() => _PlantViewerState();
@@ -28,13 +24,13 @@ class _PlantViewerState extends State<PlantViewer> {
       children: [
         Row(
           children: [
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 0.5.w),
-              child: Container(
+              child: SizedBox(
                 width: 75.w,
                 child: Text(
-                  widget._analyzer.name,
+                  widget.analyzer.name,
                   style: TextStyle(
                     fontSize: 16.sp,
                     fontWeight: FontWeight.bold,
@@ -44,7 +40,7 @@ class _PlantViewerState extends State<PlantViewer> {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: EdgeInsets.only(top: 1.h, right: 2.w),
               child: Column(
@@ -62,7 +58,7 @@ class _PlantViewerState extends State<PlantViewer> {
                   ),
                   BatteryIndicator(
                     batteryFromPhone: false,
-                    batteryLevel: widget._analyzer.battery!,
+                    batteryLevel: widget.analyzer.battery!,
                     style: BatteryIndicatorStyle.skeumorphism,
                     showPercentNum: true,
                     size: 6.w,
@@ -75,7 +71,7 @@ class _PlantViewerState extends State<PlantViewer> {
         ),
         Center(
           child: Image.network(
-            widget._analyzer.imageURL!,
+            widget.analyzer.imageURL!,
             height: 34.h,
           ),
         ),
@@ -83,22 +79,22 @@ class _PlantViewerState extends State<PlantViewer> {
           padding: EdgeInsets.symmetric(vertical: 2.h),
           child: Row(
             children: [
-              Spacer(),
-              widget._analyzer.needSprinkle
+              const Spacer(),
+              widget.analyzer.needSprinkle
                   ? ElevatedButton(
                       onPressed: water,
                       style: ElevatedButton.styleFrom(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
                         ),
-                        primary: SoulPotTheme.SPPaleGreen,
+                        primary: SoulPotTheme.spPaleGreen,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(
+                          const Icon(
                             SoulPotTheme.water,
-                            color: SoulPotTheme.SPBT,
+                            color: SoulPotTheme.spBT,
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(
@@ -107,22 +103,22 @@ class _PlantViewerState extends State<PlantViewer> {
                               "M'arroser",
                               style: TextStyle(
                                 fontSize: 12.sp,
-                                color: SoulPotTheme.SPPurple,
+                                color: SoulPotTheme.spPurple,
                               ),
                             ),
                           ),
                         ],
                       ),
                     )
-                  : Container(
+                  : SizedBox(
                       width: 0.w,
                       height: 5.36.h,
                     ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),
-        Divider(
+        const Divider(
           thickness: 2,
           color: Colors.grey,
         ),
@@ -130,34 +126,34 @@ class _PlantViewerState extends State<PlantViewer> {
           children: [
             CardInfoPlant(
               label: "Luminosité",
-              value: "${widget._analyzer.luminosity!} lux",
-              backgroundColor: getLuminosityColor(widget._analyzer),
+              value: "${widget.analyzer.luminosity!} lux",
+              backgroundColor: getLuminosityColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
-              widget._analyzer.recommendations!.recommendedLuminosity,
+                  widget.analyzer.recommendations!.recommendedLuminosity,
             ),
             CardInfoPlant(
               label: "Température",
-              value: "${widget._analyzer.temperature!}°C",
-              backgroundColor: getTemperatureColor(widget._analyzer),
+              value: "${widget.analyzer.temperature!}°C",
+              backgroundColor: getTemperatureColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
-                  widget._analyzer.recommendations!.recommendedTemperature,
+                  widget.analyzer.recommendations!.recommendedTemperature,
             ),
           ],
         ),
         Row(
           children: [
-            Spacer(),
+            const Spacer(),
             CardInfoPlant(
               label: "Humidité",
-              value: "${widget._analyzer.humidity!}%",
-              backgroundColor: getHumidityColor(widget._analyzer),
+              value: "${widget.analyzer.humidity!}%",
+              backgroundColor: getHumidityColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
-                  widget._analyzer.recommendations!.recommendedHumidity,
+                  widget.analyzer.recommendations!.recommendedHumidity,
             ),
-            Spacer(),
+            const Spacer(),
           ],
         )
       ],
@@ -165,11 +161,7 @@ class _PlantViewerState extends State<PlantViewer> {
   }
 
   void water() {
-    print("J'arrose ma plonte");
-  }
-
-  void parameters() {
-    print("Vers les paramètres");
+    //TODO PUSH TO MQTT
   }
 
   Color getTemperatureColor(Analyzer analyzer) {
@@ -184,7 +176,7 @@ class _PlantViewerState extends State<PlantViewer> {
         return SoulPotTheme.temperatureColors["Good"]!;
       }
     } else {
-      return SoulPotTheme.SPBackgroundWhite;
+      return SoulPotTheme.spBackgroundWhite;
     }
   }
 
@@ -200,7 +192,7 @@ class _PlantViewerState extends State<PlantViewer> {
         return SoulPotTheme.luminosityColors["Good"]!;
       }
     } else {
-      return SoulPotTheme.SPBackgroundWhite;
+      return SoulPotTheme.spBackgroundWhite;
     }
   }
 
@@ -216,7 +208,7 @@ class _PlantViewerState extends State<PlantViewer> {
         return SoulPotTheme.humidityColors["Good"]!;
       }
     } else {
-      return SoulPotTheme.SPBackgroundWhite;
+      return SoulPotTheme.spBackgroundWhite;
     }
   }
 }

@@ -1,5 +1,5 @@
 import 'package:auth_buttons/auth_buttons.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../../global/utilities/firebase_management/authentication.dart';
 
@@ -10,7 +10,6 @@ class GoogleSignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
 
     bool isLoading = false;
-    bool darkMode = false;
 
     AuthButtonType? buttonType;
     AuthIconType? iconType;
@@ -20,7 +19,7 @@ class GoogleSignInButton extends StatelessWidget {
         AuthenticationManager.signInWithGoogle(context);
       },
       text: "Se connecter avec Google  ",
-      darkMode: darkMode,
+      darkMode: true,
       isLoading: isLoading,
       style: AuthButtonStyle(
         buttonType: buttonType,

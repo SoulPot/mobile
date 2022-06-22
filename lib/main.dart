@@ -14,11 +14,13 @@ void main() async {
   await Firebase.initializeApp();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((_) {
-    runApp(SoulPotApp());
+    runApp(const SoulPotApp());
   });
 }
 
 class SoulPotApp extends StatelessWidget {
+  const SoulPotApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Sizer(
@@ -30,7 +32,7 @@ class SoulPotApp extends StatelessWidget {
             future: AuthenticationManager.initializeApp(context),
             builder: (BuildContext context, AsyncSnapshot<Widget> widget) {
               if (!widget.hasData) {
-                return Center(
+                return const Center(
                   child: CircularProgressIndicator(),
                 );
               }

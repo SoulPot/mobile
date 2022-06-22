@@ -1,18 +1,15 @@
-import 'dart:ffi';
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:linear_progress_bar/linear_progress_bar.dart';
 import 'package:sizer/sizer.dart';
-import 'package:soulpot/models/Objective.dart';
+import 'package:soulpot/models/objective.dart';
 
 import '../../global/utilities/theme.dart';
 
 class ObjectiveCard extends StatefulWidget {
-  const ObjectiveCard(Objective objective, {Key? key})
-      : this.objective = objective,
-        super(key: key);
+  const ObjectiveCard({Key? key, required this.objective}) : super(key: key);
+
   final Objective objective;
 
   @override
@@ -24,7 +21,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 45.w,
       height: 25.h,
       child: GestureDetector(
@@ -42,11 +39,11 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       builder: (context, widget) {
         final isUnder = (ValueKey(buildFront) != widget?.key);
         final value =
-        isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
+            isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
         return Transform(
           transform: Matrix4.rotationY(value),
-          child: widget,
           alignment: Alignment.center,
+          child: widget,
         );
       },
     );
@@ -57,18 +54,18 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       onTap: () => setState(() => displayFront = !displayFront),
       child: AnimatedSwitcher(
         transitionBuilder: __transitionBuilder,
-        duration: Duration(milliseconds: 600),
+        duration: const Duration(milliseconds: 600),
         child: displayFront ? buildFront() : buildBack(),
       ),
     );
   }
 
   Widget buildFront() {
-    return buildCard(ValueKey(true));
+    return buildCard(const ValueKey(true));
   }
 
   Widget buildBack() {
-    return buildCard(ValueKey(false));
+    return buildCard(const ValueKey(false));
   }
 
   Widget buildCard(Key key) {
@@ -77,7 +74,8 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Container(
+      color: widget.objective.backgroundColor,
+      child: SizedBox(
         width: 35.w,
         height: 20.h,
         child: Padding(
@@ -87,33 +85,33 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
             children: [
               displayFront
                   ? Text(
-                widget.objective.label,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 14.sp,
-                    color: widget.objective.fontColor,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Greenhouse"),
-              )
+                      widget.objective.label,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 14.sp,
+                          color: widget.objective.fontColor,
+                          fontWeight: FontWeight.bold,
+                          fontFamily: "Greenhouse"),
+                    )
                   : Text(
-                widget.objective.description,
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 12.sp,
-                    color: widget.objective.fontColor,
-                    fontFamily: "Greenhouse"),
-              ),
+                      widget.objective.description,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          color: widget.objective.fontColor,
+                          fontFamily: "Greenhouse"),
+                    ),
               widget.objective.owned == false || !displayFront
-                  ? Container(
-                width: 0,
-                height: 0,
-              ) : displayProgressBar(),
+                  ? const SizedBox(
+                      width: 0,
+                      height: 0,
+                    )
+                  : displayProgressBar(),
               !displayFront ? displayObjectiveType() : Container(),
             ],
           ),
         ),
       ),
-      color: widget.objective.backgroundColor,
     );
   }
 
@@ -123,8 +121,8 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       progressType: LinearProgressBar.progressTypeLinear,
       // Use Linear progress
       currentStep:
-      widget.objective.stateValue != null ? widget.objective.stateValue : 0,
-      progressColor: SoulPotTheme.SPPaleGreen,
+          widget.objective.stateValue ?? 0,
+      progressColor: SoulPotTheme.spPaleGreen,
       backgroundColor: Colors.grey,
       semanticsLabel: "Label",
       semanticsValue: "Value",
@@ -132,14 +130,13 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
   }
 
   displayObjectiveType() {
-    var star_counter = 0;
 
     if (widget.objective.type == "easy") {
-      return Icon(Icons.star_border_outlined);
+      return const Icon(Icons.star_border_outlined);
     } else if (widget.objective.type == "advanced") {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Icon(Icons.star_border_outlined),
           Icon(Icons.star_border_outlined),
         ],
@@ -147,7 +144,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
     } else if (widget.objective.type == "hard") {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
+        children: const [
           Icon(Icons.star_border_outlined),
           Icon(Icons.star_border_outlined),
           Icon(Icons.star_border_outlined)

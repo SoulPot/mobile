@@ -5,30 +5,28 @@ import 'package:soulpot/analyzers_setup/views/analyzer_count_picker_view.dart';
 import 'package:soulpot/global/utilities/custom_snackbar.dart';
 import 'package:soulpot/analyzers_setup/widgets/analyzer_rename_dialog.dart';
 import 'package:sizer/sizer.dart';
-import '../../models/Analyzer.dart';
+import '../../models/analyzer.dart';
 import '../widgets/analyzer_pairing_dialog.dart';
 
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 
 class AnalyzerSetupView extends StatefulWidget {
-  const AnalyzerSetupView({Key? key, required List<Analyzer> analyzers})
-      : _analyzers = analyzers,
-        super(key: key);
+  const AnalyzerSetupView({Key? key, required this.analyzers})
+      : super(key: key);
 
-  final List<Analyzer> _analyzers;
+  final List<Analyzer> analyzers;
 
   @override
-  State<AnalyzerSetupView> createState() =>
-      _AnalyzerSetupViewState();
+  State<AnalyzerSetupView> createState() => _AnalyzerSetupViewState();
 }
 
 class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SoulPotTheme.SPBackgroundWhite,
+      backgroundColor: SoulPotTheme.spBackgroundWhite,
       body: SingleChildScrollView(
-        child: Container(
+        child: SizedBox(
           height: 100.h,
           width: 100.w,
           child: SafeArea(
@@ -38,15 +36,16 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                   crossAxisCount: 2,
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
-                  children: List.generate(widget._analyzers.length, (index) {
+                  children: List.generate(widget.analyzers.length, (index) {
                     return Center(
                       child: Container(
                         decoration: BoxDecoration(
-                          color: SoulPotTheme.SPPalePurple,
+                          color: SoulPotTheme.spPalePurple,
                           border: Border.all(
-                            color: SoulPotTheme.SPPalePurple,
+                            color: SoulPotTheme.spPalePurple,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(20)),
                         ),
                         width: 40.w,
                         height: 20.h,
@@ -55,17 +54,17 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                             Padding(
                               padding: EdgeInsets.only(top: 2.h),
                               child: Text(
-                                '${widget._analyzers[index].name}',
+                                widget.analyzers[index].name,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                  color: SoulPotTheme.SPBlack,
+                                  color: SoulPotTheme.spBlack,
                                   fontSize: 15.sp,
                                   fontFamily: 'Greenhouse',
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                            Spacer(),
+                            const Spacer(),
                             Column(
                               children: [
                                 ElevatedButton(
@@ -75,28 +74,27 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                                         builder: (BuildContext context) =>
                                             RenameDialog(
                                               analyzer:
-                                                  widget._analyzers[index],
+                                                  widget.analyzers[index],
                                             )).then((value) => setState(() {}));
                                   },
                                   style: ElevatedButton.styleFrom(
-                                    shape: new RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(30.0),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30.0),
                                     ),
-                                    primary: SoulPotTheme.SPPaleGreen,
+                                    primary: SoulPotTheme.spPaleGreen,
                                   ),
                                   child: Text(
                                     'Renommer',
                                     style: TextStyle(
-                                      color: SoulPotTheme.SPBlack,
+                                      color: SoulPotTheme.spBlack,
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: 'Greenhouse',
                                     ),
                                   ),
                                 ),
-                                widget._analyzers[index].paired!
-                                    ? Text("Connecté")
+                                widget.analyzers[index].paired!
+                                    ? const Text("Connecté")
                                     : ElevatedButton(
                                         onPressed: () async {
                                           await showDialog(
@@ -105,16 +103,16 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                                               builder: (BuildContext context) =>
                                                   AnalyzerPairingDialog(
                                                     analyzer: widget
-                                                        ._analyzers[index],
+                                                        .analyzers[index],
                                                   )).then(
                                               (value) => setState(() {}));
                                         },
                                         style: ElevatedButton.styleFrom(
-                                          shape: new RoundedRectangleBorder(
+                                          shape: RoundedRectangleBorder(
                                             borderRadius:
-                                                new BorderRadius.circular(30.0),
+                                                BorderRadius.circular(30.0),
                                           ),
-                                          primary: SoulPotTheme.SPBT,
+                                          primary: SoulPotTheme.spBT,
                                         ),
                                         child: Text(
                                           'Paramètrer',
@@ -128,33 +126,33 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                                       ),
                               ],
                             ),
-                            Spacer(),
+                            const Spacer(),
                           ],
                         ),
                       ),
                     );
                   }),
                 ),
-                Spacer(),
+                const Spacer(),
                 Padding(
                   padding: const EdgeInsets.only(bottom: 20),
                   child: Row(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       ElevatedButton(
                         onPressed: () async {
                           await Navigator.of(context).push(
                             PageTransition(
                               type: PageTransitionType.fade,
-                              child: AnalyzerCountPickerView(),
+                              child: const AnalyzerCountPickerView(),
                             ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          primary: SoulPotTheme.SPPaleRed,
+                          primary: SoulPotTheme.spPaleRed,
                           padding: EdgeInsets.symmetric(
                               horizontal: 5.h, vertical: 2.h),
                         ),
@@ -162,39 +160,39 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                           "Précédent",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: SoulPotTheme.SPBlack,
+                              color: SoulPotTheme.spBlack,
                               fontSize: 13.sp,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       ElevatedButton(
                         onPressed: () async {
                           bool allArePaired = true;
-                          widget._analyzers.forEach((analyzer) {
+                          for (var analyzer in widget.analyzers) {
                             if (!analyzer.paired! || analyzer.paired == null) {
                               allArePaired = false;
                             }
-                          });
+                          }
                           if (!allArePaired) {
                             snackBarCreator(
                                 context,
                                 "Tous les analyzers n'ont pas été configurés",
-                                SoulPotTheme.SPPaleRed);
+                                SoulPotTheme.spPaleRed);
                           } else {
                             await Navigator.of(context).push(
                               PageTransition(
                                 type: PageTransitionType.fade,
-                                child: SignInView(),
+                                child: const SignInView(),
                               ),
                             );
                           }
                         },
                         style: ElevatedButton.styleFrom(
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          primary: SoulPotTheme.SPPaleGreen,
+                          primary: SoulPotTheme.spPaleGreen,
                           padding: EdgeInsets.symmetric(
                               horizontal: 5.h, vertical: 2.h),
                         ),
@@ -202,12 +200,12 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                           "Continuer",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: SoulPotTheme.SPBlack,
+                              color: SoulPotTheme.spBlack,
                               fontSize: 13.sp,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                     ],
                   ),
                 )

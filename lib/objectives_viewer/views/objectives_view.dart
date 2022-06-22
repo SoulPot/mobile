@@ -1,17 +1,12 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:soulpot/models/Objective.dart';
+import 'package:soulpot/models/objective.dart';
 import 'package:soulpot/objectives_viewer/widgets/objective_card.dart';
 
 class ObjectivesView extends StatefulWidget {
-  const ObjectivesView(List<Objective> objectives, {Key? key})
-      : this.objectives = objectives,
-        super(key: key);
+  const ObjectivesView({Key? key, required this.objectives}) : super(key: key);
 
   final List<Objective> objectives;
 
@@ -52,13 +47,13 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                     return const Text("Loading");
                   }
                   Map<String, dynamic> userObjectiveData =
-                      Map<String, dynamic>();
+                      <String, dynamic>{};
 
                   snapshot.data!.docs
                       .map((DocumentSnapshot document) {
                         Map<String, dynamic> data =
                             document.data()! as Map<String, dynamic>;
-                        userObjectiveData["${document.id}"] = data;
+                        userObjectiveData[document.id] = data;
                       })
                       .toList()
                       .cast();
@@ -71,8 +66,7 @@ class _ObjectivesViewState extends State<ObjectivesView> {
   }
 
   Widget displayCards(Map<String, dynamic> userObjectiveData) {
-    //Concats static objectives and user's objectives satuts
-    userObjectiveData.keys.forEach((element) {
+    for (var element in userObjectiveData.keys) {
       for (int i = 0; i < widget.objectives.length; i++) {
         if (element == widget.objectives[i].id) {
           widget.objectives[i].owned = userObjectiveData[element]["owned"];
@@ -80,7 +74,7 @@ class _ObjectivesViewState extends State<ObjectivesView> {
               userObjectiveData[element]["status"];
         }
       }
-    });
+    }
 
     var ownedObjectives = [];
     var notOwnedObjectives = [];
@@ -118,10 +112,11 @@ class _ObjectivesViewState extends State<ObjectivesView> {
     var rows = <Widget>[];
 
     for (int i = 0; i < data.length; i += 2) {
-      var card, cardBis;
-      card = ObjectiveCard(data[i]);
+      Widget card;
+      Widget cardBis;
+      card = ObjectiveCard(objective: data[i]);
       if (i + 1 < data.length) {
-        cardBis = ObjectiveCard(data[i + 1]);
+        cardBis = ObjectiveCard(objective: data[i + 1]);
       } else {
         //Yen a pas
         cardBis = Container();
@@ -141,10 +136,11 @@ class _ObjectivesViewState extends State<ObjectivesView> {
     var rows = <Widget>[];
 
     for (int i = 0; i < data.length; i += 2) {
-      var card, cardBis;
-      card = ObjectiveCard(data[i]);
+      Widget card;
+      Widget cardBis;
+      card = ObjectiveCard(objective: data[i]);
       if (i + 1 < data.length) {
-        cardBis = ObjectiveCard(data[i+1]);
+        cardBis = ObjectiveCard(objective: data[i + 1]);
       } else {
         //Yen a pas
         cardBis = Container();

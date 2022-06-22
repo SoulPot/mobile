@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CodexView extends StatefulWidget {
@@ -12,7 +11,7 @@ class _CodexViewState extends State<CodexView> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
         body: Center(
             child: Text(
                 "Informations get by analyzer"

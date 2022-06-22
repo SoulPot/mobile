@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:soulpot/models/Analyzer.dart';
+import 'package:soulpot/models/analyzer.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/analyzers_setup/widgets/analyzer_count_printer.dart';
 import 'package:sizer/sizer.dart';
@@ -18,12 +18,12 @@ class AnalyzerCountPickerView extends StatefulWidget {
 
 class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
   int _currentAnalyzerCount = 0;
-  List<Analyzer> _analyzers = [];
+  final List<Analyzer> _analyzers = [];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SoulPotTheme.SPBackgroundWhite,
+      backgroundColor: SoulPotTheme.spBackgroundWhite,
       body: SingleChildScrollView(
         child: SafeArea(
           child: Padding(
@@ -37,7 +37,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 20.sp,
-                      color: SoulPotTheme.SPBlack,
+                      color: SoulPotTheme.spBlack,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Greenhouse',
                     ),
@@ -56,7 +56,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: SoulPotTheme.SPBlack,
+                      color: SoulPotTheme.spBlack,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Greenhouse',
                     ),
@@ -64,9 +64,9 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 1.w, right: 1.w, top: 1.h),
-                  child: Divider(
+                  child: const Divider(
                     thickness: 1,
-                    color: SoulPotTheme.SPBlack,
+                    color: SoulPotTheme.spBlack,
                   ),
                 ),
                 Padding(
@@ -76,7 +76,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 15.sp,
-                      color: SoulPotTheme.SPBlack,
+                      color: SoulPotTheme.spBlack,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'Greenhouse',
                     ),
@@ -86,20 +86,20 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                   padding: EdgeInsets.only(top: 3.h),
                   child: Center(
                     child: NumberStepper(
-                      numbers: [1, 2, 3, 4, 5],
+                      numbers: const [1, 2, 3, 4, 5],
                       activeStep: _currentAnalyzerCount,
-                      activeStepBorderColor: SoulPotTheme.SPGreen,
+                      activeStepBorderColor: SoulPotTheme.spGreen,
                       activeStepBorderWidth: 2,
-                      activeStepColor: SoulPotTheme.SPPalePurple,
+                      activeStepColor: SoulPotTheme.spPalePurple,
                       enableNextPreviousButtons: false,
                       enableStepTapping: true,
-                      lineColor: SoulPotTheme.SPGreen,
-                      numberStyle: TextStyle(
-                        color: SoulPotTheme.SPBlack,
+                      lineColor: SoulPotTheme.spGreen,
+                      numberStyle: const TextStyle(
+                        color: SoulPotTheme.spBlack,
                         fontWeight: FontWeight.bold,
                         fontFamily: 'Greenhouse',
                       ),
-                      stepColor: SoulPotTheme.SPLightGray,
+                      stepColor: SoulPotTheme.spLightGray,
                       onStepReached: (step) {
                         setState(() {
                           _currentAnalyzerCount = step;
@@ -108,21 +108,21 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                     ),
                   ),
                 ),
-                AnalyzerCountPrinter(AnalyzerCount: _currentAnalyzerCount + 1),
+                AnalyzerCountPrinter(analyzerCount: _currentAnalyzerCount + 1),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
                   child: ElevatedButton(
                     onPressed: () async {
                       for (int i = 0; i < _currentAnalyzerCount + 1; i++) {
-                        _analyzers.add(new Analyzer("Analyzer ${i + 1}", false));
+                        _analyzers.add(Analyzer("Analyzer ${i + 1}", false));
                       }
                       Navigator.push(
                         context,
                         PageTransition(
                             alignment: Alignment.bottomCenter,
                             curve: Curves.easeInOut,
-                            duration: Duration(milliseconds: 600),
-                            reverseDuration: Duration(milliseconds: 600),
+                            duration: const Duration(milliseconds: 600),
+                            reverseDuration: const Duration(milliseconds: 600),
                             type: PageTransitionType.fade,
                             child: AnalyzerSetupView(
                               analyzers: _analyzers,
@@ -130,23 +130,23 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                             childCurrent: context.widget),
                       );
                     },
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      primary: SoulPotTheme.spGreen,
+                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
+                      textStyle: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     child: Text(
                       _currentAnalyzerCount == 0
                           ? "Continuer la configuration de votre analyzer"
                           : "Continuer la configuration de vos ${_currentAnalyzerCount + 1} analyzers",
                       textAlign: TextAlign.center,
-                      style: TextStyle(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0),
-                      ),
-                      primary: SoulPotTheme.SPGreen,
-                      padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 3.h),
-                      textStyle: TextStyle(
-                        fontSize: 15,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: const TextStyle(color: Colors.white),
                     ),
                   ),
                 )

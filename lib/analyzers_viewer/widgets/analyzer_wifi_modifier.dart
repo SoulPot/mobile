@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
@@ -8,9 +7,7 @@ import '../../global/utilities/theme.dart';
 import '../../global/widgets/dropdown_wifi_picker.dart';
 
 class AnalyzerWifiModifier extends StatefulWidget {
-  const AnalyzerWifiModifier({Key? key, required List<String> pSsids})
-      : ssids = pSsids,
-        super(key: key);
+  const AnalyzerWifiModifier({Key? key, required this.ssids}) : super(key: key);
 
   final List<String> ssids;
 
@@ -23,9 +20,10 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
   List<String> ssids = [];
   late String selectedSSID = "";
   bool errorVisible = false;
-  TextEditingController _wifiPassController = TextEditingController();
-  TextEditingController _ssidController = TextEditingController();
+  final TextEditingController _wifiPassController = TextEditingController();
+  final TextEditingController _ssidController = TextEditingController();
 
+  @override
   initState() {
     super.initState();
     ssids = widget.ssids.toSet().toList();
@@ -37,7 +35,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Container(
+      child: SizedBox(
         height: 50.h,
         width: 90.w,
         child: Padding(
@@ -53,7 +51,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                   fontFamily: "Greenhouse",
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 3.h),
                 child: Column(
@@ -68,7 +66,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 4.w, vertical: 3.h),
-                                child: Container(
+                                child: SizedBox(
                                   height: 5.h,
                                   width: 80.w,
                                   child: TextField(
@@ -84,10 +82,10 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                       hintStyle: TextStyle(
                                           fontFamily: "Greenhouse",
                                           fontSize: 11.sp),
-                                      border: OutlineInputBorder(),
+                                      border: const OutlineInputBorder(),
                                     ),
                                     style: TextStyle(
-                                      color: SoulPotTheme.SPBlack,
+                                      color: SoulPotTheme.spBlack,
                                       fontSize: 12.sp,
                                       fontFamily: 'Greenhouse',
                                       fontWeight: FontWeight.bold,
@@ -102,7 +100,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 1.w, vertical: 1.h),
-                                child: Container(
+                                child: SizedBox(
                                   height: 5.h,
                                   width: 80.w,
                                   child: TextField(
@@ -112,7 +110,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                       });
                                     },
                                     controller: _ssidController,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       labelText: 'SSID',
                                       border: OutlineInputBorder(),
                                     ),
@@ -122,7 +120,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                               Padding(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: 1.w, vertical: 1.h),
-                                child: Container(
+                                child: SizedBox(
                                   height: 5.h,
                                   width: 80.w,
                                   child: TextField(
@@ -133,7 +131,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                     },
                                     obscureText: true,
                                     controller: _wifiPassController,
-                                    decoration: InputDecoration(
+                                    decoration: const InputDecoration(
                                       labelText: 'Mot de passe',
                                       border: OutlineInputBorder(),
                                     ),
@@ -145,13 +143,13 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                   ],
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               Column(
                 children: [
                   errorVisible
                       ? Padding(
-                        padding: EdgeInsets.only(bottom: 2.h),
-                        child: Text(
+                          padding: EdgeInsets.only(bottom: 2.h),
+                          child: Text(
                             "Veuillez remplir tous les champs",
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
@@ -160,29 +158,24 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                               color: Colors.red,
                             ),
                           ),
-                      )
-                      : Container(
+                        )
+                      : const SizedBox(
                           height: 0,
                           width: 0,
                         ),
                   Row(
                     children: [
-                      Spacer(),
+                      const Spacer(),
                       ElevatedButton(
                         onPressed: () async {
-                          this.dispose();
+                          dispose();
                           Navigator.of(context).pop();
                         },
-                        child: Text(
-                          "Annuler",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(color: SoulPotTheme.SPBlack),
-                        ),
                         style: ElevatedButton.styleFrom(
-                          shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0),
                           ),
-                          primary: SoulPotTheme.SPPaleRed,
+                          primary: SoulPotTheme.spPaleRed,
                           padding: EdgeInsets.symmetric(
                               horizontal: 7.w, vertical: 2.h),
                           textStyle: TextStyle(
@@ -190,13 +183,18 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        child: const Text(
+                          "Annuler",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(color: SoulPotTheme.spBlack),
+                        ),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 8.w),
                         child: ElevatedButton(
                           onPressed: () async {
-                            print("Selected SSID : " + selectedSSID);
-                            if ((_ssidController.text != "" || selectedSSID.isNotEmpty) &&
+                            if ((_ssidController.text != "" ||
+                                    selectedSSID.isNotEmpty) &&
                                 _wifiPassController.text != "") {
                               wifiCredentials[0] = _ssidController.text;
                               wifiCredentials[1] = _wifiPassController.text;
@@ -207,16 +205,11 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                               });
                             }
                           },
-                          child: Text(
-                            "Valider",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: SoulPotTheme.SPBlack),
-                          ),
                           style: ElevatedButton.styleFrom(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
                             ),
-                            primary: SoulPotTheme.SPPaleGreen,
+                            primary: SoulPotTheme.spPaleGreen,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 7.w, vertical: 2.h),
                             textStyle: TextStyle(
@@ -224,14 +217,19 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
+                          child: const Text(
+                            "Valider",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: SoulPotTheme.spBlack),
+                          ),
                         ),
                       ),
-                      Spacer(),
+                      const Spacer(),
                     ],
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),

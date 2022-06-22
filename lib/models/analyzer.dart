@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:soulpot/models/Recommendations.dart';
+import 'recommendations.dart';
 
 class Analyzer {
   Analyzer(this.name, this.paired,

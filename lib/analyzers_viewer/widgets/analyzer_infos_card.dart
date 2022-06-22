@@ -1,10 +1,9 @@
 import 'package:battery_indicator/battery_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/analyzers_viewer/widgets/analyzer_details_dialog.dart';
 
-import '../../models/Analyzer.dart';
+import '../../models/analyzer.dart';
 import '../../global/utilities/theme.dart';
 
 class CardInfoAnalyzer extends StatefulWidget {
@@ -17,6 +16,7 @@ class CardInfoAnalyzer extends StatefulWidget {
 }
 
 class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
+  @override
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
@@ -35,7 +35,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                     child: Center(
                       child: Row(
                         children: [
-                          Spacer(),
+                          const Spacer(),
                           Text(
                             widget.analyzer.name,
                             style: TextStyle(
@@ -50,7 +50,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                               height: 6.h,
                             ),
                           ),
-                          Spacer(),
+                          const Spacer(),
                         ],
                       ),
                     ),
@@ -82,9 +82,9 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                     padding: EdgeInsets.only(left: 2.w),
                     child: Row(
                       children: [
-                        Icon(
+                        const Icon(
                           Icons.wifi,
-                          color: SoulPotTheme.SPGreen,
+                          color: SoulPotTheme.spGreen,
                         ),
                         Padding(
                           padding: const EdgeInsets.only(left: 8.0),
@@ -106,9 +106,9 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
             child: Padding(
               padding: EdgeInsets.only(right: 1.w),
               child: IconButton(
-                icon: Icon(
+                icon: const Icon(
                   Icons.settings_rounded,
-                  color: SoulPotTheme.SPPurple,
+                  color: SoulPotTheme.spPurple,
                 ),
                 onPressed: () {
                   showDialog(

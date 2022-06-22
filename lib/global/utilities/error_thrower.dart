@@ -6,57 +6,62 @@ import 'package:soulpot/global/utilities/theme.dart';
 import 'custom_snackbar.dart';
 
 class ErrorThrower {
-
   static void firebaseErrorThrower(FirebaseException e, BuildContext context) {
-    switch (e.code) {case "ERROR_EMAIL_ALREADY_IN_USE":
-      case "account-exists-with-different-credential":
-      case "email-already-in-use":
-      {
-        snackBarCreator(context, "Email déjà utilisé", SoulPotTheme.SPPaleRed);
-        break;
-      }
+    switch (e.code) {
+      case "ERROR_EMAIL_ALREADY_IN_USE":
+        {
+          snackBarCreator(
+              context, "Email déjà utilisé", SoulPotTheme.spPaleRed);
+          break;
+        }
       case "ERROR_WRONG_PASSWORD":
-      case "wrong-password":
-      {
-        snackBarCreator(context, "Adresse email ou mot de passe incorrect", SoulPotTheme.SPPaleRed);
-        break;
-      }
+        {
+          snackBarCreator(context, "Adresse email ou mot de passe incorrect",
+              SoulPotTheme.spPaleRed);
+          break;
+        }
       case "ERROR_USER_NOT_FOUND":
-      case "user-not-found":
-      {
-        snackBarCreator(context, "Aucun utilisateur trouvé pour cette adresse email.", SoulPotTheme.SPPaleRed);
-        break;
-      }
+        {
+          snackBarCreator(
+              context,
+              "Aucun utilisateur trouvé pour cette adresse email.",
+              SoulPotTheme.spPaleRed);
+          break;
+        }
       case "ERROR_USER_DISABLED":
-      case "user-disabled":
-      {
-        snackBarCreator(context, "Utilisateur désactivé", SoulPotTheme.SPPaleRed);
-        break;
-      }
+        {
+          snackBarCreator(
+              context, "Utilisateur désactivé", SoulPotTheme.spPaleRed);
+          break;
+        }
       case "ERROR_TOO_MANY_REQUESTS":
-      case "operation-not-allowed":
-      {
-        snackBarCreator(context, "Trop de requêtes. Réessayez plus tard.", SoulPotTheme.SPPaleRed);
-        break;
-      }
+        {
+          snackBarCreator(context, "Trop de requêtes. Réessayez plus tard.",
+              SoulPotTheme.spPaleRed);
+          break;
+        }
       case "ERROR_OPERATION_NOT_ALLOWED":
-      case "operation-not-allowed":
-      {
-        snackBarCreator(context, "Erreur serveur, veuillez réessayer plus tard.", SoulPotTheme.SPPaleRed);
-        break;
-      }
+        {
+          snackBarCreator(
+              context,
+              "Erreur serveur, veuillez réessayer plus tard.",
+              SoulPotTheme.spPaleRed);
+          break;
+        }
       case "ERROR_INVALID_EMAIL":
-      case "invalid-email":
-      {
-        snackBarCreator(context, "Adresse email invalide.", SoulPotTheme.SPPaleRed);
-        break;
-      }
+        {
+          snackBarCreator(
+              context, "Adresse email invalide.", SoulPotTheme.spPaleRed);
+          break;
+        }
       default:
         {
-          snackBarCreator(context, "Opération interrompue. Veuillez réessayer plus tard.", SoulPotTheme.SPPaleRed);
+          snackBarCreator(
+              context,
+              "Opération interrompue. Veuillez réessayer plus tard.",
+              SoulPotTheme.spPaleRed);
           break;
         }
     }
   }
 }
-

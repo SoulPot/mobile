@@ -1,22 +1,17 @@
-import 'dart:math';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_view_indicators/page_view_indicators.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/plants_viewer/widgets/plant_viewer.dart';
 
-import '../../models/Analyzer.dart';
-import '../../models/Plant.dart';
+import '../../models/analyzer.dart';
+import '../../models/plant.dart';
 import '../../global/utilities/theme.dart';
 
 class PlantsView extends StatefulWidget {
-  const PlantsView(List<Plant> codex, {Key? key})
-      : this._codex = codex,
-        super(key: key);
+  const PlantsView({Key? key, required this.codex}) : super(key: key);
 
-  final List<Plant> _codex;
+  final List<Plant> codex;
 
   @override
   State<PlantsView> createState() => _PlantsViewState();
@@ -25,23 +20,23 @@ class PlantsView extends StatefulWidget {
 class _PlantsViewState extends State<PlantsView> {
   List<Analyzer> userAnalyzers = [];
   List<Widget> viewers = [];
-  PageController _pageController = PageController();
+  final PageController _pageController = PageController();
   List<Plant> userPlants = [];
-  ValueNotifier<int> _pageNotifier = ValueNotifier<int>(0);
+  final ValueNotifier<int> _pageNotifier = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: SoulPotTheme.SPBackgroundWhite,
+      backgroundColor: SoulPotTheme.spBackgroundWhite,
       body: SafeArea(
         child: StreamBuilder<QuerySnapshot>(
           stream: FirestoreManager.getAnalyzersByUserID(),
           builder:
               (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
+            if (snapshot.hasError) return Text('Error: ${snapshot.error}');
             switch (snapshot.connectionState) {
               case ConnectionState.waiting:
-                return new Text('Loading...');
+                return const Text('Loading...');
               default:
                 return PageView.builder(
                   controller: _pageController,
@@ -53,14 +48,14 @@ class _PlantsViewState extends State<PlantsView> {
                   },
                   itemBuilder: (context, position) {
                     final document = snapshot.data!.docs[position];
-                    Plant plant = widget._codex
+                    Plant plant = widget.codex
                         .where(
                             (element) => element.plantID == document["plantID"])
                         .first;
                     return Column(
                       children: [
                         PlantViewer(
-                          Analyzer(
+                          analyzer: Analyzer(
                             document.id,
                             true,
                             battery: document["battery"].toInt(),
@@ -68,7 +63,7 @@ class _PlantsViewState extends State<PlantsView> {
                             humidity: document["humidity"].toInt(),
                             luminosity: document["luminosity"].toInt(),
                             wifiName: document["wifiName"],
-                            imageURL: plant.gif_url,
+                            imageURL: plant.gifURL,
                             recommendations: plant.recommendations,
                           ),
                         ),
@@ -78,16 +73,16 @@ class _PlantsViewState extends State<PlantsView> {
                           ),
                           child: Row(
                             children: [
-                              Spacer(),
+                              const Spacer(),
                               CirclePageIndicator(
                                 currentPageNotifier: _pageNotifier,
                                 itemCount: snapshot.data!.docs.length,
                                 size: 10,
                                 selectedSize: 12,
-                                selectedDotColor: SoulPotTheme.SPGreen,
+                                selectedDotColor: SoulPotTheme.spGreen,
                                 dotColor: Colors.grey,
                               ),
-                              Spacer(),
+                              const Spacer(),
                             ],
                           ),
                         ),

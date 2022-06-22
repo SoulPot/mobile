@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/global/utilities/theme.dart';
@@ -15,8 +14,8 @@ class EmailPwdSignIn extends StatefulWidget {
 }
 
 class _EmailPwdSignInState extends State<EmailPwdSignIn> {
-  TextEditingController _emailController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: SoulPotTheme.SPGreen, width: 1.h),
+                        BorderSide(color: SoulPotTheme.spGreen, width: 1.h),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   border: OutlineInputBorder(
@@ -42,7 +41,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                   hintStyle: TextStyle(
                       color: Colors.grey[800], fontFamily: 'Greenhouse'),
                   hintText: "Email",
-                  fillColor: SoulPotTheme.SPBackgroundWhite),
+                  fillColor: SoulPotTheme.spBackgroundWhite),
             ),
           ),
           Padding(
@@ -54,7 +53,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: SoulPotTheme.SPGreen, width: 1.h),
+                        BorderSide(color: SoulPotTheme.spGreen, width: 1.h),
                     borderRadius: BorderRadius.circular(25),
                   ),
                   border: OutlineInputBorder(
@@ -63,7 +62,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                   filled: true,
                   hintStyle: TextStyle(color: Colors.grey[800]),
                   hintText: "Mot de passe",
-                  fillColor: SoulPotTheme.SPBackgroundWhite),
+                  fillColor: SoulPotTheme.spBackgroundWhite),
             ),
           ),
           Padding(
@@ -73,20 +72,20 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                 AuthenticationManager.signInWithPwd(
                     context, _emailController.text, _passwordController.text);
               },
-              child: Text(
-                "Connexion",
-                style: TextStyle(fontFamily: "Greenhouse", fontSize: 12.sp),
-              ),
               style: ElevatedButton.styleFrom(
-                shape: new RoundedRectangleBorder(
-                  borderRadius: new BorderRadius.circular(30.0),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
-                primary: SoulPotTheme.SPGreen,
+                primary: SoulPotTheme.spGreen,
                 padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 1.5.h),
                 textStyle: TextStyle(
                   fontSize: 11.sp,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+              child: Text(
+                "Connexion",
+                style: TextStyle(fontFamily: "Greenhouse", fontSize: 12.sp),
               ),
             ),
           ),
@@ -100,24 +99,24 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                   style: TextStyle(fontFamily: "Greenhouse", fontSize: 12.sp),
                 ),
                 TextButton(
-                  style: TextButton.styleFrom(primary: SoulPotTheme.SPBlack),
+                  style: TextButton.styleFrom(primary: SoulPotTheme.spBlack),
                   onPressed: () {
                     Navigator.push(
                       context,
                       PageTransition(
                           alignment: Alignment.bottomCenter,
                           curve: Curves.easeInOut,
-                          duration: Duration(milliseconds: 300),
-                          reverseDuration: Duration(milliseconds: 300),
+                          duration: const Duration(milliseconds: 300),
+                          reverseDuration: const Duration(milliseconds: 300),
                           type: PageTransitionType.rightToLeftWithFade,
-                          child: SignUpView(),
+                          child: const SignUpView(),
                           childCurrent: context.widget),
                     );
                   },
                   child: Text(
                     "S'inscrire",
                     style: TextStyle(
-                        color: SoulPotTheme.SPGreen,
+                        color: SoulPotTheme.spGreen,
                         fontSize: 12.sp,
                         fontFamily: "Greenhouse"),
                   ),

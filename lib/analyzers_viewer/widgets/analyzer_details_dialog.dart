@@ -2,20 +2,16 @@ import 'dart:io';
 
 import 'package:battery_indicator/battery_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:soulpot/global/utilities/bluetooth_manager.dart';
 import 'package:soulpot/global/utilities/wifi_manager.dart';
 import 'package:soulpot/analyzers_viewer/widgets/analyzer_wifi_modifier.dart';
-import 'package:soulpot/global/widgets/dropdown_wifi_picker.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../models/Analyzer.dart';
+import '../../models/analyzer.dart';
 import '../../global/utilities/theme.dart';
 
 class AnalyzerDetailsDialog extends StatefulWidget {
-  const AnalyzerDetailsDialog({Key? key, required Analyzer analyzer})
-      : analyzer = analyzer,
-        super(key: key);
+  const AnalyzerDetailsDialog({Key? key, required this.analyzer})
+      : super(key: key);
 
   final Analyzer analyzer;
 
@@ -30,7 +26,7 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      child: Container(
+      child: SizedBox(
         height: 50.h,
         width: 90.w,
         child: Padding(
@@ -69,7 +65,7 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                 inactiveThumbColor: Colors.red,
                 inactiveTrackColor: Colors.grey[300],
               ),
-              Spacer(),
+              const Spacer(),
               Row(
                 children: [
                   Padding(
@@ -93,16 +89,16 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Column(
                 children: [
                   Row(
                     children: [
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 2.w),
-                        child: Icon(
+                        child: const Icon(
                           Icons.wifi,
-                          color: SoulPotTheme.SPGreen,
+                          color: SoulPotTheme.spGreen,
                         ),
                       ),
                       Text(
@@ -123,9 +119,17 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              AnalyzerWifiModifier(pSsids: ssids),
+                              AnalyzerWifiModifier(ssids: ssids),
                         );
                       },
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0),
+                        ),
+                        primary: SoulPotTheme.spPurple,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 5.w, vertical: 1.h),
+                      ),
                       child: Text(
                         "Changer le réseau wifi",
                         textAlign: TextAlign.center,
@@ -135,23 +139,23 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                             fontFamily: "Greenhouse",
                             fontWeight: FontWeight.bold),
                       ),
-                      style: ElevatedButton.styleFrom(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0),
-                        ),
-                        primary: SoulPotTheme.SPPurple,
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 5.w, vertical: 1.h),
-                      ),
                     ),
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Padding(
                 padding: EdgeInsets.only(bottom: 1.h),
                 child: ElevatedButton(
                   onPressed: () async {},
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    primary: SoulPotTheme.spRed,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
+                  ),
                   child: Text(
                     "Supprimer ${widget.analyzer.name}",
                     textAlign: TextAlign.center,
@@ -160,14 +164,6 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                         fontSize: 12.sp,
                         fontFamily: "Greenhouse",
                         fontWeight: FontWeight.bold),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0),
-                    ),
-                    primary: SoulPotTheme.SPRed,
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
                   ),
                 ),
               ),

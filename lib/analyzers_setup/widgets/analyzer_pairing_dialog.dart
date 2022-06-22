@@ -9,13 +9,12 @@ import 'package:soulpot/global/utilities/custom_snackbar.dart';
 import 'package:soulpot/global/widgets/dropdown_wifi_picker.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../models/Analyzer.dart';
+import '../../models/analyzer.dart';
 import '../../global/utilities/theme.dart';
 
 class AnalyzerPairingDialog extends StatefulWidget {
-  const AnalyzerPairingDialog({Key? key, required Analyzer analyzer})
-      : analyzer = analyzer,
-        super(key: key);
+  const AnalyzerPairingDialog({Key? key, required this.analyzer})
+      : super(key: key);
 
   final Analyzer analyzer;
 
@@ -36,9 +35,10 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   List<String> wifiCredentials = ["SSID", "PASSWORD"];
   late List<String> ssids;
   late String selectedSSID = "";
-  TextEditingController _wifiPassController = TextEditingController();
-  TextEditingController _ssidController = TextEditingController();
+  final TextEditingController _wifiPassController = TextEditingController();
+  final TextEditingController _ssidController = TextEditingController();
 
+  @override
   initState() {
     getBluetooth().then((_) => {
           getWifi().then((_) => setState(() {
@@ -56,7 +56,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
-      child: Container(
+      child: SizedBox(
         height: 33.h,
         width: 90.w,
         child: Column(
@@ -67,7 +67,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                   ? Text(
                           "Analyzer trouvé",
                           style: TextStyle(
-                              color: SoulPotTheme.SPGreen,
+                              color: SoulPotTheme.spGreen,
                               fontWeight: FontWeight.bold,
                               fontSize: 15.sp,
                               fontFamily: 'Greenhouse'),
@@ -76,16 +76,16 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                       'Scan en cours veuillez patienter...',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                          color: SoulPotTheme.SPBlack,
+                          color: SoulPotTheme.spBlack,
                           fontSize: 15.sp,
                           fontFamily: 'Greenhouse',
                           fontWeight: FontWeight.bold),
                     ),
             ),
-            Spacer(),
+            const Spacer(),
             showLoading
                 ? LoadingAnimationWidget.discreteCircle(
-                    color: SoulPotTheme.SPBT, size: 20.w)
+                    color: SoulPotTheme.spBT, size: 20.w)
                 : Padding(
                     padding: EdgeInsets.symmetric(horizontal: 5.w),
                     child: Column(
@@ -94,7 +94,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                           "A quel réseau Wifi souhaitez-vous connecter ${widget.analyzer.name} ?",
                           textAlign: TextAlign.center,
                           style: TextStyle(
-                              color: SoulPotTheme.SPBlack,
+                              color: SoulPotTheme.spBlack,
                               fontWeight: FontWeight.bold,
                               fontSize: 11.sp,
                               fontFamily: 'Greenhouse'),
@@ -109,7 +109,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   Padding(
                                     padding:
                                         EdgeInsets.symmetric(horizontal: 4.w),
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 5.h,
                                       width: 80.w,
                                       child: TextField(
@@ -123,10 +123,10 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                           hintStyle: TextStyle(
                                               fontFamily: "Greenhouse",
                                               fontSize: 11.sp),
-                                          border: OutlineInputBorder(),
+                                          border: const OutlineInputBorder(),
                                         ),
                                         style: TextStyle(
-                                          color: SoulPotTheme.SPBlack,
+                                          color: SoulPotTheme.spBlack,
                                           fontSize: 12.sp,
                                           fontFamily: 'Greenhouse',
                                           fontWeight: FontWeight.bold,
@@ -141,7 +141,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 1.w, vertical: 1.h),
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 5.h,
                                       width: 80.w,
                                       child: TextField(
@@ -149,7 +149,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                           setState(() {});
                                         },
                                         controller: _ssidController,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           labelText: 'SSID',
                                           border: OutlineInputBorder(),
                                         ),
@@ -159,7 +159,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   Padding(
                                     padding: EdgeInsets.symmetric(
                                         horizontal: 1.w, vertical: 1.h),
-                                    child: Container(
+                                    child: SizedBox(
                                       height: 5.h,
                                       width: 80.w,
                                       child: TextField(
@@ -168,7 +168,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                         },
                                         obscureText: true,
                                         controller: _wifiPassController,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           labelText: 'Mot de passe',
                                           border: OutlineInputBorder(),
                                         ),
@@ -180,41 +180,41 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                       ],
                     ),
                   ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: EdgeInsets.only(bottom: 1.h),
               child: showLoading
-                  ? Container(
+                  ? SizedBox(
                       height: 0.h,
                       width: 0.w,
                     )
                   : Row(
                       children: [
-                        Spacer(),
+                        const Spacer(),
                         ElevatedButton(
                           onPressed: () async {
                             if(analyzer != null) {
                               analyzer!.disconnect();
                             }
-                            this.dispose();
+                            dispose();
                             Navigator.of(context).pop();
                           },
-                          child: Text(
-                            "Annuler",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: SoulPotTheme.SPBlack),
-                          ),
                           style: ElevatedButton.styleFrom(
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
                             ),
-                            primary: SoulPotTheme.SPPaleRed,
+                            primary: SoulPotTheme.spPaleRed,
                             padding: EdgeInsets.symmetric(
                                 horizontal: 5.w, vertical: 1.h),
                             textStyle: TextStyle(
                               fontSize: 11.sp,
                               fontWeight: FontWeight.bold,
                             ),
+                          ),
+                          child: const Text(
+                            "Annuler",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: SoulPotTheme.spBlack),
                           ),
                         ),
                         Padding(
@@ -225,24 +225,17 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   ? selectedSSID
                                   : _ssidController.text;
                               wifiCredentials[1] = _wifiPassController.text;
-                              print(
-                                  "Analyzer => $analyzer \n characteristic => $wifiCharacteristic \n credentials => ${wifiCredentials[0]},${wifiCredentials[1]}");
                               BluetoothManager.sendData(
                                   context,
                                   analyzer,
                                   wifiCharacteristic,
                                   "${wifiCredentials[0]},${wifiCredentials[1]}");
                             },
-                            child: Text(
-                              "Valider",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: SoulPotTheme.SPBlack),
-                            ),
                             style: ElevatedButton.styleFrom(
-                              shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(30.0),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30.0),
                               ),
-                              primary: SoulPotTheme.SPPaleGreen,
+                              primary: SoulPotTheme.spPaleGreen,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 5.w, vertical: 1.h),
                               textStyle: TextStyle(
@@ -250,9 +243,14 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
+                            child: const Text(
+                              "Valider",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: SoulPotTheme.spBlack),
+                            ),
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                       ],
                     ),
             ),
@@ -270,13 +268,12 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
 
   Future<void> getBluetooth() async {
     if (Platform.isIOS) {
-      await flutterBlue.scan();
+      flutterBlue.scan();
       await flutterBlue.stopScan();
     }
-    var results = await flutterBlue.startScan(timeout: Duration(seconds: 4));
+    var results = await flutterBlue.startScan(timeout: const Duration(seconds: 4));
     for (ScanResult r in results) {
       if (r.advertisementData.localName.contains("SOULPOT_ESP32_")) {
-        print("ANALYZER FOUND => ${r.advertisementData.localName}");
         analyzer = r.device;
       }
       r.device.disconnect();
@@ -284,27 +281,27 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
     flutterBlue.stopScan();
 
     if (analyzer == null) {
-      print("ANALYZER NOT FOUND");
-      snackBarCreator(context, "Aucun analyzer trouvé", SoulPotTheme.SPPaleRed);
-      Navigator.of(context).pop();
+      cancelBluetoothScan();
     } else {
       await analyzer!.connect();
       var services = await analyzer!.discoverServices();
       for (BluetoothService s in services) {
-        print("OUI");
         var characteristics = s.characteristics;
         for (BluetoothCharacteristic c in characteristics) {
           if (c.uuid.toString() == "96c44fd5-c309-4553-a11e-b8457810b94c") {
-            print("CHARACTERISTIC FOUND => ${c.uuid.toString()}");
             wifiCharacteristic = c;
             showLoading = false;
             deviceFound = true;
           } else {
-            print("CHARACTERISTIC NOT FOUND");
           }
         }
       }
     }
+  }
+
+  void cancelBluetoothScan() {
+    snackBarCreator(context, "Aucun analyzer trouvé", SoulPotTheme.spPaleRed);
+    Navigator.of(context).pop();
   }
 
   Future<void> getWifi() async {

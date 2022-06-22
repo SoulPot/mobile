@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:soulpot/models/Analyzer.dart';
-import 'package:soulpot/models/Objective.dart';
+import 'package:soulpot/models/objective.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:soulpot/models/Plant.dart';
-import 'package:soulpot/models/Recommendations.dart';
-import 'package:soulpot/theme.dart';
+import 'package:soulpot/models/plant.dart';
+import 'package:soulpot/models/recommendations.dart';
+
+import '../theme.dart';
 
 class FirestoreManager {
   static FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -15,22 +15,22 @@ class FirestoreManager {
   static Future<List<Objective>> getStaticObjectives() async {
     List<Objective> objectivesStatic = [];
     await firestore.collection("objectives").get().then((objective){
-      objective.docs.forEach((element) {
+      for (var element in objective.docs) {
         Color backgroundColor, fontColor;
         if(element["type"] == "easy"){
-          backgroundColor = SoulPotTheme.SPPaleGreen;
-          fontColor = SoulPotTheme.SPBlack;
+          backgroundColor = SoulPotTheme.spPaleGreen;
+          fontColor = SoulPotTheme.spBlack;
         } else if(element["type"] == "advanced"){
-          backgroundColor = SoulPotTheme.SPPaleRed;
-          fontColor = SoulPotTheme.SPBlack;
+          backgroundColor = SoulPotTheme.spPaleRed;
+          fontColor = SoulPotTheme.spBlack;
         } else {
-          backgroundColor = SoulPotTheme.SPPalePurple;
-          fontColor = SoulPotTheme.SPBlack;
+          backgroundColor = SoulPotTheme.spPalePurple;
+          fontColor = SoulPotTheme.spBlack;
         }
 
         Objective o = Objective(element.id, element["nom"], element["description"], backgroundColor, fontColor, element["objective_value"], element["type"]);
         objectivesStatic.add(o);
-      });
+      }
     });
     return objectivesStatic;
   }
