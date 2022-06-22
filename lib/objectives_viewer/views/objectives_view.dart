@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/models/objective.dart';
 import 'package:soulpot/objectives_viewer/widgets/objective_card.dart';
+import 'package:soulpot/objectives_viewer/widgets/objectives_viewer.dart';
+
+import '../../global/utilities/theme.dart';
 
 class ObjectivesView extends StatefulWidget {
   const ObjectivesView({Key? key, required this.objectives}) : super(key: key);
@@ -15,39 +18,28 @@ class ObjectivesView extends StatefulWidget {
 }
 
 class _ObjectivesViewState extends State<ObjectivesView> {
-  final Stream<QuerySnapshot> _objectivesStream = FirebaseFirestore.instance
-      .collection(
-          'users/${FirebaseAuth.instance.currentUser!.uid}/objectives_owned')
-      .snapshots();
-
-  late int totalObjectives;
-  late int objectivesOwned;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: SoulPotTheme.spBackgroundWhite,
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: StreamBuilder<QuerySnapshot>(
-                stream: _objectivesStream,
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (snapshot.hasError) {
-                    return const Text('Something went wrong');
-                  }
-
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Text("Loading");
-                  }
-                  Map<String, dynamic> userObjectiveData =
-                      <String, dynamic>{};
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: StreamBuilder<QuerySnapshot>(
+            stream: FirebaseFirestore.instance
+                .collection(
+                    'users/${FirebaseAuth.instance.currentUser!.uid}/objectives_owned')
+                .snapshots(),
+            builder:
+                (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+              if (snapshot.hasError) return Text('Error: ${snapshot.error}');
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const Text('Loading...');
+                default:
+                  Map<String, dynamic> userObjectiveData = <String, dynamic>{};
+                  List<Objective> ownedObjectives = [];
+                  List<Objective> availableObjectives = [];
 
                   snapshot.data!.docs
                       .map((DocumentSnapshot document) {
@@ -57,101 +49,61 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                       })
                       .toList()
                       .cast();
-                  return displayCards(userObjectiveData);
-                },
-              )),
+
+                  for (var element in userObjectiveData.keys) {
+                    for (int i = 0; i < widget.objectives.length; i++) {
+                      if (element == widget.objectives[i].id) {
+                        widget.objectives[i].owned =
+                            userObjectiveData[element]["owned"];
+                        if (widget.objectives[i].owned!) {
+                          ownedObjectives.add(widget.objectives[i]);
+                        }
+                        widget.objectives[i].stateValue =
+                            userObjectiveData[element]["status"];
+                      }
+                    }
+                  }
+
+                  availableObjectives = widget.objectives
+                      .where((element) => !ownedObjectives.contains(element))
+                      .toList();
+
+                  return Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2.h),
+                        child: Text(
+                          "Objectifs non complétés",
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              fontFamily: "Greenhouse",
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child: ObjectivesViewer(objectives: availableObjectives),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 2.h),
+                        child: Text(
+                          "Objectifs complétés",
+                          style: TextStyle(
+                              fontSize: 18.sp,
+                              fontFamily: "Greenhouse",
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(
+                        child:
+                            ObjectivesViewer(objectives: ownedObjectives),
+                      ),
+                    ],
+                  );
+              }
+            },
+          ),
         ),
       ),
     );
-  }
-
-  Widget displayCards(Map<String, dynamic> userObjectiveData) {
-    for (var element in userObjectiveData.keys) {
-      for (int i = 0; i < widget.objectives.length; i++) {
-        if (element == widget.objectives[i].id) {
-          widget.objectives[i].owned = userObjectiveData[element]["owned"];
-          widget.objectives[i].stateValue =
-              userObjectiveData[element]["status"];
-        }
-      }
-    }
-
-    var ownedObjectives = [];
-    var notOwnedObjectives = [];
-    for (int i = 0; i < widget.objectives.length; i++) {
-      if (widget.objectives[i].owned == true) {
-        ownedObjectives.add(widget.objectives[i]);
-      } else {
-        notOwnedObjectives.add(widget.objectives[i]);
-      }
-    }
-
-    return Column(
-      children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 2.h),
-          child: Text(
-            "Objectifs à réaliser",
-            style: TextStyle(fontSize: 18.sp),
-          ),
-        ),
-        displayCardsNotOwned(notOwnedObjectives),
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 2.h),
-          child: Text(
-            "Objectifs Réalisés",
-            style: TextStyle(fontSize: 18.sp),
-          ),
-        ),
-        displayCardsOwned(ownedObjectives),
-      ],
-    );
-  }
-
-  displayCardsOwned(data) {
-    var rows = <Widget>[];
-
-    for (int i = 0; i < data.length; i += 2) {
-      Widget card;
-      Widget cardBis;
-      card = ObjectiveCard(objective: data[i]);
-      if (i + 1 < data.length) {
-        cardBis = ObjectiveCard(objective: data[i + 1]);
-      } else {
-        //Yen a pas
-        cardBis = Container();
-      }
-
-      var rowUnique = Row(
-        children: [card, cardBis],
-      );
-      rows.add(rowUnique);
-    }
-
-    return Column(
-        crossAxisAlignment: CrossAxisAlignment.center, children: rows);
-  }
-
-  displayCardsNotOwned(data) {
-    var rows = <Widget>[];
-
-    for (int i = 0; i < data.length; i += 2) {
-      Widget card;
-      Widget cardBis;
-      card = ObjectiveCard(objective: data[i]);
-      if (i + 1 < data.length) {
-        cardBis = ObjectiveCard(objective: data[i + 1]);
-      } else {
-        //Yen a pas
-        cardBis = Container();
-      }
-
-      var rowUnique = Row(
-        children: [card, cardBis],
-      );
-      rows.add(rowUnique);
-    }
-
-    return Column(children: rows);
   }
 }

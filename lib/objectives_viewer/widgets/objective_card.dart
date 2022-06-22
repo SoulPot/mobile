@@ -119,10 +119,8 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
     return LinearProgressBar(
       maxSteps: 100,
       progressType: LinearProgressBar.progressTypeLinear,
-      // Use Linear progress
-      currentStep:
-          widget.objective.stateValue ?? 0,
-      progressColor: SoulPotTheme.spPaleGreen,
+      currentStep: widget.objective.stateValue ?? 0,
+      progressColor: SoulPotTheme.spGreen,
       backgroundColor: Colors.grey,
       semanticsLabel: "Label",
       semanticsValue: "Value",
@@ -130,27 +128,33 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
   }
 
   displayObjectiveType() {
-
     if (widget.objective.type == "easy") {
-      return const Icon(Icons.star_border_outlined);
+      return difficultyStar();
     } else if (widget.objective.type == "advanced") {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(Icons.star_border_outlined),
-          Icon(Icons.star_border_outlined),
+        children: [
+          difficultyStar(),
+          difficultyStar(),
         ],
       );
     } else if (widget.objective.type == "hard") {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(Icons.star_border_outlined),
-          Icon(Icons.star_border_outlined),
-          Icon(Icons.star_border_outlined)
+        children: [
+          difficultyStar(),
+          difficultyStar(),
+          difficultyStar(),
         ],
       );
     }
+  }
+
+  static Widget difficultyStar() {
+    return const Icon(
+      Icons.star_outlined,
+      color: Color(0xFFDEC20B),
+    );
   }
 
   onChanged() {}
