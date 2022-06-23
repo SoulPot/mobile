@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
@@ -230,6 +231,8 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   analyzer,
                                   wifiCharacteristic,
                                   "${wifiCredentials[0]},${wifiCredentials[1]}");
+                              //TODO : check if the connection is successful
+                              await FirebaseMessaging.instance.subscribeToTopic('test_tom1'); //TODO : change to the right topic
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(

@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -15,7 +16,24 @@ import '../error_thrower.dart';
 
 class AuthenticationManager {
   static Future<Widget> initializeApp(BuildContext context) async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
     User? user = FirebaseAuth.instance.currentUser;
+
+    NotificationSettings settings = await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true, // Required to display a heads up notification
+      badge: true,
+      sound: true,
+    );
 
     if (user != null) {
       List<Objective> objectives = await FirestoreManager.getStaticObjectives();
@@ -30,6 +48,7 @@ class AuthenticationManager {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseMessaging.instance.subscribeToTopic(FirebaseAuth.instance.currentUser!.uid);
       AnalyticsManager.logEmailPwdAuth();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -67,6 +86,7 @@ class AuthenticationManager {
       idToken: googleAuth?.idToken,
     );
     await FirebaseAuth.instance.signInWithCredential(credential);
+    await FirebaseMessaging.instance.subscribeToTopic(FirebaseAuth.instance.currentUser!.uid);
     return true;
   }
 
@@ -75,6 +95,14 @@ class AuthenticationManager {
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
     await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    await FirebaseMessaging.instance.subscribeToTopic(FirebaseAuth.instance.currentUser!.uid);
     return true;
+  }
+
+  static Future<void> signOut() async {
+    await FirebaseMessaging.instance.unsubscribeFromTopic(FirebaseAuth.instance.currentUser!.uid);
+    await FirebaseAuth.instance.signOut();
+    await GoogleSignIn().signOut();
+    await FacebookAuth.instance.logOut();
   }
 }

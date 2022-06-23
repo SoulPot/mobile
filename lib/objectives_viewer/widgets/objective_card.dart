@@ -37,7 +37,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       animation: rotateAnim,
       child: widget,
       builder: (context, widget) {
-        final isUnder = (ValueKey(buildFront) != widget?.key);
+        final isUnder = (ValueKey(buildCard(const ValueKey(true))) != widget?.key);
         final value =
             isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
         return Transform(
@@ -55,17 +55,9 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       child: AnimatedSwitcher(
         transitionBuilder: __transitionBuilder,
         duration: const Duration(milliseconds: 600),
-        child: displayFront ? buildFront() : buildBack(),
+        child: displayFront ?  buildCard(const ValueKey(true)) :  buildCard(const ValueKey(false)),
       ),
     );
-  }
-
-  Widget buildFront() {
-    return buildCard(const ValueKey(true));
-  }
-
-  Widget buildBack() {
-    return buildCard(const ValueKey(false));
   }
 
   Widget buildCard(Key key) {
