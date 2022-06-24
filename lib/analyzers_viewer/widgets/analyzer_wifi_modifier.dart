@@ -3,14 +3,16 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/utilities/bluetooth_manager.dart';
+import 'package:soulpot/models/analyzer.dart';
 
 import '../../global/utilities/theme.dart';
 import '../../global/widgets/dropdown_wifi_picker.dart';
 
 class AnalyzerWifiModifier extends StatefulWidget {
-  const AnalyzerWifiModifier({Key? key, required this.ssids}) : super(key: key);
+  const AnalyzerWifiModifier({Key? key, required this.ssids, required this.analyzer}) : super(key: key);
 
   final List<String> ssids;
+  final Analyzer analyzer;
 
   @override
   State<AnalyzerWifiModifier> createState() => _AnalyzerWifiModifierState();
@@ -180,7 +182,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                 _wifiPassController.text != "") {
                               wifiCredentials[0] = _ssidController.text;
                               wifiCredentials[1] = _wifiPassController.text;
-                              BluetoothManager.sendCredentials("${wifiCredentials[0]},${wifiCredentials[1]}");
+                              BluetoothManager.sendCredentials(credentials: "${wifiCredentials[0]},${wifiCredentials[1]}", isSetup: false, analyzer: widget.analyzer);
                             } else {
                               setState(() {
                                 errorVisible = true;

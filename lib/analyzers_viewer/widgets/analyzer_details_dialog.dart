@@ -20,7 +20,6 @@ class AnalyzerDetailsDialog extends StatefulWidget {
 }
 
 class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
-  bool _isOn = true;
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +114,10 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                         showDialog(
                           context: context,
                           builder: (BuildContext context) =>
-                              AnalyzerWifiModifier(ssids: ssids),
+                              AnalyzerWifiModifier(
+                            ssids: ssids,
+                            analyzer: widget.analyzer,
+                          ),
                         );
                       },
                       style: ElevatedButton.styleFrom(

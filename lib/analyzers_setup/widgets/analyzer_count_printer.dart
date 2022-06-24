@@ -15,7 +15,7 @@ class AnalyzerCountPrinter extends StatelessWidget {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 1.w),
           child: Image.asset(
-            "assets/images/SoulPotLogoFlower.png",
+            "assets/images/SoulPotLogoFlowerTransparentBG.png",
             height: 15.h,
             width: 16.w,
           ),

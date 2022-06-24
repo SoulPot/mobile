@@ -56,9 +56,9 @@ class _PlantsViewState extends State<PlantsView> {
                       children: [
                         PlantViewer(
                           analyzer: Analyzer(
-                            document.id,
                             document["name"],
                             true,
+                            id: document.id,
                             battery: document["battery"].toInt(),
                             temperature: document["temperature"].toInt(),
                             humidity: document["humidity"].toInt(),
