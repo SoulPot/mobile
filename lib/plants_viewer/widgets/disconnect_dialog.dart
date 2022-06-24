@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/utilities/firebase_management/authentication.dart';
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 
 class DisconnectDialog extends StatefulWidget {
@@ -64,18 +65,20 @@ class _DisconnectDialogState extends State<DisconnectDialog> {
                           fontSize: 14.sp),
                     ),
                     onPressed: () {
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          PageTransition(
-                              alignment: Alignment.bottomCenter,
-                              curve: Curves.easeInOut,
-                              duration: const Duration(milliseconds: 300),
-                              reverseDuration:
-                                  const Duration(milliseconds: 300),
-                              type: PageTransitionType.rightToLeftWithFade,
-                              child: const SignInView(),
-                              childCurrent: context.widget),
-                          (route) => false);
+                      AuthenticationManager.signOut().then((_) {
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            PageTransition(
+                                alignment: Alignment.bottomCenter,
+                                curve: Curves.easeInOut,
+                                duration: const Duration(milliseconds: 300),
+                                reverseDuration:
+                                    const Duration(milliseconds: 300),
+                                type: PageTransitionType.rightToLeftWithFade,
+                                child: const SignInView(),
+                                childCurrent: context.widget),
+                            (route) => false);
+                      });
                     }),
                 const Spacer(),
               ],

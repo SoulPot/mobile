@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soulpot/global/utilities/bluetooth_manager.dart';
 import 'package:soulpot/global/utilities/wifi_manager.dart';
 import 'package:soulpot/global/utilities/custom_snackbar.dart';
@@ -227,12 +228,12 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                                   : _ssidController.text;
                               wifiCredentials[1] = _wifiPassController.text;
                               BluetoothManager.sendData(
-                                  context,
-                                  analyzer,
                                   wifiCharacteristic,
                                   "${wifiCredentials[0]},${wifiCredentials[1]}");
                               //TODO : check if the connection is successful
                               await FirebaseMessaging.instance.subscribeToTopic('test_tom1'); //TODO : change to the right topic
+                              var prefs = await SharedPreferences.getInstance();
+                              prefs.setBool("first_launch", false);
                             },
                             style: ElevatedButton.styleFrom(
                               shape: RoundedRectangleBorder(

@@ -41,30 +41,6 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                   fontFamily: "Greenhouse",
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 1.h),
-                child: Text(
-                  _isOn ? "On" : "Off",
-                  style: TextStyle(
-                    fontSize: 11.sp,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: "Greenhouse",
-                  ),
-                ),
-              ),
-              Switch(
-                value: _isOn,
-                onChanged: (_) {
-                  setState(() {
-                    _isOn = !_isOn;
-                  });
-                },
-                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                activeTrackColor: Colors.grey[300],
-                activeColor: Colors.green,
-                inactiveThumbColor: Colors.red,
-                inactiveTrackColor: Colors.grey[300],
-              ),
               const Spacer(),
               Row(
                 children: [
@@ -81,6 +57,26 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                   ),
                   Text(
                     "Charge de la batterie : ${widget.analyzer.battery} %",
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: "Greenhouse",
+                    ),
+                  ),
+                ],
+              ),
+              const Spacer(),
+              Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 2.w),
+                    child: const Icon(
+                      Icons.smart_toy,
+                      color: SoulPotTheme.spGreen,
+                    ),
+                  ),
+                  Text(
+                    "ID de l'analyzer : ${widget.analyzer.id}",
                     style: TextStyle(
                       fontSize: 12.sp,
                       fontWeight: FontWeight.bold,
@@ -175,7 +171,7 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
   }
 
   Future<List<String>> getWifi() async {
-    List<String> tmpSSIDs = [];
+    List<String> tmpSSIDs = [""];
     if (Platform.isAndroid) {
       tmpSSIDs = await WifiManager.scanForWifi(context);
     }

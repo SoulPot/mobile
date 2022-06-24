@@ -3,7 +3,7 @@ import 'dart:math';
 import 'recommendations.dart';
 
 class Analyzer {
-  Analyzer(this.name, this.paired,
+  Analyzer(this.id, this.name, this.paired,
       {this.battery,
       this.temperature,
       this.humidity,
@@ -14,6 +14,7 @@ class Analyzer {
       : needSprinkle = recommendations != null
             ? humidity! < recommendations.recommendedHumidity.reduce(min)
             : false;
+  String id;
   String name;
   bool? paired;
   int? battery;

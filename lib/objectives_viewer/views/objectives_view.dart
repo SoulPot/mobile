@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/models/objective.dart';
-import 'package:soulpot/objectives_viewer/widgets/objective_card.dart';
 import 'package:soulpot/objectives_viewer/widgets/objectives_viewer.dart';
 
+import '../../global/utilities/firebase_management/authentication.dart';
 import '../../global/utilities/theme.dart';
 
 class ObjectivesView extends StatefulWidget {
@@ -29,7 +29,7 @@ class _ObjectivesViewState extends State<ObjectivesView> {
           child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection(
-                    'users/${FirebaseAuth.instance.currentUser!.uid}/objectives_owned')
+                    'users/${AuthenticationManager.auth.currentUser!.uid}/objectives_owned')
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {

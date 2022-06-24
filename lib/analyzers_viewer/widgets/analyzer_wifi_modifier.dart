@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/utilities/bluetooth_manager.dart';
 
 import '../../global/utilities/theme.dart';
 import '../../global/widgets/dropdown_wifi_picker.dart';
@@ -27,7 +28,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
   initState() {
     super.initState();
     ssids = widget.ssids.toSet().toList();
-    ssids.removeWhere((element) => element == "");
+    if(Platform.isAndroid) ssids.removeWhere((element) => element == "");
     selectedSSID = ssids[0];
   }
 
@@ -56,16 +57,16 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                 padding: EdgeInsets.symmetric(horizontal: 1.w, vertical: 3.h),
                 child: Column(
                   children: [
-                    Platform.isAndroid
-                        ? Column(
-                            children: [
-                              DropdownWidget(
-                                  items: ssids,
-                                  itemCallBack: _handleSelectedSSIDChanged,
-                                  currentItem: selectedSSID),
-                              Padding(
+                    Column(
+                      children: [
+                        Platform.isAndroid
+                            ? DropdownWidget(
+                                items: ssids,
+                                itemCallBack: _handleSelectedSSIDChanged,
+                                currentItem: selectedSSID)
+                            : Padding(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: 4.w, vertical: 3.h),
+                                    horizontal: 4.w, vertical: 1.h),
                                 child: SizedBox(
                                   height: 5.h,
                                   width: 80.w,
@@ -75,13 +76,11 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                         errorVisible = false;
                                       });
                                     },
-                                    obscureText: true,
-                                    controller: _wifiPassController,
+                                    controller: _ssidController,
                                     decoration: InputDecoration(
-                                      hintText: 'Mot de passe',
+                                      hintText: 'SSID',
                                       hintStyle: TextStyle(
-                                          fontFamily: "Greenhouse",
-                                          fontSize: 11.sp),
+                                          fontFamily: "Greenhouse", fontSize: 11.sp),
                                       border: const OutlineInputBorder(),
                                     ),
                                     style: TextStyle(
@@ -93,53 +92,37 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                   ),
                                 ),
                               ),
-                            ],
-                          )
-                        : Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 1.w, vertical: 1.h),
-                                child: SizedBox(
-                                  height: 5.h,
-                                  width: 80.w,
-                                  child: TextField(
-                                    onChanged: (_) {
-                                      setState(() {
-                                        errorVisible = false;
-                                      });
-                                    },
-                                    controller: _ssidController,
-                                    decoration: const InputDecoration(
-                                      labelText: 'SSID',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                  ),
-                                ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 4.w, vertical: 1.h),
+                          child: SizedBox(
+                            height: 5.h,
+                            width: 80.w,
+                            child: TextField(
+                              onChanged: (_) {
+                                setState(() {
+                                  errorVisible = false;
+                                });
+                              },
+                              obscureText: true,
+                              controller: _wifiPassController,
+                              decoration: InputDecoration(
+                                hintText: 'Mot de passe',
+                                hintStyle: TextStyle(
+                                    fontFamily: "Greenhouse", fontSize: 11.sp),
+                                border: const OutlineInputBorder(),
                               ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 1.w, vertical: 1.h),
-                                child: SizedBox(
-                                  height: 5.h,
-                                  width: 80.w,
-                                  child: TextField(
-                                    onChanged: (_) {
-                                      setState(() {
-                                        errorVisible = false;
-                                      });
-                                    },
-                                    obscureText: true,
-                                    controller: _wifiPassController,
-                                    decoration: const InputDecoration(
-                                      labelText: 'Mot de passe',
-                                      border: OutlineInputBorder(),
-                                    ),
-                                  ),
-                                ),
+                              style: TextStyle(
+                                color: SoulPotTheme.spBlack,
+                                fontSize: 12.sp,
+                                fontFamily: 'Greenhouse',
+                                fontWeight: FontWeight.bold,
                               ),
-                            ],
+                            ),
                           ),
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -168,7 +151,6 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                       const Spacer(),
                       ElevatedButton(
                         onPressed: () async {
-                          dispose();
                           Navigator.of(context).pop();
                         },
                         style: ElevatedButton.styleFrom(
@@ -198,7 +180,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                 _wifiPassController.text != "") {
                               wifiCredentials[0] = _ssidController.text;
                               wifiCredentials[1] = _wifiPassController.text;
-                              //TODO: Push wifi credentials to ESP
+                              BluetoothManager.sendCredentials("${wifiCredentials[0]},${wifiCredentials[1]}");
                             } else {
                               setState(() {
                                 errorVisible = true;
