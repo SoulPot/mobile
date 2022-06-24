@@ -26,7 +26,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 50.w,
-      height: 14.h,
+      height: 15.h,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(30),
@@ -41,7 +41,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
                 widget.label,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: 15.sp,
                     color: widget.fontColor,
                     fontWeight: FontWeight.bold,
                     fontFamily: "Greenhouse"),
@@ -50,7 +50,7 @@ class _CardInfoPlantState extends State<CardInfoPlant> {
                 widget.value,
                 textAlign: TextAlign.center,
                 style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: 15.sp,
                     color: widget.fontColor,
                     fontWeight: FontWeight.bold,
                     fontFamily: "Greenhouse"),

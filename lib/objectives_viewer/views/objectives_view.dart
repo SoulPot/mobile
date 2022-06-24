@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/models/objective.dart';
-import 'package:soulpot/objectives_viewer/widgets/objective_card.dart';
 import 'package:soulpot/objectives_viewer/widgets/objectives_viewer.dart';
 
+import '../../global/utilities/firebase_management/authentication.dart';
 import '../../global/utilities/theme.dart';
 
 class ObjectivesView extends StatefulWidget {
@@ -28,7 +29,7 @@ class _ObjectivesViewState extends State<ObjectivesView> {
           child: StreamBuilder<QuerySnapshot>(
             stream: FirebaseFirestore.instance
                 .collection(
-                    'users/${FirebaseAuth.instance.currentUser!.uid}/objectives_owned')
+                    'users/${AuthenticationManager.auth.currentUser!.uid}/objectives_owned')
                 .snapshots(),
             builder:
                 (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -56,6 +57,10 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                         widget.objectives[i].owned =
                             userObjectiveData[element]["owned"];
                         if (widget.objectives[i].owned!) {
+                          widget.objectives[i].ownedDate = timestampToFormattedDateString(userObjectiveData[element]
+                              ["ownedDate"] as Timestamp);
+                          widget.objectives[i].stateValue = userObjectiveData[
+                          element]["status"];
                           ownedObjectives.add(widget.objectives[i]);
                         }
                         widget.objectives[i].stateValue =
@@ -71,7 +76,7 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                   return Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2.h),
+                        padding: EdgeInsets.symmetric(vertical: 1.h),
                         child: Text(
                           "Objectifs non complétés",
                           style: TextStyle(
@@ -105,5 +110,11 @@ class _ObjectivesViewState extends State<ObjectivesView> {
         ),
       ),
     );
+  }
+
+  String timestampToFormattedDateString(Timestamp timestamp) {
+    DateTime date = timestamp.toDate();
+    String formattedDate = DateFormat('dd/MM/yyyy').format(date);
+    return formattedDate;
   }
 }

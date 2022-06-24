@@ -1,4 +1,5 @@
 import 'package:battery_indicator/battery_indicator.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/analyzers_viewer/widgets/analyzer_details_dialog.dart';
@@ -48,7 +49,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
           Row(
             children: [
               Expanded(
-                flex: 4,
+                flex: 5,
                 child: Padding(
                   padding: EdgeInsets.fromLTRB(2.w, 0, 1.w, 2.h),
                   child: Column(
@@ -77,7 +78,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 2.w),
+                        padding: EdgeInsets.only(left: 2.w, top: 1.h),
                         child: Row(
                           children: [
                             const Icon(
@@ -102,10 +103,13 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
               Expanded(
                 flex: 2,
                 child: Padding(
-                  padding: EdgeInsets.only(bottom: 3.h),
-                  child: Image.network(
-                    widget.analyzer.imageURL!,
+                  padding: EdgeInsets.only(bottom: 3.h, right: 6.w),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.analyzer.imageURL!,
                     height: 10.h,
+                    progressIndicatorBuilder: (context, url, downloadProgress) =>
+                        Center(child: CircularProgressIndicator(value: downloadProgress.progress, color: SoulPotTheme.spGreen, strokeWidth: 1.w)),
+                    errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
                   ),
                 ),
               ),

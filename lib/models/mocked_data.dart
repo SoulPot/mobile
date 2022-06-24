@@ -8,6 +8,7 @@ import '../global/utilities/theme.dart';
 
 class MockedData {
   static Analyzer analyzer1 = Analyzer(
+    "1",
     "Analyzer Acacia",
     true,
     battery: 100,
@@ -19,6 +20,7 @@ class MockedData {
   );
 
   static Analyzer analyzer2 = Analyzer(
+    "2",
     "Analyzer Tomates",
     true,
     battery: 10,
@@ -29,6 +31,7 @@ class MockedData {
   );
 
   static Analyzer analyzer3 = Analyzer(
+    "3",
     "Analyzer Laurier",
     true,
     battery: 15,
@@ -39,6 +42,7 @@ class MockedData {
   );
 
   static Analyzer analyzer4 = Analyzer(
+    "4",
     "Analyzer Sapin",
     true,
     battery: 45,

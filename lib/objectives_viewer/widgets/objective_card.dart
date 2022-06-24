@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:linear_progress_bar/linear_progress_bar.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/models/objective.dart';
 
@@ -37,7 +36,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       animation: rotateAnim,
       child: widget,
       builder: (context, widget) {
-        final isUnder = (ValueKey(buildFront) != widget?.key);
+        final isUnder = (ValueKey(buildCard(const ValueKey(true))) != widget?.key);
         final value =
             isUnder ? min(rotateAnim.value, pi / 2) : rotateAnim.value;
         return Transform(
@@ -55,17 +54,9 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       child: AnimatedSwitcher(
         transitionBuilder: __transitionBuilder,
         duration: const Duration(milliseconds: 600),
-        child: displayFront ? buildFront() : buildBack(),
+        child: displayFront ?  buildCard(const ValueKey(true)) :  buildCard(const ValueKey(false)),
       ),
     );
-  }
-
-  Widget buildFront() {
-    return buildCard(const ValueKey(true));
-  }
-
-  Widget buildBack() {
-    return buildCard(const ValueKey(false));
   }
 
   Widget buildCard(Key key) {
@@ -74,10 +65,28 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
       ),
-      color: widget.objective.backgroundColor,
-      child: SizedBox(
+      child: Container(
         width: 35.w,
-        height: 20.h,
+        height: 15.h,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          gradient: LinearGradient(
+            colors: [
+              Colors.grey.shade300,
+              Colors.grey.shade300,
+              widget.objective.backgroundColor,
+              widget.objective.backgroundColor,
+            ],
+            stops: [
+              0.0,
+              (100 - widget.objective.stateValue!) / 100,
+              (100 - widget.objective.stateValue!) / 100,
+              1.0
+            ],
+            end: Alignment.bottomCenter,
+            begin: Alignment.topCenter,
+          ),
+        ),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
           child: Column(
@@ -101,29 +110,36 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
                           color: widget.objective.fontColor,
                           fontFamily: "Greenhouse"),
                     ),
-              widget.objective.owned == false || !displayFront
-                  ? const SizedBox(
-                      width: 0,
-                      height: 0,
-                    )
-                  : displayProgressBar(),
+              widget.objective.owned == true || !displayFront
+                  ? widget.objective.owned == true
+                      ? Text(
+                          "Obtenu le ${widget.objective.ownedDate}",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 12.sp,
+                              color: widget.objective.fontColor,
+                              fontFamily: "Greenhouse",
+                              fontWeight: FontWeight.w500),
+                        )
+                      : SizedBox(
+                          height: 0.h,
+                        )
+                  : Text(
+                      widget.objective.stateValue! == 0
+                          ? "Non commencé"
+                          : "Complété à ${widget.objective.stateValue}%",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 12.sp,
+                          color: widget.objective.fontColor,
+                          fontFamily: "Greenhouse",
+                          fontWeight: FontWeight.w500),
+                    ),
               !displayFront ? displayObjectiveType() : Container(),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  displayProgressBar() {
-    return LinearProgressBar(
-      maxSteps: 100,
-      progressType: LinearProgressBar.progressTypeLinear,
-      currentStep: widget.objective.stateValue ?? 0,
-      progressColor: SoulPotTheme.spGreen,
-      backgroundColor: Colors.grey,
-      semanticsLabel: "Label",
-      semanticsValue: "Value",
     );
   }
 

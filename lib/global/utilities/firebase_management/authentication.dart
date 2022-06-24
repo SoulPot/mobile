@@ -1,7 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/global/utilities/firebase_management/analytics.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
@@ -14,9 +17,37 @@ import '../custom_snackbar.dart';
 import '../error_thrower.dart';
 
 class AuthenticationManager {
-  static Future<Widget> initializeApp(BuildContext context) async {
-    User? user = FirebaseAuth.instance.currentUser;
 
+  static final FirebaseAuth auth = FirebaseAuth.instanceFor(app: Firebase.apps.first);
+
+  static Future<Widget> initializeApp(BuildContext context) async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    User? user = auth.currentUser;
+
+    await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+      alert: true, // Required to display a heads up notification
+      badge: true,
+      sound: true,
+    );
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? firstTime = prefs.getBool('first_launch');
+
+    /*if(firstTime == null) {
+      return const AnalyzerCountPickerView();
+    } else if (firstTime == false){
+
+    }*/
     if (user != null) {
       List<Objective> objectives = await FirestoreManager.getStaticObjectives();
       List<Plant> codex = await FirestoreManager.getCodex();
@@ -28,8 +59,9 @@ class AuthenticationManager {
   static Future<bool> signInWithPwd(
       BuildContext context, String email, String password) async {
     try {
-      await FirebaseAuth.instance
+      await AuthenticationManager.auth
           .signInWithEmailAndPassword(email: email, password: password);
+      await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
       AnalyticsManager.logEmailPwdAuth();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -41,12 +73,12 @@ class AuthenticationManager {
   static Future<bool> signUp(
       BuildContext context, String email, String password) async {
     try {
-      await FirebaseAuth.instance
+      await auth
           .createUserWithEmailAndPassword(email: email, password: password);
       String delimiter = '@';
       int lastIndex = email.indexOf(delimiter);
 
-      FirebaseAuth.instance.currentUser
+      auth.currentUser
           ?.updateDisplayName(email.substring(0, lastIndex));
       return true;
     } on FirebaseAuthException catch (e) {
@@ -66,7 +98,8 @@ class AuthenticationManager {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    await FirebaseAuth.instance.signInWithCredential(credential);
+    await auth.signInWithCredential(credential);
+    await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
     return true;
   }
 
@@ -74,7 +107,16 @@ class AuthenticationManager {
     final LoginResult loginResult = await FacebookAuth.instance.login();
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    await FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+    await auth.signInWithCredential(facebookAuthCredential);
+    await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
     return true;
+  }
+
+  static Future<void> signOut() async {
+    await FirebaseMessaging.instance.unsubscribeFromTopic(auth.currentUser!.uid);
+    print("Unsubscribed from topic: ${auth.currentUser!.uid}");
+    await auth.signOut();
+    await GoogleSignIn().signOut();
+    await FacebookAuth.instance.logOut();
   }
 }

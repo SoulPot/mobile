@@ -10,12 +10,13 @@ class BluetoothManager {
 
   static Future<BluetoothDevice?> scanForAnalyzer() async {
     BluetoothDevice? analyzer;
-    var results = await flutterBlue.startScan(timeout: const Duration(seconds: 4));
-      for (ScanResult r in results) {
-        if (r.advertisementData.localName.contains("SOULPOT_ESP32_")) {
-          analyzer = r.device;
-        }
+    var results =
+        await flutterBlue.startScan(timeout: const Duration(seconds: 4));
+    for (ScanResult r in results) {
+      if (r.advertisementData.localName.contains("SOULPOT_ESP32_")) {
+        analyzer = r.device;
       }
+    }
     return analyzer;
   }
 
@@ -38,14 +39,39 @@ class BluetoothManager {
     }
     return analyzerCharacteristic;
   }
+  static Future<void> writeToCharacteristic(
+      BluetoothCharacteristic? characteristic, String data) async {
+    if (characteristic == null) {
+      return;
+    }
+    await characteristic.write(const Utf8Encoder().convert(data),
+        withoutResponse: true);
+  }
 
-  static Future<void> sendData(BuildContext context, BluetoothDevice? analyzer,
-      BluetoothCharacteristic? analyzerCharacteristic, String data) async {
+  static Future<bool> sendCredentials(String credentials) async {
+    BluetoothCharacteristic? characteristic = await scanForAnalyzerCharacteristic(
+        await scanForAnalyzer(), "SOULPOT_ESP32_Credentials");
+    if (characteristic == null) {
+      return false;
+    }
+    if(await sendData(characteristic, credentials)) {
+      return true;
+    }
+    return false;
+  }
+
+  static Future<int> readAnalyzerCharacteristic(
+      BluetoothCharacteristic? analyzerCharacteristic) async {
+    var data = await analyzerCharacteristic!.read();
+    return data[0];
+  }
+
+  static Future<bool> sendData(BluetoothCharacteristic? analyzerCharacteristic, String data) async {
     try {
       await analyzerCharacteristic?.write(utf8.encode(data));
+      return true;
     } catch (error) {
-      snackBarCreator(
-          context, "Error while sending data : $error", SoulPotTheme.spPaleRed);
+      return false;
     }
   }
 }

@@ -1,15 +1,17 @@
 import 'dart:io';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:intl/intl.dart';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 
 class AnalyticsManager {
-  static AnalyticsManager instance = AnalyticsManager.instance;
+
+  static final FirebaseAnalytics analytics = FirebaseAnalytics.instanceFor(app: Firebase.apps.first);
 
   static void logEmailPwdAuth() async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
-    await FirebaseAnalytics.instance.logEvent(
+    await analytics.logEvent(
       name: "authentication",
       parameters: {
         "date": formattedDate,
@@ -22,7 +24,7 @@ class AnalyticsManager {
   static void logFacebookAuth() async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
-    await FirebaseAnalytics.instance.logEvent(
+    await analytics.logEvent(
       name: "authentication",
       parameters: {
         "date": formattedDate,
@@ -35,7 +37,7 @@ class AnalyticsManager {
   static void logGoogleAuth() async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
-    await FirebaseAnalytics.instance.logEvent(
+    await analytics.logEvent(
       name: "authentication",
       parameters: {
         "date": formattedDate,
@@ -48,7 +50,7 @@ class AnalyticsManager {
   static void logSignUp() async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
-    await FirebaseAnalytics.instance.logEvent(
+    await analytics.logEvent(
       name: "new account",
       parameters: {
         "date": formattedDate,
@@ -60,7 +62,7 @@ class AnalyticsManager {
   static void logNewPlantAdded(String plantName) async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
-    await FirebaseAnalytics.instance.logEvent(
+    await analytics.logEvent(
       name: "new plant",
       parameters: {
         "date": formattedDate,
@@ -73,7 +75,7 @@ class AnalyticsManager {
   static void logSprinkle() async {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
-    await FirebaseAnalytics.instance.logEvent(
+    await analytics.logEvent(
       name: "new plant",
       parameters: {
         "date": formattedDate,

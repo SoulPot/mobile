@@ -2,15 +2,17 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:soulpot/models/objective.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:soulpot/models/plant.dart';
 import 'package:soulpot/models/recommendations.dart';
 
 import '../theme.dart';
+import 'authentication.dart';
 
 class FirestoreManager {
-  static FirebaseFirestore firestore = FirebaseFirestore.instance;
+  static final FirebaseFirestore firestore = FirebaseFirestore.instanceFor(app: Firebase.apps.first);
 
   static Future<List<Objective>> getStaticObjectives() async {
     List<Objective> objectivesStatic = [];
@@ -39,7 +41,7 @@ class FirestoreManager {
     return firestore
         .collection("analyzers")
         .where("userID",
-            isEqualTo: FirebaseAuth.instance.currentUser!.uid.toString())
+            isEqualTo: AuthenticationManager.auth.currentUser!.uid.toString())
         .snapshots();
   }
 
