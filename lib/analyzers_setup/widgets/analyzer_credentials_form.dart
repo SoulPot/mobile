@@ -248,6 +248,7 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                   widget.analyzer.id = deviceAfterRestart?.name;
                                   await FirebaseMessaging.instance
                                       .subscribeToTopic(widget.analyzer.id!);
+                                  await deviceAfterRestart!.disconnect();
                                   setState(() {
                                     Navigator.of(context).pop(selectedSSID != "" ? selectedSSID : _ssidController.text);
                                   });

@@ -236,6 +236,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                               analyzerToCreate.plant = selectedPlant;
                               analyzerToCreate.wifiName = ssid;
                               FirestoreManager.createAnalyzer(analyzerToCreate);
+                              Navigator.pop(context);
                             } else {
                               setState(() {
                                 showError = true;
