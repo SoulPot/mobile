@@ -41,9 +41,9 @@ class _AnalyzersViewState extends State<AnalyzersView> {
                         .first;
                     return CardInfoAnalyzer(
                       analyzer: Analyzer(
-                        document.id,
                         document["name"],
                         false,
+                        id: document.id,
                         battery: document["battery"],
                         temperature: document["temperature"],
                         humidity: document["humidity"],

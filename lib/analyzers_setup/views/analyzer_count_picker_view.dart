@@ -114,7 +114,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                   child: ElevatedButton(
                     onPressed: () async {
                       for (int i = 0; i < _currentAnalyzerCount + 1; i++) {
-                        _analyzers.add(Analyzer("1","Analyzer ${i + 1}", false));
+                        _analyzers.add(Analyzer("Analyzer ${i + 1}", false));
                       }
                       Navigator.push(
                         context,
