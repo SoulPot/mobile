@@ -60,6 +60,15 @@ class FirestoreManager {
     List<Plant> result = [];
     var data = await firestore.collection("plants").get();
     for (var document in data.docs) {
+      var famille =
+          document.data().keys.contains("family") ? document["family"] : "";
+      var recoText = document.data().keys.contains("recommendations")
+          ? document["recommendations"]
+          : "";
+      var shortDescription = document.data().keys.contains("short_description")
+          ? document["short_description"]
+          : "";
+
       result.add(
         Plant(
           document.id,
@@ -71,6 +80,9 @@ class FirestoreManager {
             [document["min_soil_moist"], document["max_soil_moist"]],
             [document["min_light_lux"], document["max_light_lux"]],
           ),
+          famille,
+          recoText,
+          shortDescription,
         ),
       );
     }

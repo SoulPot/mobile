@@ -43,7 +43,7 @@ class AuthenticationManager {
     );
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? firstTime = prefs.getBool('first_launch');
+    bool? firstTime = false;
 
     if(firstTime == null) {
     List<Plant> codex = await FirestoreManager.getCodex();

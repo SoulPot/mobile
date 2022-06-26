@@ -24,7 +24,7 @@ class _PlantItemCardState extends State<PlantItemCard> {
         borderRadius: BorderRadius.circular(30),
       ),
       child: GestureDetector(
-          onTap: (){
+          onTap: () {
             Navigator.push(
               context,
               PageTransition(
@@ -45,21 +45,33 @@ class _PlantItemCardState extends State<PlantItemCard> {
                   imageUrl: widget.plant.gifURL,
                   height: 10.h,
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
-                      Center(child: CircularProgressIndicator(value: downloadProgress.progress, color: SoulPotTheme.spGreen, strokeWidth: 1.w)),
-                  errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
+                      Center(
+                          child: CircularProgressIndicator(
+                              color: SoulPotTheme.spGreen,
+                              strokeWidth: 1.w)),
+                  errorWidget: (context, url, error) =>
+                      const Center(child: Icon(Icons.error)),
                 ),
+                VerticalDivider(),
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(widget.plant.alias),
-                    Text("Famille > ${widget.plant.plantID}")
+                    Text(
+                      widget.plant.alias,
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    SizedBox(
+                        width: 60.w,
+                        child: Text(
+                          "${widget.plant.shortDescription}",
+                          style: TextStyle(color: Colors.black54),
+                        )),
                   ],
                 ),
+                Icon(Icons.arrow_circle_right),
               ],
             ),
           )),
     );
   }
-
 }
-
