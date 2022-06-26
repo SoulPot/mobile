@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/models/analyzer.dart';
 
@@ -18,12 +17,14 @@ class AnalyzerCredentialsForm extends StatefulWidget {
       {required this.analyzer,
       Key? key,
       required this.scannedSSIDs,
-      required this.wifiCharacteristic})
+      required this.wifiCharacteristic,
+      required this.espDevice})
       : super(key: key);
 
   final Analyzer analyzer;
   final List<String> scannedSSIDs;
   final BluetoothCharacteristic wifiCharacteristic;
+  final BluetoothDevice espDevice;
 
   @override
   State<AnalyzerCredentialsForm> createState() =>
@@ -32,7 +33,6 @@ class AnalyzerCredentialsForm extends StatefulWidget {
 
 class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
   int? espState;
-  late BluetoothDevice espDevice;
 
   List<String> wifiCredentials = ["SSID", "PASSWORD"];
   late String selectedSSID;
@@ -41,10 +41,11 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
 
   bool showLoadingWifi = false;
   bool showErrorWifi = false;
+  bool espConnectedToWifi = false;
 
   @override
   void initState() {
-    espDevice = BluetoothDevice.fromId(widget.wifiCharacteristic.deviceId.id);
+    print("ESP device: ${widget.espDevice.name}");
     selectedSSID = Platform.isAndroid ? widget.scannedSSIDs.first : "";
     super.initState();
   }
@@ -180,7 +181,7 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                             const Spacer(),
                             ElevatedButton(
                               onPressed: () async {
-                                espDevice.disconnect();
+                                widget.espDevice.disconnect();
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(
@@ -213,14 +214,28 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                     : _ssidController.text;
 
                                 wifiCredentials[1] = _wifiPassController.text;
-
-                                espState = await BluetoothManager.sendCredentials(
+                                await BluetoothManager.sendCredentials(
                                     credentials:
                                         "${wifiCredentials[0]},${wifiCredentials[1]}",
-                                    isSetup: true,
                                     characteristic: widget.wifiCharacteristic);
 
-                                if (espState == 2) {
+                                await Future.delayed(
+                                  const Duration(seconds: 13),
+                                ); // WAIT UNTIL THE ESP CONNECTS TO THE WIFI AND RESTART IF IT'S CONNECTED
+                                await widget.espDevice.disconnect();
+                                BluetoothDevice? deviceAfterRestart =
+                                    await BluetoothManager.getAnalyzerDevice(
+                                        analyzerID: widget.espDevice.name);
+                                BluetoothCharacteristic?
+                                    characteristicAfterRestart =
+                                    await BluetoothManager
+                                        .getAnalyzerCharacteristic(
+                                            deviceAfterRestart); // GET THE NEW CHARACTERISTIC AFTER THE ESP CONNECTS TO THE WIFI
+                                espState =
+                                    await BluetoothManager.readCharacteristic(
+                                        characteristicAfterRestart); // READ THE NEW CHARACTERISTIC
+
+                                if (espState != 0) {
                                   // CASE ERROR WIFI CONNECTION
                                   _ssidController.text = "";
                                   _wifiPassController.text = "";
@@ -228,14 +243,14 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                     showLoadingWifi = false;
                                     showErrorWifi = true;
                                   });
-                                } else if (espState == 1) {
-                                  widget.analyzer.id = espDevice.id.id;
+                                } else if (espState == 0) {
+                                  // CASE WIFI CONNECTED
+                                  widget.analyzer.id = deviceAfterRestart?.name;
                                   await FirebaseMessaging.instance
                                       .subscribeToTopic(widget.analyzer.id!);
-                                  var prefs =
-                                      await SharedPreferences.getInstance();
-
-                                  //prefs.setBool("first_launch", false);
+                                  setState(() {
+                                    Navigator.of(context).pop(selectedSSID != "" ? selectedSSID : _ssidController.text);
+                                  });
                                 }
                               },
                               style: ElevatedButton.styleFrom(

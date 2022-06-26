@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/utilities/bluetooth_manager.dart';
 import 'package:soulpot/models/analyzer.dart';
@@ -9,7 +10,9 @@ import '../../global/utilities/theme.dart';
 import '../../global/widgets/dropdown_wifi_picker.dart';
 
 class AnalyzerWifiModifier extends StatefulWidget {
-  const AnalyzerWifiModifier({Key? key, required this.ssids, required this.analyzer}) : super(key: key);
+  const AnalyzerWifiModifier(
+      {Key? key, required this.ssids, required this.analyzer})
+      : super(key: key);
 
   final List<String> ssids;
   final Analyzer analyzer;
@@ -30,7 +33,7 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
   initState() {
     super.initState();
     ssids = widget.ssids.toSet().toList();
-    if(Platform.isAndroid) ssids.removeWhere((element) => element == "");
+    if (Platform.isAndroid) ssids.removeWhere((element) => element == "");
     selectedSSID = ssids[0];
   }
 
@@ -82,7 +85,8 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                     decoration: InputDecoration(
                                       hintText: 'SSID',
                                       hintStyle: TextStyle(
-                                          fontFamily: "Greenhouse", fontSize: 11.sp),
+                                          fontFamily: "Greenhouse",
+                                          fontSize: 11.sp),
                                       border: const OutlineInputBorder(),
                                     ),
                                     style: TextStyle(
@@ -182,7 +186,16 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                 _wifiPassController.text != "") {
                               wifiCredentials[0] = _ssidController.text;
                               wifiCredentials[1] = _wifiPassController.text;
-                              BluetoothManager.sendCredentials(credentials: "${wifiCredentials[0]},${wifiCredentials[1]}", isSetup: false, analyzer: widget.analyzer);
+                              BluetoothDevice? espDevice =
+                                  await BluetoothManager.getAnalyzerDevice(
+                                      analyzerID: widget.analyzer.id);
+                              BluetoothCharacteristic? espCharacteristic =
+                                  await BluetoothManager
+                                      .getAnalyzerCharacteristic(espDevice);
+                              BluetoothManager.sendCredentials(
+                                  credentials:
+                                      "${wifiCredentials[0]},${wifiCredentials[1]}",
+                                  characteristic: espCharacteristic);
                             } else {
                               setState(() {
                                 errorVisible = true;

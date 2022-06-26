@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:soulpot/analyzers_setup/views/analyzer_count_picker_view.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/global/utilities/firebase_management/analytics.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
@@ -17,8 +18,8 @@ import '../custom_snackbar.dart';
 import '../error_thrower.dart';
 
 class AuthenticationManager {
-
-  static final FirebaseAuth auth = FirebaseAuth.instanceFor(app: Firebase.apps.first);
+  static final FirebaseAuth auth =
+      FirebaseAuth.instanceFor(app: Firebase.apps.first);
 
   static Future<Widget> initializeApp(BuildContext context) async {
     FirebaseMessaging messaging = FirebaseMessaging.instance;
@@ -34,7 +35,8 @@ class AuthenticationManager {
       sound: true,
     );
 
-    await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
       alert: true, // Required to display a heads up notification
       badge: true,
       sound: true,
@@ -43,15 +45,15 @@ class AuthenticationManager {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_launch');
 
-    /*if(firstTime == null) {
-      return const AnalyzerCountPickerView();
+    if(firstTime == null) {
+    List<Plant> codex = await FirestoreManager.getCodex();
+      return AnalyzerCountPickerView(codex: codex);
     } else if (firstTime == false){
-
-    }*/
-    if (user != null) {
-      List<Objective> objectives = await FirestoreManager.getStaticObjectives();
-      List<Plant> codex = await FirestoreManager.getCodex();
-      return HomeView(codex: codex, objectives: objectives);
+      if (user != null) {
+        List<Objective> objectives = await FirestoreManager.getStaticObjectives();
+        List<Plant> codex = await FirestoreManager.getCodex();
+        return HomeView(codex: codex, objectives: objectives);
+      }
     }
     return const SignInView();
   }
@@ -73,13 +75,10 @@ class AuthenticationManager {
   static Future<bool> signUp(
       BuildContext context, String email, String password) async {
     try {
-      await auth
-          .createUserWithEmailAndPassword(email: email, password: password);
-      String delimiter = '@';
-      int lastIndex = email.indexOf(delimiter);
-
-      auth.currentUser
-          ?.updateDisplayName(email.substring(0, lastIndex));
+      var userCredentials = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      await FirestoreManager.addUser(userCredentials.user!.uid);
+      await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
       return true;
     } on FirebaseAuthException catch (e) {
       ErrorThrower.firebaseErrorThrower(e, context);
@@ -98,8 +97,12 @@ class AuthenticationManager {
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
-    await auth.signInWithCredential(credential);
+    var userCredentials = await auth.signInWithCredential(credential);
     await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
+    if (userCredentials.additionalUserInfo!.isNewUser) {
+      await FirestoreManager.addUser(userCredentials.user!.uid);
+      await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
+    }
     return true;
   }
 
@@ -107,13 +110,19 @@ class AuthenticationManager {
     final LoginResult loginResult = await FacebookAuth.instance.login();
     final OAuthCredential facebookAuthCredential =
         FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    await auth.signInWithCredential(facebookAuthCredential);
+    var userCredentials =
+        await auth.signInWithCredential(facebookAuthCredential);
     await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
+    if (userCredentials.additionalUserInfo!.isNewUser) {
+      await FirestoreManager.addUser(userCredentials.user!.uid);
+      await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
+    }
     return true;
   }
 
   static Future<void> signOut() async {
-    await FirebaseMessaging.instance.unsubscribeFromTopic(auth.currentUser!.uid);
+    await FirebaseMessaging.instance
+        .unsubscribeFromTopic(auth.currentUser!.uid);
     print("Unsubscribed from topic: ${auth.currentUser!.uid}");
     await auth.signOut();
     await GoogleSignIn().signOut();

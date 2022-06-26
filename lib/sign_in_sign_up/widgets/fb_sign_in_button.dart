@@ -31,7 +31,7 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
           List<Plant> codex = await FirestoreManager.getCodex();
           List<Objective> objectives =
           await FirestoreManager.getStaticObjectives();
-          if (mounted) return;
+          if (!mounted) return;
           Navigator.pushReplacement(
             context,
             PageTransition(

@@ -6,11 +6,13 @@ import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/analyzers_setup/widgets/analyzer_count_printer.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../models/plant.dart';
 import 'analyzer_setup_view.dart';
 
 class AnalyzerCountPickerView extends StatefulWidget {
-  const AnalyzerCountPickerView({Key? key}) : super(key: key);
+  AnalyzerCountPickerView({Key? key, required this.codex}) : super(key: key);
 
+  final List<Plant> codex;
   @override
   State<AnalyzerCountPickerView> createState() =>
       _AnalyzerCountPickerViewState();
@@ -126,6 +128,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                             type: PageTransitionType.fade,
                             child: AnalyzerSetupView(
                               analyzers: _analyzers,
+                              codex: widget.codex,
                             ),
                             childCurrent: context.widget),
                       );

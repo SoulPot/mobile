@@ -19,9 +19,4 @@ class SoulPotTheme {
   static Map<String, Color> temperatureColors = {"Cold": const Color(0xFFB1F4E7), "Good": spPaleGreen, "Hot" : const Color(0xFFFF3F34)};
   static Map<String, Color> humidityColors = {"Wet": const Color(0xFF4682B4), "Good": spPaleGreen, "Dry" : const Color(0xFFFFE4B5)};
 
-  static const _kFontFam = 'SoulPot';
-  static const String? _kFontPkg = null;
-
-  static const IconData water = IconData(0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
-
 }

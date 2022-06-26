@@ -147,6 +147,7 @@ class _SignUpViewState extends State<SignUpView> {
                         if (FieldsManager.checkSignupFields(context, _emailController.text, _pwdController.text, _confirmPwdController.text)) {
                           bool registered = await AuthenticationManager.signUp(context, _emailController.text.trim(), _pwdController.text.trim());
                           if (registered) {
+                            await AuthenticationManager.auth.signOut();
                             if (!mounted) return;
                             Navigator.pushReplacement(
                               context,
