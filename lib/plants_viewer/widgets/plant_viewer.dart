@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:battery_indicator/battery_indicator.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -26,71 +25,39 @@ class _PlantViewerState extends State<PlantViewer> {
       children: [
         Row(
           children: [
-            Expanded(
-              flex: 1,
-              child: Padding(
-                padding: EdgeInsets.only(top: 1.h, right: 2.w),
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(bottom: 1.h),
-                      child: Text(
-                        "Batterie",
-                        style: TextStyle(
-                          fontSize: 11.sp,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: "Greenhouse",
-                        ),
-                      ),
-                    ),
-                    BatteryIndicator(
-                      batteryFromPhone: false,
-                      batteryLevel: widget.analyzer.battery!,
-                      style: BatteryIndicatorStyle.skeumorphism,
-                      showPercentNum: true,
-                      size: 5.w,
-                      colorful: true,
-                    ),
-                  ],
+            const Spacer(),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 1.h),
+              child: SizedBox(
+                width: 75.w,
+                child: Text(
+                  widget.analyzer.name,
+                  style: TextStyle(
+                    fontSize: 16.sp,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: "Greenhouse",
+                  ),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
-            Expanded(
-              flex: 2,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 1.h, horizontal: 0.5.w),
-                child: SizedBox(
-                  width: 75.w,
-                  child: Text(
-                    widget.analyzer.name,
-                    style: TextStyle(
-                      fontSize: 16.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Greenhouse",
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
+            Padding(
+              padding: EdgeInsets.only(top: 2.h),
+              child: ElevatedButton(
+                onPressed: () async {
+                  await showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) => const DisconnectDialog());
+                },
+                style: ElevatedButton.styleFrom(
+                  primary: SoulPotTheme.spRed,
+                  fixedSize: Size(5.h, 5.h),
+                  shape: const CircleBorder(),
                 ),
-              ),
-            ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.only(top: 2.h),
-                child: ElevatedButton(
-                  onPressed: () async {
-                    await showDialog(
-                        context: context,
-                        builder: (BuildContext context) => DisconnectDialog());
-                  },
-                  style: ElevatedButton.styleFrom(
-                    primary: SoulPotTheme.spRed,
-                    fixedSize: Size(5.h, 5.h),
-                    shape: const CircleBorder(),
-                  ),
-                  child: const Icon(
-                    Icons.door_front_door_rounded,
-                    color: Colors.white,
-                  ),
+                child: const Icon(
+                  Icons.door_front_door_rounded,
+                  color: Colors.white,
                 ),
               ),
             ),
@@ -115,7 +82,7 @@ class _PlantViewerState extends State<PlantViewer> {
           child: Row(
             children: [
               const Spacer(),
-              widget.analyzer.needSprinkle
+              widget.analyzer.needSprinkle && widget.analyzer.humidity != -255
                   ? ElevatedButton(
                       onPressed: water,
                       style: ElevatedButton.styleFrom(
@@ -128,7 +95,7 @@ class _PlantViewerState extends State<PlantViewer> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
-                            SoulPotTheme.water,
+                            Icons.shower_rounded,
                             color: SoulPotTheme.spBT,
                           ),
                           Padding(
@@ -161,7 +128,7 @@ class _PlantViewerState extends State<PlantViewer> {
           children: [
             CardInfoPlant(
               label: "Luminosité",
-              value: "${widget.analyzer.luminosity!} lux",
+              value: widget.analyzer.luminosity! == -255 ? "Aucune donnée" : "${widget.analyzer.luminosity!} lux",
               backgroundColor: getLuminosityColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
@@ -169,7 +136,7 @@ class _PlantViewerState extends State<PlantViewer> {
             ),
             CardInfoPlant(
               label: "Température",
-              value: "${widget.analyzer.temperature!}°C",
+              value: widget.analyzer.temperature! == -255 ? "Aucune donnée" : "${widget.analyzer.temperature!}°C",
               backgroundColor: getTemperatureColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
@@ -182,7 +149,7 @@ class _PlantViewerState extends State<PlantViewer> {
             const Spacer(),
             CardInfoPlant(
               label: "Humidité",
-              value: "${widget.analyzer.humidity!}%",
+              value: widget.analyzer.humidity! == -255 ? "Aucune donnée" : "${widget.analyzer.humidity!}%",
               backgroundColor: getHumidityColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:

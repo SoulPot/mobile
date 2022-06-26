@@ -1,5 +1,3 @@
-import 'package:battery_indicator/battery_indicator.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/analyzers_viewer/widgets/analyzer_details_dialog.dart';
@@ -36,7 +34,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                     child: Text(
                       widget.analyzer.name,
                       style: TextStyle(
-                          fontSize: 16.sp,
+                          fontSize: 15.sp,
                           fontWeight: FontWeight.bold,
                           fontFamily: "Greenhouse"),
                     ),
@@ -55,21 +53,17 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 2.w),
+                        padding: EdgeInsets.only(left: 2.w, top: 1.h),
                         child: Row(
                           children: [
-                            BatteryIndicator(
-                              batteryFromPhone: false,
-                              batteryLevel: widget.analyzer.battery!,
-                              style: BatteryIndicatorStyle.skeumorphism,
-                              showPercentNum: true,
-                              size: 2.2.w,
-                              colorful: true,
+                            const Icon(
+                              Icons.info_outline,
+                              color: SoulPotTheme.spBlack,
                             ),
                             Padding(
-                              padding: EdgeInsets.only(left: 2.w),
+                              padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                " Charge batterie : ${widget.analyzer.battery}%",
+                                " Identifiant : ${widget.analyzer.id!}",
                                 style: TextStyle(fontSize: 12.sp),
                                 textAlign: TextAlign.start,
                               ),
@@ -100,19 +94,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                   ),
                 ),
               ),
-              Expanded(
-                flex: 2,
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 3.h, right: 6.w),
-                  child: CachedNetworkImage(
-                    imageUrl: widget.analyzer.imageURL!,
-                    height: 10.h,
-                    progressIndicatorBuilder: (context, url, downloadProgress) =>
-                        Center(child: CircularProgressIndicator(value: downloadProgress.progress, color: SoulPotTheme.spGreen, strokeWidth: 1.w)),
-                    errorWidget: (context, url, error) => const Center(child: Icon(Icons.error)),
-                  ),
-                ),
-              ),
+
               Expanded(
                 child: Padding(
                   padding: EdgeInsets.only(bottom: 5.h),

@@ -57,14 +57,16 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                         widget.objectives[i].owned =
                             userObjectiveData[element]["owned"];
                         if (widget.objectives[i].owned!) {
-                          widget.objectives[i].ownedDate = timestampToFormattedDateString(userObjectiveData[element]
-                              ["ownedDate"] as Timestamp);
-                          widget.objectives[i].stateValue = userObjectiveData[
-                          element]["status"];
+                          widget.objectives[i].ownedDate =
+                              timestampToFormattedDateString(
+                                  userObjectiveData[element]["ownedDate"]
+                                      as Timestamp);
+                          widget.objectives[i].stateValue =
+                              userObjectiveData[element]["status"].toInt();
                           ownedObjectives.add(widget.objectives[i]);
                         }
                         widget.objectives[i].stateValue =
-                            userObjectiveData[element]["status"];
+                            userObjectiveData[element]["status"].toInt();
                       }
                     }
                   }
@@ -72,6 +74,7 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                   availableObjectives = widget.objectives
                       .where((element) => !ownedObjectives.contains(element))
                       .toList();
+                  availableObjectives.sort((b, a) => a.stateValue!.compareTo(b.stateValue!));
 
                   return Column(
                     children: [
@@ -86,7 +89,8 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                         ),
                       ),
                       Expanded(
-                        child: ObjectivesViewer(objectives: availableObjectives),
+                        child:
+                            ObjectivesViewer(objectives: availableObjectives),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(vertical: 2.h),
@@ -99,8 +103,7 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                         ),
                       ),
                       Expanded(
-                        child:
-                            ObjectivesViewer(objectives: ownedObjectives),
+                        child: ObjectivesViewer(objectives: ownedObjectives),
                       ),
                     ],
                   );

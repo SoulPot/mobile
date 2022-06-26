@@ -1,11 +1,17 @@
 import 'dart:io';
 
-import 'package:battery_indicator/battery_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_blue_plus/flutter_blue_plus.dart';
+import 'package:soulpot/analyzers_setup/widgets/analyzer_credentials_form.dart';
+import 'package:soulpot/analyzers_setup/widgets/analyzer_pairing_dialog.dart';
+import 'package:soulpot/analyzers_setup/widgets/analyzer_rename_dialog.dart';
+import 'package:soulpot/analyzers_viewer/widgets/delete_analyzer_dialog.dart';
+import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/global/utilities/wifi_manager.dart';
 import 'package:soulpot/analyzers_viewer/widgets/analyzer_wifi_modifier.dart';
 import 'package:sizer/sizer.dart';
 
+import '../../global/utilities/bluetooth_manager.dart';
 import '../../models/analyzer.dart';
 import '../../global/utilities/theme.dart';
 
@@ -20,13 +26,12 @@ class AnalyzerDetailsDialog extends StatefulWidget {
 }
 
 class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
-
   @override
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       child: SizedBox(
-        height: 50.h,
+        height: 40.h,
         width: 90.w,
         child: Padding(
           padding: EdgeInsets.all(1.h),
@@ -40,51 +45,62 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                   fontFamily: "Greenhouse",
                 ),
               ),
-              const Spacer(),
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 2.w),
-                    child: BatteryIndicator(
-                      batteryFromPhone: false,
-                      batteryLevel: widget.analyzer.battery!,
-                      style: BatteryIndicatorStyle.skeumorphism,
-                      showPercentNum: true,
-                      size: 3.w,
-                      colorful: true,
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 1.h),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    await showDialog(
+                      barrierDismissible: false,
+                      context: context,
+                      builder: (BuildContext context) =>
+                          RenameDialog(analyzer: widget.analyzer),
+                    ).then((_) async {
+                      await FirestoreManager.updateAnalyzerName(widget.analyzer.id!, widget.analyzer.name);
+                      setState(() {});
+
+                    });
+                  },
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30.0),
                     ),
+                    primary: SoulPotTheme.spGreen,
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 5.w, vertical: 1.h),
                   ),
-                  Text(
-                    "Charge de la batterie : ${widget.analyzer.battery} %",
+                  child: Text(
+                    "Renommer",
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Greenhouse",
-                    ),
+                        color: Colors.white,
+                        fontSize: 10.sp,
+                        fontFamily: "Greenhouse",
+                        fontWeight: FontWeight.bold),
                   ),
-                ],
+                ),
               ),
-              const Spacer(),
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 2.w),
-                    child: const Icon(
-                      Icons.smart_toy,
-                      color: SoulPotTheme.spGreen,
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 2.h),
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 2.w),
+                      child: const Icon(
+                        Icons.smart_toy,
+                        color: SoulPotTheme.spGreen,
+                      ),
                     ),
-                  ),
-                  Text(
-                    "ID de l'analyzer : ${widget.analyzer.id}",
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: "Greenhouse",
+                    Text(
+                      "ID de l'analyzer : ${widget.analyzer.id}",
+                      style: TextStyle(
+                        fontSize: 12.sp,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: "Greenhouse",
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-              const Spacer(),
               Column(
                 children: [
                   Row(
@@ -110,14 +126,11 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                     padding: EdgeInsets.only(top: 1.h),
                     child: ElevatedButton(
                       onPressed: () async {
-                        var ssids = await getWifi();
                         showDialog(
+                          barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) =>
-                              AnalyzerWifiModifier(
-                            ssids: ssids,
-                            analyzer: widget.analyzer,
-                          ),
+                              AnalyzerPairingDialog(analyzer: widget.analyzer),
                         );
                       },
                       style: ElevatedButton.styleFrom(
@@ -145,7 +158,21 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
               Padding(
                 padding: EdgeInsets.only(bottom: 1.h),
                 child: ElevatedButton(
-                  onPressed: () async {},
+                  onPressed: () async {
+                    await showDialog(
+                            barrierDismissible: false,
+                            context: context,
+                            builder: (BuildContext context) =>
+                                DeleteAnalyzerDialog(analyzer: widget.analyzer))
+                        .then((value) async {
+                      if (value) {
+                        await FirestoreManager.deletedAnalyzer(
+                            widget.analyzer.id!);
+                        if (!mounted) return;
+                        Navigator.pop(context);
+                      }
+                    });
+                  },
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30.0),

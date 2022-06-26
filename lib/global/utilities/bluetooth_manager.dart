@@ -12,23 +12,28 @@ class BluetoothManager {
 
   static FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
-  static Future<BluetoothCharacteristic?> getAnalyzerCharacteristic({required bool isSetup, Analyzer? analyzer}) async {
+  static Future<BluetoothDevice?> getAnalyzerDevice({String? analyzerID}) async {
     BluetoothDevice? analyzer;
-
+    String deviceNameToFind = analyzerID ?? ESP_DEVICE_NAME;
+    print("Searching for $deviceNameToFind");
     if (Platform.isIOS) {
       flutterBlue.scan();
       await flutterBlue.stopScan();
     }
     var results =
-        await flutterBlue.startScan(timeout: const Duration(seconds: 4));
+    await flutterBlue.startScan(timeout: const Duration(seconds: 4));
     for (ScanResult r in results) {
-      if (r.advertisementData.localName.contains(isSetup ? ESP_DEVICE_NAME : analyzer!.id.toString())) {
+      print("SUPPOSED ${deviceNameToFind}, FOUND ${r.advertisementData.localName.toString()}");
+      if (r.advertisementData.localName.contains(deviceNameToFind)) {
         analyzer = r.device;
       }
       r.device.disconnect();
     }
     flutterBlue.stopScan();
+    return analyzer;
+  }
 
+  static Future<BluetoothCharacteristic?> getAnalyzerCharacteristic(BluetoothDevice? analyzer) async {
     if (analyzer == null) {
       return null;
     } else {
@@ -46,15 +51,13 @@ class BluetoothManager {
     return null;
   }
 
-  static Future<int> sendCredentials({required String credentials, required bool isSetup, BluetoothCharacteristic? characteristic, Analyzer? analyzer}) async {
-    characteristic ??= await BluetoothManager.getAnalyzerCharacteristic(isSetup: isSetup, analyzer: analyzer);
-    await writeData(characteristic, credentials);
-    print("Sent credentials: $credentials");
-    await Future.delayed(const Duration(seconds: 1));
-    int tempResult = await readCharacteristic(characteristic);
-    print("readed");
-    print("tempResult: $tempResult");
-    return await readCharacteristic(characteristic);
+  static Future<bool> sendCredentials({required String credentials, required BluetoothCharacteristic? characteristic}) async {
+    try {
+      await characteristic?.write(utf8.encode(credentials), withoutResponse: true);
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 
   static Future<int> readCharacteristic(BluetoothCharacteristic? characteristic) async {
@@ -63,15 +66,5 @@ class BluetoothManager {
     }
     var data = await characteristic.read();
     return data[0];
-  }
-
-  static Future<bool> writeData(
-      BluetoothCharacteristic? analyzerCharacteristic, String data) async {
-    try {
-      await analyzerCharacteristic?.write(utf8.encode(data));
-      return true;
-    } catch (error) {
-      return false;
-    }
   }
 }

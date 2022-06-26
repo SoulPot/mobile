@@ -66,6 +66,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                   analyzer: widget.analyzer,
                   scannedSSIDs: scannedSSIDs,
                   wifiCharacteristic: wifiCharacteristic!,
+                  espDevice: analyzer!,
                 )
               : Column(
                   children: [
@@ -90,8 +91,12 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   }
 
   Future<void> getBluetooth() async {
+    widget.analyzer.id != null
+        ? analyzer = await BluetoothManager.getAnalyzerDevice(
+            analyzerID: widget.analyzer.id)
+        : analyzer = await BluetoothManager.getAnalyzerDevice();
     wifiCharacteristic =
-        await BluetoothManager.getAnalyzerCharacteristic(isSetup: true);
+        await BluetoothManager.getAnalyzerCharacteristic(analyzer);
     if (wifiCharacteristic == null) {
       cancelBluetoothScan();
       setState(() {
@@ -106,7 +111,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   }
 
   void cancelBluetoothScan() {
-    snackBarCreator(context, "Aucun analyzer trouvé", SoulPotTheme.spPaleRed);
+    snackBarCreator(context, "Analyzer introuvable, êtes vous à portée ?", SoulPotTheme.spPaleRed);
     Navigator.of(context).pop();
   }
 

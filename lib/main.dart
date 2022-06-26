@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,12 +10,19 @@ import 'package:sizer/sizer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 
+import 'global/utilities/config.dart';
 import 'global/utilities/firebase_management/authentication.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FacebookAuth.instance.autoLogAppEventsEnabled(true);
-
+  if(Platform.isAndroid) {
+    AndroidDeviceInfo androidInfo = await DEVICE_INFOS.androidInfo;
+    DEVICE_ID = androidInfo.androidId;
+  } else if(Platform.isIOS) {
+    IosDeviceInfo iosInfo = await DEVICE_INFOS.iosInfo;
+    DEVICE_ID = iosInfo.identifierForVendor;
+  }
   await Firebase.initializeApp();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
