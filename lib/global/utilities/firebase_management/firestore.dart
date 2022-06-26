@@ -120,5 +120,4 @@ class FirestoreManager {
   static Future<void> deletedAnalyzer(String analyzerID) async {
     await firestore.collection("analyzers").doc(analyzerID).delete();
   }
-
 }
