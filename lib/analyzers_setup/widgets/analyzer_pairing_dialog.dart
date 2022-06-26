@@ -16,7 +16,8 @@ import '../../models/analyzer.dart';
 import '../../global/utilities/theme.dart';
 
 class AnalyzerPairingDialog extends StatefulWidget {
-  const AnalyzerPairingDialog({Key? key, required this.analyzer})
+  const AnalyzerPairingDialog(
+      {Key? key, required this.analyzer})
       : super(key: key);
 
   final Analyzer analyzer;
@@ -27,17 +28,14 @@ class AnalyzerPairingDialog extends StatefulWidget {
 
 class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   //BLE
-  BluetoothDevice? analyzer;
   BluetoothCharacteristic? wifiCharacteristic;
+  BluetoothDevice? espDevice;
+
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
   bool? deviceFound;
 
   bool showLoadingBluetooth = true;
-
-  bool showLoadingWifi = false;
-
-  bool onWifiError = false;
 
   List<String> scannedSSIDs = [];
 
@@ -66,7 +64,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
                   analyzer: widget.analyzer,
                   scannedSSIDs: scannedSSIDs,
                   wifiCharacteristic: wifiCharacteristic!,
-                  espDevice: analyzer!,
+                  espDevice: espDevice!,
                 )
               : Column(
                   children: [
@@ -91,12 +89,13 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   }
 
   Future<void> getBluetooth() async {
-    widget.analyzer.id != null
-        ? analyzer = await BluetoothManager.getAnalyzerDevice(
-            analyzerID: widget.analyzer.id)
-        : analyzer = await BluetoothManager.getAnalyzerDevice();
-    wifiCharacteristic =
-        await BluetoothManager.getAnalyzerCharacteristic(analyzer);
+    if(widget.analyzer.id == null) {
+      espDevice = await BluetoothManager.getFirstAnalyzerDeviceFound();
+      wifiCharacteristic = await BluetoothManager.getAnalyzerCharacteristic(espDevice);
+    } else {
+      espDevice = await BluetoothManager.getAnalyzerDeviceByDeviceID(analyzerID: widget.analyzer.id!);
+      wifiCharacteristic = await BluetoothManager.getAnalyzerCharacteristic(espDevice);
+    }
     if (wifiCharacteristic == null) {
       cancelBluetoothScan();
       setState(() {
@@ -111,7 +110,8 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   }
 
   void cancelBluetoothScan() {
-    snackBarCreator(context, "Analyzer introuvable, êtes vous à portée ?", SoulPotTheme.spPaleRed);
+    snackBarCreator(context, "Analyzer introuvable, êtes vous à portée ?",
+        SoulPotTheme.spPaleRed);
     Navigator.of(context).pop();
   }
 
