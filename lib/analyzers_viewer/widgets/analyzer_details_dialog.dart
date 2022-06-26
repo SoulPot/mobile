@@ -130,7 +130,7 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                           barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) =>
-                              AnalyzerPairingDialog(analyzer: widget.analyzer),
+                              AnalyzerPairingDialog(analyzer: widget.analyzer,),
                         );
                       },
                       style: ElevatedButton.styleFrom(

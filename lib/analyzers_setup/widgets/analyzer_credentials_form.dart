@@ -45,7 +45,6 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
 
   @override
   void initState() {
-    print("ESP device: ${widget.espDevice.name}");
     selectedSSID = Platform.isAndroid ? widget.scannedSSIDs.first : "";
     super.initState();
   }
@@ -214,27 +213,29 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                     : _ssidController.text;
 
                                 wifiCredentials[1] = _wifiPassController.text;
+                                print("BEFORE SEND");
                                 await BluetoothManager.sendCredentials(
                                     credentials:
                                         "${wifiCredentials[0]},${wifiCredentials[1]}",
-                                    characteristic: widget.wifiCharacteristic);
-
+                                    characteristic: widget.wifiCharacteristic,
+                                    device: widget.espDevice);
+                                print("AFTER SEND");
                                 await Future.delayed(
                                   const Duration(seconds: 13),
                                 ); // WAIT UNTIL THE ESP CONNECTS TO THE WIFI AND RESTART IF IT'S CONNECTED
+                                print("BEFORE READ");
                                 await widget.espDevice.disconnect();
-                                BluetoothDevice? deviceAfterRestart =
-                                    await BluetoothManager.getAnalyzerDevice(
-                                        analyzerID: widget.espDevice.name);
-                                BluetoothCharacteristic?
-                                    characteristicAfterRestart =
+                                BluetoothDevice? newDevice =
                                     await BluetoothManager
-                                        .getAnalyzerCharacteristic(
-                                            deviceAfterRestart); // GET THE NEW CHARACTERISTIC AFTER THE ESP CONNECTS TO THE WIFI
+                                        .getAnalyzerDeviceByDeviceID(
+                                            analyzerID: widget.espDevice.name);
+                                BluetoothCharacteristic? newCharacteristic =
+                                    await BluetoothManager
+                                        .getAnalyzerCharacteristic(newDevice);
                                 espState =
                                     await BluetoothManager.readCharacteristic(
-                                        characteristicAfterRestart); // READ THE NEW CHARACTERISTIC
-
+                                        newCharacteristic!);
+                                print("espState: $espState");
                                 if (espState != 0) {
                                   // CASE ERROR WIFI CONNECTION
                                   _ssidController.text = "";
@@ -245,13 +246,18 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                   });
                                 } else if (espState == 0) {
                                   // CASE WIFI CONNECTED
-                                  widget.analyzer.id = deviceAfterRestart?.name;
+                                  widget.analyzer.id = newDevice?.name;
                                   await FirebaseMessaging.instance
                                       .subscribeToTopic(widget.analyzer.id!);
-                                  await deviceAfterRestart!.disconnect();
-                                  setState(() {
-                                    Navigator.of(context).pop(selectedSSID != "" ? selectedSSID : _ssidController.text);
-                                  });
+                                  await newDevice!.disconnect();
+                                  setState(
+                                    () {
+                                      Navigator.of(context).pop(
+                                          selectedSSID != ""
+                                              ? selectedSSID
+                                              : _ssidController.text);
+                                    },
+                                  );
                                 }
                               },
                               style: ElevatedButton.styleFrom(

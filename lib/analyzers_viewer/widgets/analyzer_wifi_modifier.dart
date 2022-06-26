@@ -186,16 +186,14 @@ class _AnalyzerWifiModifierState extends State<AnalyzerWifiModifier> {
                                 _wifiPassController.text != "") {
                               wifiCredentials[0] = _ssidController.text;
                               wifiCredentials[1] = _wifiPassController.text;
-                              BluetoothDevice? espDevice =
-                                  await BluetoothManager.getAnalyzerDevice(
-                                      analyzerID: widget.analyzer.id);
+
+                              BluetoothDevice? espDevice = await BluetoothManager.getAnalyzerDeviceByDeviceID(analyzerID: widget.analyzer.id!);
                               BluetoothCharacteristic? espCharacteristic =
-                                  await BluetoothManager
-                                      .getAnalyzerCharacteristic(espDevice);
+                              await BluetoothManager.getAnalyzerCharacteristic(espDevice);
                               BluetoothManager.sendCredentials(
                                   credentials:
                                       "${wifiCredentials[0]},${wifiCredentials[1]}",
-                                  characteristic: espCharacteristic);
+                                  characteristic: espCharacteristic!, device: espDevice!);
                             } else {
                               setState(() {
                                 errorVisible = true;
