@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
-import 'package:soulpot/codex_viewer/views/codex_view.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 
 import '../../models/plant.dart';
@@ -41,7 +39,11 @@ class PlantDetailsView extends StatelessWidget {
 
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 2.w),
-                      child: Text("${plant.shortDescription}", textAlign: TextAlign.center,),
+                      child: Text(
+                        "${plant.shortDescription}",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(fontFamily: "Greenhouse"),
+                      ),
                     ),
 
                     Padding(
@@ -54,54 +56,148 @@ class PlantDetailsView extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 1.h),
-                          child: const Text(
+                          child: Text(
                             "Informations",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Greenhouse"),
                           ),
                         ),
                       ),
                     ),
 
                     Padding(
-                      padding: EdgeInsets.all(5.w),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 7.w, vertical: 2.h),
                       child: Table(
                         children: [
                           TableRow(children: [
-                            Text("Nom Botanique : "),
-                            Text(plant.display_pid),
+                            const Text(
+                              "Nom Botanique : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              plant.display_pid,
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
                           ]),
                           TableRow(children: [
-                            Text("Origine : "),
+                            const Text(
+                              "Famille : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${plant.family}",
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
+                          ]),
+                          TableRow(children: [
+                            const Text(
+                              "Type de plante : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${plant.plant_type}",
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
+                          ]),
+                          TableRow(children: [
+                            const Text(
+                              "Origine : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                             Container(
-                                width: 65.w, child: Text("${plant.origin}")),
+                                width: 65.w,
+                                child: Text(
+                                  "${plant.origin}",
+                                  style: TextStyle(fontFamily: "Greenhouse"),
+                                )),
+                          ]),
+                          const TableRow(children: [
+                            Text(""),
+                            Text(""),
                           ]),
                           TableRow(children: [
-                            Text("Famille : "),
-                            Text("${plant.family}"),
+                            const Text(
+                              "Couleur(s) : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${plant.flower_color}",
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
+                          ]),
+                          const TableRow(children: [
+                            Text(""),
+                            Text(""),
                           ]),
                           TableRow(children: [
-                            Text("Type de plante : "),
-                            Text("${plant.plant_type}"),
+                            const Text(
+                              "Bouture : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${plant.cutting}",
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
                           ]),
                           TableRow(children: [
-                            Text("Couleur : "),
-                            Text("${plant.flower_color}"),
+                            const Text(
+                              "Semis : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${plant.sowing}",
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
                           ]),
                           TableRow(children: [
-                            Text("Bouture : "),
-                            Text("${plant.cutting}"),
+                            const Text(
+                              "Plantation : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${plant.planting_season}",
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
                           ]),
                           TableRow(children: [
-                            Text("Semis : "),
-                            Text("${plant.sowing}"),
-                          ]),
-                          TableRow(children: [
-                            Text("Plantation : "),
-                            Text("${plant.planting_season}"),
-                          ]),
-                          TableRow(children: [
-                            Text("Floraison"),
-                            Text("${plant.flowering_season}"),
+                            const Text(
+                              "Floraison : ",
+                              style: TextStyle(
+                                fontFamily: "Greenhouse",
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Text(
+                              "${plant.flowering_season}",
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
                           ]),
                         ],
                       ),
@@ -116,7 +212,10 @@ class PlantDetailsView extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(3.w),
-                          child: Text("${plant.infos}"),
+                          child: Text(
+                            "${plant.infos}",
+                            style: TextStyle(fontFamily: "Greenhouse"),
+                          ),
                         ),
                       ),
                     ),
@@ -131,15 +230,134 @@ class PlantDetailsView extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: 1.h),
-                          child: const Text(
+                          child: Text(
                             "Recommandations",
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: "Greenhouse"),
                           ),
                         ),
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.all(5.w),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 7.w, vertical: 2.h),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: SoulPotTheme.spLightGray,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(3.w),
+                          child: Table(
+                            border: TableBorder.symmetric(
+                                inside: BorderSide(color: Colors.black54)),
+                            children: [
+                              const TableRow(children: [
+                                Text(
+                                  "Paramètres",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Minimum",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  "Maximum",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold),
+                                )
+                              ]),
+                              TableRow(children: [
+                                const Text(
+                                  "Humidité ",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontFamily: "Greenhouse"),
+                                ),
+                                Text(
+                                  "${plant.recommendations.recommendedHumidity[0].toString()}%",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          SoulPotTheme.humidityColors["Wet"]),
+                                ),
+                                Text(
+                                  "${plant.recommendations.recommendedHumidity[1].toString()}%",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFFe6ac21)),
+                                )
+                              ]),
+                              TableRow(children: [
+                                const Text(
+                                  "Température ",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontFamily: "Greenhouse"),
+                                ),
+                                Text(
+                                  "${plant.recommendations.recommendedTemperature[0].toString()}°C",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xFF6BC7B4)),
+                                ),
+                                Text(
+                                  "${plant.recommendations.recommendedTemperature[1].toString()}°C",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold,
+                                      color: SoulPotTheme
+                                          .temperatureColors["Hot"]),
+                                )
+                              ]),
+                              TableRow(children: [
+                                const Text(
+                                  "Luminosité ",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(fontFamily: "Greenhouse"),
+                                ),
+                                Text(
+                                  "${plant.recommendations.recommendedLuminosity[0].toString()} lux",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold,
+                                      color:
+                                          SoulPotTheme.luminosityColors["Low"]),
+                                ),
+                                Text(
+                                  "${plant.recommendations.recommendedLuminosity[1].toString()} lux",
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                      fontFamily: "Greenhouse",
+                                      fontWeight: FontWeight.bold,
+                                      color: Color(0xffeded5f)),
+                                )
+                              ]),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding:
+                          EdgeInsets.only(left: 5.w, right: 5.w, bottom: 5.w),
                       child: Container(
                         decoration: const BoxDecoration(
                           borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -149,7 +367,10 @@ class PlantDetailsView extends StatelessWidget {
                           padding: EdgeInsets.all(3.w),
                           child: Container(
                             width: 100.w,
-                            child: Text("${plant.recoText}"),
+                            child: Text(
+                              "${plant.recoText}",
+                              style: TextStyle(fontFamily: "Greenhouse"),
+                            ),
                           ),
                         ),
                       ),

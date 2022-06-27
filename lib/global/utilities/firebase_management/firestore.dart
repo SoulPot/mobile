@@ -74,8 +74,8 @@ class FirestoreManager {
           document.data().keys.contains("infos") ? document["infos"] : "";
       var height =
           document.data().keys.contains("height") ? document["height"] : "";
-      var flower_color = document.data().keys.contains("flower_color")
-          ? document["flower_color"]
+      var flower_colors = document.data().keys.contains("flower_colors")
+          ? document["flower_colors"]
           : "";
       var cutting =
           document.data().keys.contains("cutting") ? document["cutting"] : "";
@@ -111,7 +111,7 @@ class FirestoreManager {
             origin,
             infos,
             height,
-            flower_color,
+            flower_colors,
             cutting,
             sowing,
             flowering_season,

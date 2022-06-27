@@ -47,8 +47,7 @@ class _PlantItemCardState extends State<PlantItemCard> {
                   progressIndicatorBuilder: (context, url, downloadProgress) =>
                       Center(
                           child: CircularProgressIndicator(
-                              color: SoulPotTheme.spGreen,
-                              strokeWidth: 1.w)),
+                              color: SoulPotTheme.spGreen, strokeWidth: 1.w)),
                   errorWidget: (context, url, error) =>
                       const Center(child: Icon(Icons.error)),
                 ),
@@ -62,7 +61,9 @@ class _PlantItemCardState extends State<PlantItemCard> {
                         child: Text(
                           widget.plant.alias,
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontFamily: "Greenhouse"),
                         ),
                       ),
                       SizedBox(
@@ -70,12 +71,18 @@ class _PlantItemCardState extends State<PlantItemCard> {
                           child: Text(
                             "${widget.plant.shortDescription}",
                             textAlign: TextAlign.start,
-                            style: TextStyle(color: Colors.black54),
+                            style: TextStyle(
+                                color: Colors.black54,
+                                fontFamily: "Greenhouse"),
                           )),
                     ],
                   ),
                 ),
-                Icon(Icons.arrow_circle_right_outlined, color: SoulPotTheme.spPurple, size: 7.w,),
+                Icon(
+                  Icons.arrow_circle_right_outlined,
+                  color: SoulPotTheme.spPurple,
+                  size: 7.w,
+                ),
               ],
             ),
           )),
