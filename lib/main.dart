@@ -1,17 +1,25 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:soulpot/global/utilities/theme.dart';
+import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 
+import 'analyzers_setup/views/analyzer_count_picker_view.dart';
 import 'global/utilities/config.dart';
 import 'global/utilities/firebase_management/authentication.dart';
+import 'global/utilities/firebase_management/firestore.dart';
+import 'home_view.dart';
+import 'models/objective.dart';
+import 'models/plant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -43,6 +51,46 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 class SoulPotApp extends StatelessWidget {
   const SoulPotApp({Key? key}) : super(key: key);
 
+  static Future<Widget> initializeApp(BuildContext context) async {
+    FirebaseMessaging messaging = FirebaseMessaging.instance;
+    User? user = AuthenticationManager.auth.currentUser;
+
+    await messaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+
+    await FirebaseMessaging.instance
+        .setForegroundNotificationPresentationOptions(
+      alert: true, // Required to display a heads up notification
+      badge: true,
+      sound: true,
+    );
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? firstTime = prefs.getBool('first_launch');
+    prefs.remove("first_launch"); // DECOMMENTER POUR ACCEDER AU SETUP
+
+    if(firstTime == null) {
+      List<Plant> codex = await FirestoreManager.getCodex();
+      codex.sort((a, b) => a.alias.compareTo(b.alias));
+      return AnalyzerCountPickerView(codex: codex);
+    } else if (firstTime == false){
+      if (user != null) {
+        List<Objective> objectives = await FirestoreManager.getStaticObjectives();
+        List<Plant> codex = await FirestoreManager.getCodex();
+        codex.sort((a, b) => a.alias.compareTo(b.alias));
+        return HomeView(codex: codex, objectives: objectives);
+      }
+    }
+    return const SignInView();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Sizer(
@@ -51,7 +99,7 @@ class SoulPotApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           title: 'SoulPot',
           home: FutureBuilder(
-            future: AuthenticationManager.initializeApp(context),
+            future: initializeApp(context),
             builder: (BuildContext context, AsyncSnapshot<Widget> widget) {
               if (!widget.hasData) {
                 return const Center(

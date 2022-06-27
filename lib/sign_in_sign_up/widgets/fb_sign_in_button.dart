@@ -29,6 +29,7 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
         bool connected = await AuthenticationManager.signInWithFacebook(context);
         if (connected) {
           List<Plant> codex = await FirestoreManager.getCodex();
+          codex.sort((a, b) => a.alias.compareTo(b.alias));
           List<Objective> objectives =
           await FirestoreManager.getStaticObjectives();
           if (!mounted) return;

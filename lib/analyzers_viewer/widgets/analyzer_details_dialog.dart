@@ -8,7 +8,6 @@ import 'package:soulpot/analyzers_setup/widgets/analyzer_rename_dialog.dart';
 import 'package:soulpot/analyzers_viewer/widgets/delete_analyzer_dialog.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/global/utilities/wifi_manager.dart';
-import 'package:soulpot/analyzers_viewer/widgets/analyzer_wifi_modifier.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../global/utilities/bluetooth_manager.dart';
@@ -39,6 +38,7 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
             children: [
               Text(
                 widget.analyzer.name,
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 15.sp,
                   fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                           barrierDismissible: false,
                           context: context,
                           builder: (BuildContext context) =>
-                              AnalyzerPairingDialog(analyzer: widget.analyzer),
+                              AnalyzerPairingDialog(analyzer: widget.analyzer,),
                         );
                       },
                       style: ElevatedButton.styleFrom(
