@@ -31,34 +31,93 @@ class PlantDetailsView extends StatelessWidget {
             Align(
               alignment: Alignment.topCenter,
               child: Padding(
-                padding: const EdgeInsets.only(top: 8.0),
-                child: Text(plant.alias, style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: SoulPotTheme.spPurple),),
+                padding: const EdgeInsets.only(top: 20.0),
+                child: Text(
+                  plant.alias,
+                  style: const TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: SoulPotTheme.spPurple),
+                ),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Spacer(),
+                  CachedNetworkImage(
+                    imageUrl: plant.gifURL,
+                    height: 35.h,
+                    progressIndicatorBuilder:
+                        (context, url, downloadProgress) => Center(
+                            child: CircularProgressIndicator(
+                                color: SoulPotTheme.spGreen, strokeWidth: 1.w)),
+                    errorWidget: (context, url, error) =>
+                        const Center(child: Icon(Icons.error)),
+                  ),
+                  Text("${plant.infos}"),
+                  Spacer(),
+                  Spacer(),
+                  Container(
+                    alignment: Alignment.center,
+                    width: 100.w,
+                    decoration: const BoxDecoration(
+                      color: SoulPotTheme.spPaleGreen,
+                    ),
+                    child: const Text(
+                      "Informations",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 2.h),
+                    child: Row(
+                      children: [
+                        Text("Nom Botanique : "),
+                        Text(plant.display_pid),
+                      ],
+                    ),
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Icon(Icons.map),
+                      Text("Origine : "),
+                      Container(width: 65.w, child: Text("${plant.origin}")),
+                    ],
+                  ),
+                  Text("${plant.family}"),
+                  Text("${plant.plant_type}"),
+                  Text("${plant.flower_color}"),
 
-            CachedNetworkImage(
-              imageUrl: plant.gifURL,
-              height: 55.h,
-              progressIndicatorBuilder: (context, url, downloadProgress) =>
-                  Center(
-                      child: CircularProgressIndicator(
-                          color: SoulPotTheme.spGreen,
-                          strokeWidth: 1.w)),
-              errorWidget: (context, url, error) =>
-              const Center(child: Icon(Icons.error)),
-            ),
-            Column(
-              
-              children: [
-                Spacer(),
+                  Text("${plant.cutting}"),
+                  Text("${plant.sowing}"),
+                  Text("${plant.planting_season}"),
+                  Text("${plant.flowering_season}"),
+                  Spacer(),
+                  Container(
+                    alignment: Alignment.center,
+                    width: 100.w,
+                    decoration: const BoxDecoration(
+                      color: SoulPotTheme.spPaleGreen,
+                    ),
+                    child: const Text(
+                      "Recommandations",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 2.h),
+                    child: Container(
+                      width: 100.w,
+                      child: Text("${plant.recoText}"),
+                    ),
+                  ),
 
-                Text("Nom Scientifique"),
-                Text(plant.plantID),
-                Text(plant.plantID),
-                Text(plant.plantID),
-                Text(plant.plantID),
-
-              ],
+                  //Text("${plant.picture_url}"),
+                ],
+              ),
             ),
           ],
         ),
