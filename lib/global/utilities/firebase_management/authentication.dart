@@ -44,14 +44,17 @@ class AuthenticationManager {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_launch');
+    prefs.remove("first_launch"); // DECOMMENTER POUR ACCEDER AU SETUP
 
     if(firstTime == null) {
-    List<Plant> codex = await FirestoreManager.getCodex();
+      List<Plant> codex = await FirestoreManager.getCodex();
+      codex.sort((a, b) => a.alias.compareTo(b.alias));
       return AnalyzerCountPickerView(codex: codex);
     } else if (firstTime == false){
       if (user != null) {
         List<Objective> objectives = await FirestoreManager.getStaticObjectives();
         List<Plant> codex = await FirestoreManager.getCodex();
+        codex.sort((a, b) => a.alias.compareTo(b.alias));
         return HomeView(codex: codex, objectives: objectives);
       }
     }

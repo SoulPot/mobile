@@ -41,6 +41,7 @@ class _RenameDialogState extends State<RenameDialog> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 5.w),
               child: TextField(
+                maxLength: 40,
                 controller: _analyzerNameController,
                 decoration: InputDecoration(
                   hintText: widget.analyzer.name,

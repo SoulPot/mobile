@@ -109,7 +109,7 @@ class _CardInfoAnalyzerState extends State<CardInfoAnalyzer> {
                           context: context,
                           builder: (BuildContext context) => AnalyzerDetailsDialog(
                                 analyzer: widget.analyzer,
-                              )).then((value) => setState(() {}));
+                              ));
                     },
                   ),
                 ),

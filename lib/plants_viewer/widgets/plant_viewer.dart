@@ -41,24 +41,21 @@ class _PlantViewerState extends State<PlantViewer> {
                 ),
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 2.h),
-              child: ElevatedButton(
-                onPressed: () async {
-                  await showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      builder: (BuildContext context) => const DisconnectDialog());
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: SoulPotTheme.spRed,
-                  fixedSize: Size(5.h, 5.h),
-                  shape: const CircleBorder(),
-                ),
-                child: const Icon(
-                  Icons.door_front_door_rounded,
-                  color: Colors.white,
-                ),
+            ElevatedButton(
+              onPressed: () async {
+                await showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (BuildContext context) => const DisconnectDialog());
+              },
+              style: ElevatedButton.styleFrom(
+                primary: SoulPotTheme.spRed,
+                fixedSize: Size(5.h, 5.h),
+                shape: const CircleBorder(),
+              ),
+              child: const Icon(
+                Icons.logout_outlined,
+                color: Colors.white,
               ),
             ),
           ],

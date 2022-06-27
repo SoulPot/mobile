@@ -64,7 +64,7 @@ class _AnalyzersViewState extends State<AnalyzersView> {
                             padding: EdgeInsets.symmetric(
                                 vertical: 1.h, horizontal: 20.w),
                             child: Align(
-                              alignment: Alignment.bottomCenter,
+                              alignment: snapshot.data!.docs.isEmpty ? Alignment.center : Alignment.bottomCenter,
                               child: ElevatedButton(
                                 onPressed: () {
                                   showDialog(

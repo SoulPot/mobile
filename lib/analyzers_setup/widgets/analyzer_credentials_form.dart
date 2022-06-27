@@ -126,12 +126,14 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                             : Padding(
                                 padding: EdgeInsets.symmetric(vertical: 1.h),
                                 child: SizedBox(
-                                  height: 5.h,
+                                  height: 7.h,
                                   width: 80.w,
                                   child: TextField(
                                     onChanged: (_) {
                                       setState(() {});
                                     },
+                                    maxLength: 32,
+
                                     controller: _ssidController,
                                     decoration: InputDecoration(
                                       hintText: 'SSID',
@@ -174,7 +176,7 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.symmetric(vertical: 2.h),
+                        padding: EdgeInsets.symmetric(vertical: 1.h),
                         child: Row(
                           children: [
                             const Spacer(),
