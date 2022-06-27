@@ -17,109 +17,184 @@ class PlantDetailsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 20.0),
-                child: Text(
-                  plant.alias,
-                  style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: SoulPotTheme.spPurple),
+        child: Container(
+          color: SoulPotTheme.spBackgroundWhite,
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 1.h, top: 8.h),
+                      child: CachedNetworkImage(
+                        imageUrl: plant.gifURL,
+                        height: 35.h,
+                        progressIndicatorBuilder:
+                            (context, url, downloadProgress) => Center(
+                                child: CircularProgressIndicator(
+                                    color: SoulPotTheme.spGreen,
+                                    strokeWidth: 1.w)),
+                        errorWidget: (context, url, error) =>
+                            const Center(child: Icon(Icons.error)),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 2.w),
+                      child: Text("${plant.shortDescription}", textAlign: TextAlign.center,),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 2.h),
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 100.w,
+                        decoration: const BoxDecoration(
+                          color: SoulPotTheme.spPaleGreen,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 1.h),
+                          child: const Text(
+                            "Informations",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.all(5.w),
+                      child: Table(
+                        children: [
+                          TableRow(children: [
+                            Text("Nom Botanique : "),
+                            Text(plant.display_pid),
+                          ]),
+                          TableRow(children: [
+                            Text("Origine : "),
+                            Container(
+                                width: 65.w, child: Text("${plant.origin}")),
+                          ]),
+                          TableRow(children: [
+                            Text("Famille : "),
+                            Text("${plant.family}"),
+                          ]),
+                          TableRow(children: [
+                            Text("Type de plante : "),
+                            Text("${plant.plant_type}"),
+                          ]),
+                          TableRow(children: [
+                            Text("Couleur : "),
+                            Text("${plant.flower_color}"),
+                          ]),
+                          TableRow(children: [
+                            Text("Bouture : "),
+                            Text("${plant.cutting}"),
+                          ]),
+                          TableRow(children: [
+                            Text("Semis : "),
+                            Text("${plant.sowing}"),
+                          ]),
+                          TableRow(children: [
+                            Text("Plantation : "),
+                            Text("${plant.planting_season}"),
+                          ]),
+                          TableRow(children: [
+                            Text("Floraison"),
+                            Text("${plant.flowering_season}"),
+                          ]),
+                        ],
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5.w),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: SoulPotTheme.spPalePurple,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(3.w),
+                          child: Text("${plant.infos}"),
+                        ),
+                      ),
+                    ),
+
+                    Padding(
+                      padding: EdgeInsets.only(top: 5.h),
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: 100.w,
+                        decoration: const BoxDecoration(
+                          color: SoulPotTheme.spPaleGreen,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: 1.h),
+                          child: const Text(
+                            "Recommandations",
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.w),
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          color: SoulPotTheme.spPalePurple,
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.all(3.w),
+                          child: Container(
+                            width: 100.w,
+                            child: Text("${plant.recoText}"),
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    //Text("${plant.picture_url}"),
+                  ],
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
-                children: [
-                  Spacer(),
-                  CachedNetworkImage(
-                    imageUrl: plant.gifURL,
-                    height: 35.h,
-                    progressIndicatorBuilder:
-                        (context, url, downloadProgress) => Center(
-                            child: CircularProgressIndicator(
-                                color: SoulPotTheme.spGreen, strokeWidth: 1.w)),
-                    errorWidget: (context, url, error) =>
-                        const Center(child: Icon(Icons.error)),
-                  ),
-                  Text("${plant.infos}"),
-                  Spacer(),
-                  Spacer(),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 100.w,
-                    decoration: const BoxDecoration(
-                      color: SoulPotTheme.spPaleGreen,
+              Container(
+                height: 7.h,
+                color: SoulPotTheme.spBackgroundWhite,
+                child: Stack(
+                  children: [
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: IconButton(
+                        icon: Icon(
+                          Icons.arrow_back,
+                          size: 7.w,
+                          color: SoulPotTheme.spPurple,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
                     ),
-                    child: const Text(
-                      "Informations",
-                      style: TextStyle(fontWeight: FontWeight.bold),
+                    Align(
+                      alignment: Alignment.topCenter,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 1.h),
+                        child: Text(
+                          plant.alias,
+                          style: TextStyle(
+                              fontSize: 22.sp,
+                              fontWeight: FontWeight.bold,
+                              color: SoulPotTheme.spPurple),
+                        ),
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.h),
-                    child: Row(
-                      children: [
-                        Text("Nom Botanique : "),
-                        Text(plant.display_pid),
-                      ],
-                    ),
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Icon(Icons.map),
-                      Text("Origine : "),
-                      Container(width: 65.w, child: Text("${plant.origin}")),
-                    ],
-                  ),
-                  Text("${plant.family}"),
-                  Text("${plant.plant_type}"),
-                  Text("${plant.flower_color}"),
-
-                  Text("${plant.cutting}"),
-                  Text("${plant.sowing}"),
-                  Text("${plant.planting_season}"),
-                  Text("${plant.flowering_season}"),
-                  Spacer(),
-                  Container(
-                    alignment: Alignment.center,
-                    width: 100.w,
-                    decoration: const BoxDecoration(
-                      color: SoulPotTheme.spPaleGreen,
-                    ),
-                    child: const Text(
-                      "Recommandations",
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 2.h),
-                    child: Container(
-                      width: 100.w,
-                      child: Text("${plant.recoText}"),
-                    ),
-                  ),
-
-                  //Text("${plant.picture_url}"),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

@@ -53,22 +53,29 @@ class _PlantItemCardState extends State<PlantItemCard> {
                       const Center(child: Icon(Icons.error)),
                 ),
                 VerticalDivider(),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.plant.alias,
-                      style: TextStyle(fontWeight: FontWeight.bold),
-                    ),
-                    SizedBox(
-                        width: 60.w,
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 2.w),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 1.h),
                         child: Text(
-                          "${widget.plant.shortDescription}",
-                          style: TextStyle(color: Colors.black54),
-                        )),
-                  ],
+                          widget.plant.alias,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                          width: 55.w,
+                          child: Text(
+                            "${widget.plant.shortDescription}",
+                            textAlign: TextAlign.start,
+                            style: TextStyle(color: Colors.black54),
+                          )),
+                    ],
+                  ),
                 ),
-                Icon(Icons.arrow_circle_right),
+                Icon(Icons.arrow_circle_right_outlined, color: SoulPotTheme.spPurple, size: 7.w,),
               ],
             ),
           )),
