@@ -156,7 +156,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                     child: Row(
                       children: [
                         Text(
-                          "Vous avez déjà configurer vos analyzers ?",
+                          "Vous avez déjà configuré vos analyzers ?",
                           style: TextStyle(
                             fontSize: 10.sp,
                             color: SoulPotTheme.spBlack,
