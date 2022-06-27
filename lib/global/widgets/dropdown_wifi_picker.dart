@@ -61,7 +61,7 @@ class _DropdownState extends State<DropdownWidget> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 5.w),
+            padding: EdgeInsets.symmetric(horizontal: 2.w),
             margin: EdgeInsets.symmetric(horizontal: 4.w),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),

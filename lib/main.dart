@@ -24,10 +24,16 @@ import 'models/plant.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FacebookAuth.instance.autoLogAppEventsEnabled(true);
-  if(Platform.isAndroid) {
+  if (Platform.isAndroid) {
     AndroidDeviceInfo androidInfo = await DEVICE_INFOS.androidInfo;
-    DEVICE_ID = androidInfo.androidId;
-  } else if(Platform.isIOS) {
+    DEVICE_ID = (androidInfo.device ?? "") +
+        (androidInfo.fingerprint ?? "") +
+        (androidInfo.hardware ?? "") +
+        (androidInfo.manufacturer ?? "") +
+        (androidInfo.model ?? "") +
+        (androidInfo.product ?? "") +
+        (androidInfo.id ?? "");
+  } else if (Platform.isIOS) {
     IosDeviceInfo iosInfo = await DEVICE_INFOS.iosInfo;
     DEVICE_ID = iosInfo.identifierForVendor;
   }
@@ -76,13 +82,14 @@ class SoulPotApp extends StatelessWidget {
     bool? firstTime = prefs.getBool('first_launch');
     prefs.remove("first_launch"); // DECOMMENTER POUR ACCEDER AU SETUP
 
-    if(firstTime == null) {
+    if (firstTime == null) {
       List<Plant> codex = await FirestoreManager.getCodex();
       codex.sort((a, b) => a.alias.compareTo(b.alias));
       return AnalyzerCountPickerView(codex: codex);
-    } else if (firstTime == false){
+    } else if (firstTime == false) {
       if (user != null) {
-        List<Objective> objectives = await FirestoreManager.getStaticObjectives();
+        List<Objective> objectives =
+            await FirestoreManager.getStaticObjectives();
         List<Plant> codex = await FirestoreManager.getCodex();
         codex.sort((a, b) => a.alias.compareTo(b.alias));
         return HomeView(codex: codex, objectives: objectives);

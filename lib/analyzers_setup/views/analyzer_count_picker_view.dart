@@ -70,7 +70,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                                   curve: Curves.easeInOut,
                                   duration: const Duration(milliseconds: 600),
                                   reverseDuration:
-                                  const Duration(milliseconds: 600),
+                                      const Duration(milliseconds: 600),
                                   type: PageTransitionType.fade,
                                   child: const AppInfosView(),
                                   childCurrent: context.widget),
@@ -155,6 +155,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                     padding: EdgeInsets.symmetric(horizontal: 1.w),
                     child: Row(
                       children: [
+                        const Spacer(),
                         Text(
                           "Vous avez déjà configuré vos analyzers ?",
                           style: TextStyle(
@@ -165,35 +166,36 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                           ),
                         ),
                         TextButton(
-                            onPressed: () async {
-                              SharedPreferences prefs =
-                                  await SharedPreferences.getInstance();
-                              prefs.setBool("first_launch", false);
+                          onPressed: () async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setBool("first_launch", false);
 
-                              if (!mounted) return;
-                              Navigator.pushReplacement(
-                                context,
-                                PageTransition(
-                                    alignment: Alignment.bottomCenter,
-                                    curve: Curves.easeInOut,
-                                    duration:
-                                        const Duration(milliseconds: 600),
-                                    reverseDuration:
-                                        const Duration(milliseconds: 600),
-                                    type: PageTransitionType.fade,
-                                    child: const SignInView(),
-                                    childCurrent: context.widget),
-                              );
-                            },
-                            child: Text(
-                              "Passer la configuration",
-                              style: TextStyle(
-                                fontSize: 10.sp,
-                                color: SoulPotTheme.spGreen,
-                                fontWeight: FontWeight.bold,
-                                fontFamily: 'Greenhouse',
-                              ),
-                            )),
+                            if (!mounted) return;
+                            Navigator.pushReplacement(
+                              context,
+                              PageTransition(
+                                  alignment: Alignment.bottomCenter,
+                                  curve: Curves.easeInOut,
+                                  duration: const Duration(milliseconds: 600),
+                                  reverseDuration:
+                                      const Duration(milliseconds: 600),
+                                  type: PageTransitionType.fade,
+                                  child: const SignInView(),
+                                  childCurrent: context.widget),
+                            );
+                          },
+                          child: Text(
+                            "Passer la configuration",
+                            style: TextStyle(
+                              fontSize: 10.sp,
+                              color: SoulPotTheme.spGreen,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'Greenhouse',
+                            ),
+                          ),
+                        ),
+                        const Spacer(),
                       ],
                     ),
                   ),
@@ -203,8 +205,7 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                     child: ElevatedButton(
                       onPressed: () async {
                         for (int i = 0; i < _currentAnalyzerCount + 1; i++) {
-                          _analyzers
-                              .add(Analyzer("Analyzer ${i + 1}", false));
+                          _analyzers.add(Analyzer("Analyzer ${i + 1}", false));
                         }
                         Navigator.push(
                           context,

@@ -58,7 +58,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
         width: 90.w,
         child: Padding(
           padding: EdgeInsets.fromLTRB(2.w, 2.h, 2.w, 0),
-          child: deviceFound != null
+          child: deviceFound != null && scannedSSIDs.isNotEmpty
               ? AnalyzerCredentialsForm(
                       analyzer: widget.analyzer,
                       scannedSSIDs: scannedSSIDs,
@@ -126,9 +126,9 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
         snackBarCreator(
             context, "Une erreur est survenue !", SoulPotTheme.spPaleRed);
       }
+    } else {
+      tmpSSIDs[1] = "";
     }
-    setState(() {
       scannedSSIDs = tmpSSIDs.toSet().toList();
-    });
   }
 }

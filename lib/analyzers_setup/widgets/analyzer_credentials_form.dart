@@ -227,16 +227,19 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                 ); // WAIT UNTIL THE ESP CONNECTS TO THE WIFI AND RESTART IF IT'S CONNECTED
                                 print("BEFORE READ");
                                 await widget.espDevice.disconnect();
+                                print("BEFORE GET DEVICE");
                                 BluetoothDevice? newDevice =
                                     await BluetoothManager
                                         .getAnalyzerDeviceByDeviceID(
                                             analyzerID: widget.espDevice.name);
+                                print("BEFORE GET CHARACTERISTIC");
                                 BluetoothCharacteristic? newCharacteristic =
                                     await BluetoothManager
                                         .getAnalyzerCharacteristic(newDevice);
+                                print("BEFORE SECOND READ");
                                 espState =
                                     await BluetoothManager.readCharacteristic(
-                                        newCharacteristic!);
+                                        newCharacteristic!, newDevice!);
                                 print("espState: $espState");
                                 if (espState != 0) {
                                   // CASE ERROR WIFI CONNECTION
@@ -248,10 +251,10 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                   });
                                 } else if (espState == 0) {
                                   // CASE WIFI CONNECTED
-                                  widget.analyzer.id = newDevice?.name;
+                                  widget.analyzer.id = newDevice.name;
                                   await FirebaseMessaging.instance
                                       .subscribeToTopic(widget.analyzer.id!);
-                                  await newDevice!.disconnect();
+                                  await newDevice.disconnect();
                                   setState(
                                     () {
                                       Navigator.of(context).pop(
