@@ -16,22 +16,36 @@ class GoogleSignInButton extends StatefulWidget {
 }
 
 class _GoogleSignInButtonState extends State<GoogleSignInButton> {
+  late bool isLoading;
+
+  @override
+  initState() {
+    isLoading = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    bool isLoading = false;
 
     AuthButtonType? buttonType;
     AuthIconType? iconType;
 
     return GoogleAuthButton(
       onPressed: () async {
+        setState(() {
+          print("SET STATE TRUE");
+          isLoading = true;
+        });
         bool connected = await AuthenticationManager.signInWithGoogle(context);
         if (connected) {
           List<Plant> codex = await FirestoreManager.getCodex();
           List<Objective> objectives =
           await FirestoreManager.getStaticObjectives();
           codex.sort((a, b) => a.alias.compareTo(b.alias));
+          setState(() {
+            print("SET STATE TRUE");
+            isLoading = false;
+          });
           if (!mounted) return;
           Navigator.pushReplacement(
             context,
@@ -44,9 +58,14 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
                 child: HomeView(codex: codex, objectives: objectives),
                 childCurrent: context.widget),
           );
+        } else {
+          setState(() {
+            print("SET STATE TRUE");
+            isLoading = false;
+          });
         }
       },
-      text: "Se connecter avec Google  ",
+      text: isLoading ? "Connexion avec Google" : "Se connecter avec Google  ",
       darkMode: true,
       isLoading: isLoading,
       style: AuthButtonStyle(

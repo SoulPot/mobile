@@ -73,6 +73,7 @@ class _SignUpViewState extends State<SignUpView> {
                     child: TextField(
                       controller: _pwdController,
                       textAlign: TextAlign.center,
+                      obscureText: true,
                       textInputAction: TextInputAction.unspecified,
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
@@ -94,6 +95,7 @@ class _SignUpViewState extends State<SignUpView> {
                     child: TextField(
                       controller: _confirmPwdController,
                       textAlign: TextAlign.center,
+                      obscureText: true,
                       textInputAction: TextInputAction.unspecified,
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
