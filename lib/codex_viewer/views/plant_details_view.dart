@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
@@ -24,16 +25,25 @@ class PlantDetailsView extends StatelessWidget {
                   children: [
                     Padding(
                       padding: EdgeInsets.only(bottom: 1.h, top: 8.h),
-                      child: CachedNetworkImage(
-                        imageUrl: plant.gifURL,
-                        height: 35.h,
-                        progressIndicatorBuilder:
-                            (context, url, downloadProgress) => Center(
-                                child: CircularProgressIndicator(
-                                    color: SoulPotTheme.spGreen,
-                                    strokeWidth: 1.w)),
-                        errorWidget: (context, url, error) =>
-                            const Center(child: Icon(Icons.error)),
+                      child: CarouselSlider(
+                        options: CarouselOptions(height: 400.0),
+                        items: [plant.gifURL,plant.picture_url!].map((url) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return CachedNetworkImage(
+                                imageUrl: url,
+                                height: 35.h,
+                                progressIndicatorBuilder:
+                                    (context, url, downloadProgress) => Center(
+                                    child: CircularProgressIndicator(
+                                        color: SoulPotTheme.spGreen,
+                                        strokeWidth: 1.w)),
+                                errorWidget: (context, url, error) =>
+                                const Center(child: Icon(Icons.error)),
+                              );
+                            },
+                          );
+                        }).toList(),
                       ),
                     ),
 
