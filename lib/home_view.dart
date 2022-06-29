@@ -63,7 +63,7 @@ class _HomeViewState extends State<HomeView> {
     } else if (_selectedIndex == 1) {
       return AnalyzersView(codex: widget.codex);
     } else if (_selectedIndex == 2) {
-      return const CodexView();
+      return CodexView(codex: widget.codex);
     } else {
       return ObjectivesView(objectives: widget.objectives);
     }
