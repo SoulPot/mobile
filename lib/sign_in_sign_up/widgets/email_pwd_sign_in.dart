@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/sign_in_sign_up/views/sign_up_view.dart';
 import 'package:sizer/sizer.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../../global/utilities/firebase_management/authentication.dart';
 import '../../global/utilities/firebase_management/firestore.dart';
@@ -20,6 +21,13 @@ class EmailPwdSignIn extends StatefulWidget {
 class _EmailPwdSignInState extends State<EmailPwdSignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  late bool isLoading;
+
+  @override
+  initState() {
+    isLoading = false;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +61,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
             child: TextField(
               controller: _passwordController,
               textAlign: TextAlign.center,
+              obscureText: true,
               textInputAction: TextInputAction.unspecified,
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
@@ -71,8 +80,11 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 2.h),
-            child: ElevatedButton(
+            child: isLoading ? LoadingAnimationWidget.discreteCircle(color: SoulPotTheme.spGreen, size: 5.h) : ElevatedButton(
               onPressed: () async {
+                setState(() {
+                  isLoading = true;
+                });
                 bool connected = await AuthenticationManager.signInWithPwd(
                     context, _emailController.text, _passwordController.text);
                 if (connected) {
@@ -80,6 +92,9 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                   List<Objective> objectives =
                       await FirestoreManager.getStaticObjectives();
                   codex.sort((a, b) => a.alias.compareTo(b.alias));
+                  setState(() {
+                    isLoading = false;
+                  });
                   if (!mounted) return;
                   Navigator.pushReplacement(
                     context,
@@ -92,6 +107,10 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                         child: HomeView(codex: codex, objectives: objectives),
                         childCurrent: context.widget),
                   );
+                } else {
+                  setState(() {
+                    isLoading = false;
+                  });
                 }
               },
               style: ElevatedButton.styleFrom(

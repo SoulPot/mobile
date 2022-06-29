@@ -59,7 +59,7 @@ class _SignInViewState extends State<SignInView> {
                     ],
                   ),
                   const Spacer(),
-                  const SocialAuthentication(),
+                  SocialAuthentication(),
                   const Spacer(),
                 ],
               ),

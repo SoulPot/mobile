@@ -47,34 +47,43 @@ class AuthenticationManager {
   }
 
   static Future<bool> signInWithGoogle(BuildContext context) async {
+    try {
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    var userCredentials = await auth.signInWithCredential(credential);
-    await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
-    if (userCredentials.additionalUserInfo!.isNewUser) {
-      await FirestoreManager.addUser(userCredentials.user!.uid);
-      await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
+      final credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth?.accessToken,
+        idToken: googleAuth?.idToken,
+      );
+      var userCredentials = await auth.signInWithCredential(credential);
+      await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
+      if (userCredentials.additionalUserInfo!.isNewUser) {
+        await FirestoreManager.addUser(userCredentials.user!.uid);
+        await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
+      }
+      return true;
+    } catch (error) {
+      return false;
     }
-    return true;
   }
 
   static Future<bool> signInWithFacebook(BuildContext context) async {
-    final LoginResult loginResult = await FacebookAuth.instance.login();
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    var userCredentials =
-        await auth.signInWithCredential(facebookAuthCredential);
-    await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
-    if (userCredentials.additionalUserInfo!.isNewUser) {
-      await FirestoreManager.addUser(userCredentials.user!.uid);
-      await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
+    try {
+      final LoginResult loginResult = await FacebookAuth.instance.login();
+
+      final OAuthCredential facebookAuthCredential =
+      FacebookAuthProvider.credential(loginResult.accessToken!.token);
+      var userCredentials =
+      await auth.signInWithCredential(facebookAuthCredential);
+      await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
+      if (userCredentials.additionalUserInfo!.isNewUser) {
+        await FirestoreManager.addUser(userCredentials.user!.uid);
+        await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
+      }
+      return true;
+    } catch(error) {
+      return false;
     }
-    return true;
   }
 
   static Future<void> signOut() async {
@@ -82,6 +91,7 @@ class AuthenticationManager {
         .unsubscribeFromTopic(auth.currentUser!.uid);
     print("Unsubscribed from topic: ${auth.currentUser!.uid}");
     await auth.signOut();
+
     await GoogleSignIn().signOut();
     await FacebookAuth.instance.logOut();
   }
