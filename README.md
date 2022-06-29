@@ -1,16 +1,30 @@
-# soulpot
+# SoulPot Mobile App
 
-A new Flutter project.
+## Installation
 
-## Getting Started
+### Stores link
+> App Store (iOS) [SoulPot](https://apps.apple.com/us/app/soulpot/id1631439638)
 
-This project is a starting point for a Flutter application.
+> Play Store (Android) [SoulPot](https://play.google.com/store/apps/details?id=com.sokaii.soulpot)
 
-A few resources to get you started if this is your first Flutter project:
+### From source code
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+> **Need Flutter SDK min 3.0.2** (see offcial [Flutter documentation](https://docs.flutter.dev/get-started/install))
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+1. Clone this repository: ``` git clone https://github.com/SoulPot/mobile SoulPot```
+2. Go to the repo directory ``` cd SoulPot ```
+3. Install flutter needed packages: ``` flutter pub get ```
+4. Run the app directly: ``` flutter run --no-sound-null-safety ```
+
+## Build to deploy
+
+Run flutter command:
+#### Android
+Generate an app bundle to upload to the [Play Store Console](https://play.google.com/console)
+
+``` flutter build appbundle --no-sound-null-safety ```
+
+#### iOS:
+Generate a ``` Runner .xcarchive ``` file to upload to [App Store Connect](https://appstoreconnect.apple.com)
+
+``` flutter build ipa --no-sound-null-safety ```

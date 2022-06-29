@@ -136,11 +136,10 @@ class _PlantsViewState extends State<PlantsView> {
                                   recommendations: plant.recommendations,
                                 ),
                               ),
+                              const Spacer(),
                               Padding(
-                                padding: const EdgeInsets.symmetric(
-                                  vertical: 10,
-                                ),
-                                child: Row(
+                                padding: EdgeInsets.only(bottom: 1.h),
+                              child: Row(
                                   children: [
                                     const Spacer(),
                                     CirclePageIndicator(

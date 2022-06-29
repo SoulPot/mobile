@@ -58,7 +58,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
         width: 90.w,
         child: Padding(
           padding: EdgeInsets.fromLTRB(2.w, 2.h, 2.w, 0),
-          child: deviceFound != null && scannedSSIDs.isNotEmpty
+          child: deviceFound != null
               ? AnalyzerCredentialsForm(
                       analyzer: widget.analyzer,
                       scannedSSIDs: scannedSSIDs,
@@ -117,18 +117,17 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
     Navigator.of(context).pop();
   }
 
-  Future<void> getWifi() async {
-    List<String> tmpSSIDs = [];
-    if (Platform.isAndroid) {
-      tmpSSIDs = await WifiManager.scanForWifi(context);
-      if (tmpSSIDs.isEmpty) {
-        if (!mounted) return;
-        snackBarCreator(
-            context, "Une erreur est survenue !", SoulPotTheme.spPaleRed);
-      }
-    } else {
-      tmpSSIDs[1] = "";
+  Future<void> getWifi() async { List<String> tmpSSIDs = [];
+  if (Platform.isAndroid) {
+    tmpSSIDs = await WifiManager.scanForWifi(context);
+    if (tmpSSIDs.isEmpty) {
+      if (!mounted) return;
+      snackBarCreator(
+          context, "Une erreur est survenue !", SoulPotTheme.spPaleRed);
     }
-      scannedSSIDs = tmpSSIDs.toSet().toList();
+  }
+  setState(() {
+    scannedSSIDs = tmpSSIDs.toSet().toList();
+  });
   }
 }

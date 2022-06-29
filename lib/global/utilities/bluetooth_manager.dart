@@ -111,7 +111,11 @@ class BluetoothManager {
       required BluetoothDevice device}) async {
     print("BEFORE WRITE IN FUNCTION");
     try {
-      await characteristic.write(utf8.encode(credentials), withoutResponse: false);
+      Platform.isAndroid
+          ? await characteristic.write(utf8.encode(credentials),
+              withoutResponse: false)
+          : await characteristic.write(utf8.encode(credentials),
+              withoutResponse: true);
     } catch (error) {
       print(error);
     }
