@@ -44,7 +44,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: SizedBox(
-          height: 50.h,
+          height: showError ? 55.h : 50.h,
           width: 90.w,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
