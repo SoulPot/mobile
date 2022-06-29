@@ -26,7 +26,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
   late Analyzer analyzerToCreate;
 
   bool showError = false;
-  TextEditingController _plantNameController = TextEditingController();
+  final TextEditingController _plantNameController = TextEditingController();
 
   @override
   void initState() {
@@ -36,6 +36,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
     );
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -59,15 +60,20 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 2.w),
                 child: SizedBox(
-                  height: 5.h,
+                  height: 7.h,
                   width: 80.w,
                   child: TextField(
                     onChanged: (_) {
                       setState(() {});
                     },
+                    maxLength: 40,
                     controller: _plantNameController,
+                    cursorColor: SoulPotTheme.spPurple,
                     decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide:
+                            BorderSide(color: SoulPotTheme.spGreen),
+                      ),
                     ),
                     style: TextStyle(
                       color: SoulPotTheme.spBlack,
@@ -116,7 +122,6 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                                   )).then(
                             (value) => setState(() {
                               selectedPlant = value;
-                              print(selectedPlant!.alias);
                             }),
                           );
                         },
@@ -156,11 +161,12 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                             barrierDismissible: false,
                             context: context,
                             builder: (BuildContext context) =>
-                                AnalyzerPairingDialog( analyzer: analyzerToCreate,
+                                AnalyzerPairingDialog(
+                                  analyzer: analyzerToCreate,
                                 )).then(
                           (value) => setState(() {
                             ssid = value;
-                            paired = true;
+                            paired = value != null;
                           }),
                         );
                       },
@@ -170,11 +176,15 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                         ),
                         primary: SoulPotTheme.spBT,
                       ),
-                      child: Text(
-                        "Appairer",
-                        style: TextStyle(
-                          fontSize: 8.sp,
-                          color: SoulPotTheme.spBackgroundWhite,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 2.h, horizontal: 10.w),
+                        child: Text(
+                          "Appairer",
+                          style: TextStyle(
+                            fontSize: 8.sp,
+                            color: SoulPotTheme.spBackgroundWhite,
+                          ),
                         ),
                       ),
                     ),
@@ -205,6 +215,9 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                         const Spacer(),
                         ElevatedButton(
                           onPressed: () {
+                            if (paired) {
+                              //TODO SEND RESET TRIGGER TO ESP
+                            }
                             Navigator.pop(context);
                           },
                           style: ElevatedButton.styleFrom(

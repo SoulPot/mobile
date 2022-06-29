@@ -55,8 +55,8 @@ class _SignUpViewState extends State<SignUpView> {
                       textInputAction: TextInputAction.next,
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: SoulPotTheme.spGreen, width: 1.h),
+                            borderSide: const BorderSide(
+                                color: SoulPotTheme.spGreen),
                             borderRadius: BorderRadius.circular(30),
                           ),
                           border: OutlineInputBorder(
@@ -77,7 +77,7 @@ class _SignUpViewState extends State<SignUpView> {
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                                color: SoulPotTheme.spGreen, width: 2.0),
+                                color: SoulPotTheme.spGreen),
                             borderRadius: BorderRadius.circular(25.0),
                           ),
                           border: OutlineInputBorder(
@@ -98,7 +98,7 @@ class _SignUpViewState extends State<SignUpView> {
                       decoration: InputDecoration(
                           focusedBorder: OutlineInputBorder(
                             borderSide: const BorderSide(
-                                color: SoulPotTheme.spGreen, width: 2.0),
+                                color: SoulPotTheme.spGreen),
                             borderRadius: BorderRadius.circular(25.0),
                           ),
                           border: OutlineInputBorder(

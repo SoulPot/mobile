@@ -4,59 +4,16 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:soulpot/analyzers_setup/views/analyzer_count_picker_view.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/global/utilities/firebase_management/analytics.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
-import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
-import 'package:soulpot/home_view.dart';
 
-import '../../../models/objective.dart';
-import '../../../models/plant.dart';
 import '../custom_snackbar.dart';
 import '../error_thrower.dart';
 
 class AuthenticationManager {
   static final FirebaseAuth auth =
       FirebaseAuth.instanceFor(app: Firebase.apps.first);
-
-  static Future<Widget> initializeApp(BuildContext context) async {
-    FirebaseMessaging messaging = FirebaseMessaging.instance;
-    User? user = auth.currentUser;
-
-    await messaging.requestPermission(
-      alert: true,
-      announcement: false,
-      badge: true,
-      carPlay: false,
-      criticalAlert: false,
-      provisional: false,
-      sound: true,
-    );
-
-    await FirebaseMessaging.instance
-        .setForegroundNotificationPresentationOptions(
-      alert: true, // Required to display a heads up notification
-      badge: true,
-      sound: true,
-    );
-
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool? firstTime = prefs.getBool('first_launch');
-
-    if(firstTime == null) {
-    List<Plant> codex = await FirestoreManager.getCodex();
-      return AnalyzerCountPickerView(codex: codex);
-    } else if (firstTime == false){
-      if (user != null) {
-        List<Objective> objectives = await FirestoreManager.getStaticObjectives();
-        List<Plant> codex = await FirestoreManager.getCodex();
-        return HomeView(codex: codex, objectives: objectives);
-      }
-    }
-    return const SignInView();
-  }
 
   static Future<bool> signInWithPwd(
       BuildContext context, String email, String password) async {

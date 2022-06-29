@@ -16,8 +16,7 @@ import '../../models/analyzer.dart';
 import '../../global/utilities/theme.dart';
 
 class AnalyzerPairingDialog extends StatefulWidget {
-  const AnalyzerPairingDialog(
-      {Key? key, required this.analyzer})
+  const AnalyzerPairingDialog({Key? key, required this.analyzer})
       : super(key: key);
 
   final Analyzer analyzer;
@@ -61,11 +60,11 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
           padding: EdgeInsets.fromLTRB(2.w, 2.h, 2.w, 0),
           child: deviceFound != null
               ? AnalyzerCredentialsForm(
-                  analyzer: widget.analyzer,
-                  scannedSSIDs: scannedSSIDs,
-                  wifiCharacteristic: wifiCharacteristic!,
-                  espDevice: espDevice!,
-                )
+                      analyzer: widget.analyzer,
+                      scannedSSIDs: scannedSSIDs,
+                      wifiCharacteristic: wifiCharacteristic!,
+                      espDevice: espDevice!,
+                    )
               : Column(
                   children: [
                     Text(
@@ -89,12 +88,15 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
   }
 
   Future<void> getBluetooth() async {
-    if(widget.analyzer.id == null) {
+    if (widget.analyzer.id == null) {
       espDevice = await BluetoothManager.getFirstAnalyzerDeviceFound();
-      wifiCharacteristic = await BluetoothManager.getAnalyzerCharacteristic(espDevice);
+      wifiCharacteristic =
+          await BluetoothManager.getAnalyzerCharacteristic(espDevice);
     } else {
-      espDevice = await BluetoothManager.getAnalyzerDeviceByDeviceID(analyzerID: widget.analyzer.id!);
-      wifiCharacteristic = await BluetoothManager.getAnalyzerCharacteristic(espDevice);
+      espDevice = await BluetoothManager.getAnalyzerDeviceByDeviceID(
+          analyzerID: widget.analyzer.id!);
+      wifiCharacteristic =
+          await BluetoothManager.getAnalyzerCharacteristic(espDevice);
     }
     if (wifiCharacteristic == null) {
       cancelBluetoothScan();
@@ -115,18 +117,17 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
     Navigator.of(context).pop();
   }
 
-  Future<void> getWifi() async {
-    List<String> tmpSSIDs = [];
-    if (Platform.isAndroid) {
-      tmpSSIDs = await WifiManager.scanForWifi(context);
-      if (tmpSSIDs.isEmpty) {
-        if (!mounted) return;
-        snackBarCreator(
-            context, "Une erreur est survenue !", SoulPotTheme.spPaleRed);
-      }
+  Future<void> getWifi() async { List<String> tmpSSIDs = [];
+  if (Platform.isAndroid) {
+    tmpSSIDs = await WifiManager.scanForWifi(context);
+    if (tmpSSIDs.isEmpty) {
+      if (!mounted) return;
+      snackBarCreator(
+          context, "Une erreur est survenue !", SoulPotTheme.spPaleRed);
     }
-    setState(() {
-      scannedSSIDs = tmpSSIDs.toSet().toList();
-    });
+  }
+  setState(() {
+    scannedSSIDs = tmpSSIDs.toSet().toList();
+  });
   }
 }

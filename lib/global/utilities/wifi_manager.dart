@@ -9,8 +9,8 @@ class WifiManager {
 
   static Future<List<String>> scanForWifi(BuildContext context) async {
     List<String> scannedSSID = [];
-    final result =
-        await WiFiScan.instance.getScannedResults();
+    await WiFiScan.instance.startScan(askPermissions: true);
+    final result = await WiFiScan.instance.getScannedResults(askPermissions: true);
     if (result.hasError) {
       return [];
     } else {

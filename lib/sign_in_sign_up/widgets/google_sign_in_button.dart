@@ -31,6 +31,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           List<Plant> codex = await FirestoreManager.getCodex();
           List<Objective> objectives =
           await FirestoreManager.getStaticObjectives();
+          codex.sort((a, b) => a.alias.compareTo(b.alias));
           if (!mounted) return;
           Navigator.pushReplacement(
             context,

@@ -35,7 +35,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: SoulPotTheme.spGreen, width: 1.h),
+                        const BorderSide(color: SoulPotTheme.spGreen),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
                   border: OutlineInputBorder(
@@ -57,7 +57,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
               decoration: InputDecoration(
                   focusedBorder: OutlineInputBorder(
                     borderSide:
-                        BorderSide(color: SoulPotTheme.spGreen, width: 1.h),
+                        const BorderSide(color: SoulPotTheme.spGreen),
                     borderRadius: BorderRadius.circular(25),
                   ),
                   border: OutlineInputBorder(
@@ -79,6 +79,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                   List<Plant> codex = await FirestoreManager.getCodex();
                   List<Objective> objectives =
                       await FirestoreManager.getStaticObjectives();
+                  codex.sort((a, b) => a.alias.compareTo(b.alias));
                   if (!mounted) return;
                   Navigator.pushReplacement(
                     context,
