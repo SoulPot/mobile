@@ -60,18 +60,64 @@ class FirestoreManager {
     List<Plant> result = [];
     var data = await firestore.collection("plants").get();
     for (var document in data.docs) {
+      var famille =
+          document.data().keys.contains("family") ? document["family"] : "";
+      var recoText = document.data().keys.contains("recommendations")
+          ? document["recommendations"]
+          : "";
+      var shortDescription = document.data().keys.contains("short_description")
+          ? document["short_description"]
+          : "";
+      var origin =
+          document.data().keys.contains("origin") ? document["origin"] : "";
+      var infos =
+          document.data().keys.contains("infos") ? document["infos"] : "";
+      var height =
+          document.data().keys.contains("height") ? document["height"] : "";
+      var flower_colors = document.data().keys.contains("flower_colors")
+          ? document["flower_colors"]
+          : "";
+      var cutting =
+          document.data().keys.contains("cutting") ? document["cutting"] : "";
+      var sowing =
+          document.data().keys.contains("sowing") ? document["sowing"] : "";
+      var picture_url = document.data().keys.contains("picture_url")
+          ? document["picture_url"]
+          : "";
+      var plant_type = document.data().keys.contains("plant_type")
+          ? document["plant_type"]
+          : "";
+      var flowering_season = document.data().keys.contains("flowering_season")
+          ? document["flowering_season"]
+          : "";
+      var planting_season = document.data().keys.contains("planting_season")
+          ? document["planting_season"]
+          : "";
+
       result.add(
         Plant(
-          document.id,
-          document["alias"],
-          document["display_pid"],
-          document["image_url"],
-          Recommendations(
-            [document["min_temp"], document["max_temp"]],
-            [document["min_soil_moist"], document["max_soil_moist"]],
-            [document["min_light_lux"], document["max_light_lux"]],
-          ),
-        ),
+            document.id,
+            document["alias"],
+            document["display_pid"],
+            document["image_url"],
+            Recommendations(
+              [document["min_temp"], document["max_temp"]],
+              [document["min_soil_moist"], document["max_soil_moist"]],
+              [document["min_light_lux"], document["max_light_lux"]],
+            ),
+            famille,
+            recoText,
+            shortDescription,
+            origin,
+            infos,
+            height,
+            flower_colors,
+            cutting,
+            sowing,
+            flowering_season,
+            picture_url,
+            plant_type,
+            planting_season),
       );
     }
     return result;
@@ -120,5 +166,4 @@ class FirestoreManager {
   static Future<void> deletedAnalyzer(String analyzerID) async {
     await firestore.collection("analyzers").doc(analyzerID).delete();
   }
-
 }
