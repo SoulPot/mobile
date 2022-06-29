@@ -47,7 +47,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
           height: 50.h,
           width: 90.w,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 2.h),
+            padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
             child: Column(children: [
               Text(
                 "Donnez un nom à votre analyzer",
@@ -95,7 +95,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    vertical: 2.h,
+                    vertical: 1.h,
                     horizontal: selectedPlant != null ? 1.w : 15.w),
                 child: selectedPlant != null
                     ? GestureDetector(

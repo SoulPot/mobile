@@ -37,6 +37,8 @@ class PlantDetailsView extends StatelessWidget {
                           options: CarouselOptions(
                             height: 40.h,
                             enableInfiniteScroll: false,
+                            pageSnapping: true,
+                            viewportFraction: 1,
                             onPageChanged: (index, reason) {
                               _pageNotifier.value = index;
                             },
