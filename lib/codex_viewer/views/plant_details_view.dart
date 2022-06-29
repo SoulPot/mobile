@@ -2,15 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_view_indicators/circle_page_indicator.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 
 import '../../models/plant.dart';
 
 class PlantDetailsView extends StatelessWidget {
-  const PlantDetailsView({Key? key, required this.plant}) : super(key: key);
-
+  PlantDetailsView({Key? key, required this.plant}) : super(key: key);
   final Plant plant;
+  final ValueNotifier<int> _pageNotifier = ValueNotifier<int>(0);
 
   @override
   Widget build(BuildContext context) {
@@ -26,24 +27,47 @@ class PlantDetailsView extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.only(bottom: 1.h, top: 8.h),
                       child: CarouselSlider(
-                        options: CarouselOptions(height: 400.0),
-                        items: [plant.gifURL,plant.picture_url!].map((url) {
+                        options: CarouselOptions(
+                          height: 40.h,
+                          enableInfiniteScroll: false,
+                          onPageChanged: (index, reason) {
+                            _pageNotifier.value = index;
+                          },
+                        ),
+                        items: [plant.gifURL, plant.picture_url!].map((url) {
                           return Builder(
                             builder: (BuildContext context) {
-                              return CachedNetworkImage(
-                                imageUrl: url,
-                                height: 35.h,
-                                progressIndicatorBuilder:
-                                    (context, url, downloadProgress) => Center(
-                                    child: CircularProgressIndicator(
-                                        color: SoulPotTheme.spGreen,
-                                        strokeWidth: 1.w)),
-                                errorWidget: (context, url, error) =>
-                                const Center(child: Icon(Icons.error)),
+                              return Column(
+                                children: [
+                                  CachedNetworkImage(
+                                    imageUrl: url,
+                                    height: 40.h,
+                                    progressIndicatorBuilder: (context, url,
+                                            downloadProgress) =>
+                                        Center(
+                                            child: CircularProgressIndicator(
+                                                color: SoulPotTheme.spGreen,
+                                                strokeWidth: 1.w)),
+                                    errorWidget: (context, url, error) =>
+                                        const Center(child: Icon(Icons.error)),
+                                  ),
+
+                                ],
                               );
                             },
                           );
                         }).toList(),
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(top: 2.h),
+                      child: CirclePageIndicator(
+                        currentPageNotifier: _pageNotifier,
+                        itemCount: 2,
+                        size: 10,
+                        selectedSize: 12,
+                        selectedDotColor: SoulPotTheme.spGreen,
+                        dotColor: Colors.grey,
                       ),
                     ),
 
