@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:soulpot/analyzers_setup/widgets/app_infos_view.dart';
+import 'package:soulpot/analyzers_setup/views/app_infos_view.dart';
 import 'package:soulpot/models/analyzer.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/analyzers_setup/widgets/analyzer_count_printer.dart';
