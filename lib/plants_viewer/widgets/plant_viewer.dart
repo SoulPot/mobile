@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/utilities/mqtt_manager.dart';
 import 'package:soulpot/plants_viewer/widgets/disconnect_dialog.dart';
 
 import '../../models/analyzer.dart';
@@ -19,6 +20,14 @@ class PlantViewer extends StatefulWidget {
 }
 
 class _PlantViewerState extends State<PlantViewer> {
+
+  late MQTTManager mqttManager;
+
+  _PlantViewerState() {
+    mqttManager = MQTTManager();
+    mqttManager.connect();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -81,7 +90,7 @@ class _PlantViewerState extends State<PlantViewer> {
               const Spacer(),
               widget.analyzer.needSprinkle && widget.analyzer.humidity != -255
                   ? ElevatedButton(
-                      onPressed: water,
+                      onPressed: sprink,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
@@ -159,8 +168,17 @@ class _PlantViewerState extends State<PlantViewer> {
     );
   }
 
-  void water() {
-    //TODO PUSH TO MQTT
+  void sprink() {
+    String? deviceId = widget.analyzer.id;
+    int minReco = widget.analyzer.recommendations!.recommendedHumidity[0];
+    int maxReco = widget.analyzer.recommendations!.recommendedHumidity[1];
+    int medReco = (minReco + maxReco) ~/ 2;
+    if (deviceId == null) {
+      print('ERROR: no device id set');
+      return;
+    }
+    String payload = "{\"sprinkle\":\"true\", \"expectedValue\": \"$medReco\"}";
+    mqttManager.publishMsg(payload, deviceId);
   }
 
   Color getTemperatureColor(Analyzer analyzer) {
