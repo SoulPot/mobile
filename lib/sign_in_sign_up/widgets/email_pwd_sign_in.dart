@@ -5,11 +5,11 @@ import 'package:soulpot/sign_in_sign_up/views/sign_up_view.dart';
 import 'package:sizer/sizer.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 
+import '../../global/models/objective.dart';
+import '../../global/models/plant.dart';
 import '../../global/utilities/firebase_management/authentication.dart';
 import '../../global/utilities/firebase_management/firestore.dart';
 import '../../home_view.dart';
-import '../../models/objective.dart';
-import '../../models/plant.dart';
 
 class EmailPwdSignIn extends StatefulWidget {
   const EmailPwdSignIn({Key? key}) : super(key: key);

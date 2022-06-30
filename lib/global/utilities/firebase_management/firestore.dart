@@ -1,16 +1,14 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:ui';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:soulpot/global/utilities/config.dart';
-import 'package:soulpot/models/objective.dart';
-import 'package:soulpot/models/plant.dart';
-import 'package:soulpot/models/recommendations.dart';
 
-import '../../../models/analyzer.dart';
+import '../../models/analyzer.dart';
+import '../../models/objective.dart';
+import '../../models/plant.dart';
+import '../../models/recommendations.dart';
 import '../theme.dart';
 import 'authentication.dart';
 
@@ -60,9 +58,9 @@ class FirestoreManager {
     List<Plant> result = [];
     var data = await firestore.collection("plants").get();
     for (var document in data.docs) {
-      var famille =
+      var plantFamily =
           document.data().keys.contains("family") ? document["family"] : "";
-      var recoText = document.data().keys.contains("recommendations")
+      var recommendationsText = document.data().keys.contains("recommendations")
           ? document["recommendations"]
           : "";
       var shortDescription = document.data().keys.contains("short_description")
@@ -74,23 +72,23 @@ class FirestoreManager {
           document.data().keys.contains("infos") ? document["infos"] : "";
       var height =
           document.data().keys.contains("height") ? document["height"] : "";
-      var flower_colors = document.data().keys.contains("flower_colors")
+      var flowerColors = document.data().keys.contains("flower_colors")
           ? document["flower_colors"]
           : "";
       var cutting =
           document.data().keys.contains("cutting") ? document["cutting"] : "";
       var sowing =
           document.data().keys.contains("sowing") ? document["sowing"] : "";
-      var picture_url = document.data().keys.contains("picture_url")
+      var pictureURL = document.data().keys.contains("picture_url")
           ? document["picture_url"]
           : "";
-      var plant_type = document.data().keys.contains("plant_type")
+      var plantType = document.data().keys.contains("plant_type")
           ? document["plant_type"]
           : "";
-      var flowering_season = document.data().keys.contains("flowering_season")
+      var floweringSeason = document.data().keys.contains("flowering_season")
           ? document["flowering_season"]
           : "";
-      var planting_season = document.data().keys.contains("planting_season")
+      var plantingSeason = document.data().keys.contains("planting_season")
           ? document["planting_season"]
           : "";
 
@@ -105,19 +103,19 @@ class FirestoreManager {
               [document["min_soil_moist"], document["max_soil_moist"]],
               [document["min_light_lux"], document["max_light_lux"]],
             ),
-            famille,
-            recoText,
+            plantFamily,
+            recommendationsText,
             shortDescription,
             origin,
             infos,
             height,
-            flower_colors,
+            flowerColors,
             cutting,
             sowing,
-            flowering_season,
-            picture_url,
-            plant_type,
-            planting_season),
+            floweringSeason,
+            pictureURL,
+            plantType,
+            plantingSeason),
       );
     }
     return result;
@@ -141,14 +139,14 @@ class FirestoreManager {
             "name": analyzer.name,
             "plantID": analyzer.plant!.plantID,
             "wifiName": analyzer.wifiName,
-            "deviceID": DEVICE_ID,
+            "deviceID": deviceID,
           });
   }
 
   static Future<void> assignAnalyzers(String userID) async {
     var data = await firestore.collection("analyzers").get();
     for (var document in data.docs) {
-      if (document.data()["deviceID"] == DEVICE_ID) {
+      if (document.data()["deviceID"] == deviceID) {
         await firestore.collection("analyzers").doc(document.id).update({
           "userID": userID,
           "deviceID": FieldValue.delete(),

@@ -47,8 +47,8 @@ class _SignInViewState extends State<SignInView> {
                         padding: EdgeInsets.only(left: 1.w, right: 1.w),
                         child: Text(
                           "OU",
-                          style:
-                              TextStyle(fontSize: 12.sp, fontFamily: "Greenhouse"),
+                          style: TextStyle(
+                              fontSize: 12.sp, fontFamily: "Greenhouse"),
                         ),
                       ),
                       const Expanded(
@@ -59,7 +59,7 @@ class _SignInViewState extends State<SignInView> {
                     ],
                   ),
                   const Spacer(),
-                  SocialAuthentication(),
+                  const SocialAuthentication(),
                   const Spacer(),
                 ],
               ),

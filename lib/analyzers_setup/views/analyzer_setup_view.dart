@@ -6,13 +6,12 @@ import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/analyzers_setup/views/analyzer_count_picker_view.dart';
 import 'package:soulpot/global/utilities/custom_snackbar.dart';
-import 'package:soulpot/analyzers_setup/widgets/analyzer_rename_dialog.dart';
 import 'package:sizer/sizer.dart';
-import '../../models/analyzer.dart';
-import '../../models/plant.dart';
-import '../widgets/analyzer_pairing_dialog.dart';
 
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
+
+import '../../global/models/analyzer.dart';
+import '../../global/models/plant.dart';
 
 class AnalyzerSetupView extends StatefulWidget {
   const AnalyzerSetupView({Key? key, required this.analyzers, required this.codex})
@@ -96,6 +95,7 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                           }
                           SharedPreferences prefs = await SharedPreferences.getInstance();
                           prefs.setBool('first_launch', false);
+                          if(!mounted) return;
                           await Navigator.of(context).push(
                             PageTransition(
                               type: PageTransitionType.fade,
