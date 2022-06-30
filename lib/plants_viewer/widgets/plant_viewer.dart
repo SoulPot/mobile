@@ -178,7 +178,7 @@ class _PlantViewerState extends State<PlantViewer> {
       return;
     }
     String payload = "{\"sprinkle\":\"true\", \"expectedValue\": \"$medReco\"}";
-    mqttManager.publishMsg(payload, deviceId);
+    mqttManager.publishMsg(payload, deviceId, "/sprink");
   }
 
   Color getTemperatureColor(Analyzer analyzer) {
