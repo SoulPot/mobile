@@ -1,13 +1,12 @@
 import 'dart:io';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sizer/sizer.dart';
-import 'package:soulpot/models/analyzer.dart';
 
+import '../../global/models/analyzer.dart';
 import '../../global/utilities/bluetooth_manager.dart';
 import '../../global/utilities/theme.dart';
 import '../../global/widgets/dropdown_wifi_picker.dart';
@@ -215,32 +214,25 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                     : _ssidController.text;
 
                                 wifiCredentials[1] = _wifiPassController.text;
-                                print("BEFORE SEND");
                                 await BluetoothManager.sendCredentials(
                                     credentials:
                                         "${wifiCredentials[0]},${wifiCredentials[1]}",
                                     characteristic: widget.wifiCharacteristic,
                                     device: widget.espDevice);
-                                print("AFTER SEND");
                                 await Future.delayed(
                                   const Duration(seconds: 13),
                                 ); // WAIT UNTIL THE ESP CONNECTS TO THE WIFI AND RESTART IF IT'S CONNECTED
-                                print("BEFORE READ");
                                 await widget.espDevice.disconnect();
-                                print("BEFORE GET DEVICE");
                                 BluetoothDevice? newDevice =
                                     await BluetoothManager
                                         .getAnalyzerDeviceByDeviceID(
                                             analyzerID: widget.espDevice.name);
-                                print("BEFORE GET CHARACTERISTIC");
                                 BluetoothCharacteristic? newCharacteristic =
                                     await BluetoothManager
                                         .getAnalyzerCharacteristic(newDevice);
-                                print("BEFORE SECOND READ");
                                 espState =
                                     await BluetoothManager.readCharacteristic(
                                         newCharacteristic!, newDevice!);
-                                print("espState: $espState");
                                 if (espState != 0) {
                                   // CASE ERROR WIFI CONNECTION
                                   _ssidController.text = "";

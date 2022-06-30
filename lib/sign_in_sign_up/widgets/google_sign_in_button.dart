@@ -2,11 +2,11 @@ import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 
+import '../../global/models/objective.dart';
+import '../../global/models/plant.dart';
 import '../../global/utilities/firebase_management/authentication.dart';
 import '../../global/utilities/firebase_management/firestore.dart';
 import '../../home_view.dart';
-import '../../models/objective.dart';
-import '../../models/plant.dart';
 
 class GoogleSignInButton extends StatefulWidget {
   const GoogleSignInButton({Key? key}) : super(key: key);
@@ -33,7 +33,6 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
     return GoogleAuthButton(
       onPressed: () async {
         setState(() {
-          print("SET STATE TRUE");
           isLoading = true;
         });
         bool connected = await AuthenticationManager.signInWithGoogle(context);
@@ -43,7 +42,6 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           await FirestoreManager.getStaticObjectives();
           codex.sort((a, b) => a.alias.compareTo(b.alias));
           setState(() {
-            print("SET STATE TRUE");
             isLoading = false;
           });
           if (!mounted) return;
@@ -60,13 +58,12 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
           );
         } else {
           setState(() {
-            print("SET STATE TRUE");
             isLoading = false;
           });
         }
       },
       text: isLoading ? "Connexion avec Google" : "Se connecter avec Google  ",
-      darkMode: true,
+      themeMode: ThemeMode.dark,
       isLoading: isLoading,
       style: AuthButtonStyle(
         buttonType: buttonType,

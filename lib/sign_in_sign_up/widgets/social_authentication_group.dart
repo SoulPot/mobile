@@ -13,11 +13,11 @@ class SocialAuthentication extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(vertical: 1.h),
-          child: GoogleSignInButton(),
+          child: const GoogleSignInButton(),
         ),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 1.h),
-          child: FacebookSignInButton(),
+          child: const FacebookSignInButton(),
         ),
       ],
     );

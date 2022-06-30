@@ -14,19 +14,19 @@ import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 
 import 'analyzers_setup/views/analyzer_count_picker_view.dart';
+import 'global/models/objective.dart';
+import 'global/models/plant.dart';
 import 'global/utilities/config.dart';
 import 'global/utilities/firebase_management/authentication.dart';
 import 'global/utilities/firebase_management/firestore.dart';
 import 'home_view.dart';
-import 'models/objective.dart';
-import 'models/plant.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   FacebookAuth.instance.autoLogAppEventsEnabled(true);
   if (Platform.isAndroid) {
-    AndroidDeviceInfo androidInfo = await DEVICE_INFOS.androidInfo;
-    DEVICE_ID = (androidInfo.device ?? "") +
+    AndroidDeviceInfo androidInfo = await deviceInfos.androidInfo;
+    deviceID = (androidInfo.device ?? "") +
         (androidInfo.fingerprint ?? "") +
         (androidInfo.hardware ?? "") +
         (androidInfo.manufacturer ?? "") +
@@ -34,8 +34,8 @@ void main() async {
         (androidInfo.product ?? "") +
         (androidInfo.id ?? "");
   } else if (Platform.isIOS) {
-    IosDeviceInfo iosInfo = await DEVICE_INFOS.iosInfo;
-    DEVICE_ID = iosInfo.identifierForVendor;
+    IosDeviceInfo iosInfo = await deviceInfos.iosInfo;
+    deviceID = iosInfo.identifierForVendor;
   }
   await Firebase.initializeApp();
   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterFatalError;
@@ -50,8 +50,6 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
   // make sure you call `initializeApp` before using other Firebase services.
   await Firebase.initializeApp();
-
-  print("Handling a background message: ${message.messageId}");
 }
 
 class SoulPotApp extends StatelessWidget {
@@ -80,7 +78,7 @@ class SoulPotApp extends StatelessWidget {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_launch');
-    //prefs.remove("first_launch"); // DECOMMENTER POUR ACCEDER AU SETUP
+    prefs.remove("first_launch"); // DECOMMENTER POUR ACCEDER AU SETUP
 
     if (firstTime == null) {
       List<Plant> codex = await FirestoreManager.getCodex();

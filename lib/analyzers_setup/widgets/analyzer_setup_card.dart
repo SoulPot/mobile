@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:soulpot/analyzers_viewer/widgets/plant_card.dart';
-import 'package:soulpot/analyzers_viewer/widgets/plant_picker_dialog.dart';
 import 'package:soulpot/global/utilities/theme.dart';
-import 'package:soulpot/models/analyzer.dart';
 
-import '../../models/plant.dart';
+import '../../global/models/analyzer.dart';
+import '../../global/models/plant.dart';
+import '../../in_app/analyzers_viewer/widgets/plant_card.dart';
+import '../../in_app/analyzers_viewer/widgets/plant_picker_dialog.dart';
 import 'analyzer_pairing_dialog.dart';
 import 'analyzer_rename_dialog.dart';
 

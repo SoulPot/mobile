@@ -24,7 +24,7 @@ class AppInfosView extends StatelessWidget {
                     size: 10.w,
                   )),
             ),
-            Center(
+            const Center(
               child: Text('AppInfosView'),
             ),
           ],

@@ -3,17 +3,17 @@ import 'package:im_stepper/stepper.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soulpot/analyzers_setup/widgets/app_infos_view.dart';
-import 'package:soulpot/models/analyzer.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/analyzers_setup/widgets/analyzer_count_printer.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 
-import '../../models/plant.dart';
+import '../../global/models/analyzer.dart';
+import '../../global/models/plant.dart';
 import 'analyzer_setup_view.dart';
 
 class AnalyzerCountPickerView extends StatefulWidget {
-  AnalyzerCountPickerView({Key? key, required this.codex}) : super(key: key);
+  const AnalyzerCountPickerView({Key? key, required this.codex}) : super(key: key);
 
   final List<Plant> codex;
 

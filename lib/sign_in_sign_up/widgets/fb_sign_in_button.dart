@@ -1,14 +1,12 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:sizer/sizer.dart';
 
+import '../../global/models/objective.dart';
+import '../../global/models/plant.dart';
 import '../../global/utilities/firebase_management/authentication.dart';
 import '../../global/utilities/firebase_management/firestore.dart';
 import '../../home_view.dart';
-import '../../models/objective.dart';
-import '../../models/plant.dart';
-import '../../global/utilities/theme.dart';
 
 
 class FacebookSignInButton extends StatefulWidget {
@@ -35,7 +33,6 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
     return FacebookAuthButton(
       onPressed: () async {
         setState(() {
-          print("SET STATE TRUE");
           isLoading = true;
         });
         bool connected = await AuthenticationManager.signInWithFacebook(
@@ -67,7 +64,7 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
         }
       },
       text: isLoading ? "Connexion avec Facebook" : "Se connecter avec Facebook",
-      darkMode: true,
+      themeMode: ThemeMode.dark,
       isLoading: isLoading,
       style: AuthButtonStyle(
         buttonType: buttonType,

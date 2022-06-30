@@ -89,7 +89,6 @@ class AuthenticationManager {
   static Future<void> signOut() async {
     await FirebaseMessaging.instance
         .unsubscribeFromTopic(auth.currentUser!.uid);
-    print("Unsubscribed from topic: ${auth.currentUser!.uid}");
     await auth.signOut();
 
     await GoogleSignIn().signOut();

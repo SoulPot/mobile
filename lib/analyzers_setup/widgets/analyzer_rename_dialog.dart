@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../models/analyzer.dart';
+import '../../global/models/analyzer.dart';
+
 
 class RenameDialog extends StatefulWidget {
   const RenameDialog({Key? key, required this.analyzer}) : super(key: key);

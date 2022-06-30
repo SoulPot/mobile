@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:soulpot/plants_viewer/views/plants_view.dart';
-import '../models/objective.dart';
-import '../models/plant.dart';
-import 'analyzers_viewer/views/analyzers_view.dart';
-import 'codex_viewer/views/codex_view.dart';
+import 'global/models/objective.dart';
+import 'global/models/plant.dart';
 import 'global/utilities/theme.dart';
-import 'objectives_viewer/views/objectives_view.dart';
+import 'in_app/analyzers_viewer/views/analyzers_view.dart';
+import 'in_app/codex_viewer/views/codex_view.dart';
+import 'in_app/objectives_viewer/views/objectives_view.dart';
+import 'in_app/plants_viewer/views/plants_view.dart';
 
 class HomeView extends StatefulWidget {
   const HomeView({Key? key, required this.codex, required this.objectives})
