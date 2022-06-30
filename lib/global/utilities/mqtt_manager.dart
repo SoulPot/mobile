@@ -3,20 +3,25 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:soulpot/global/utilities/GUID.dart';
 
 class MQTTManager {
-  String host = 'alesia-julianitow.ovh';
-  String username = "soulpot";
-  String password = "soulpot";
-  int port = 9443;
-  late String clientId;
-  late MqttClient client;
+  static String host = 'alesia-julianitow.ovh';
+  static String username = "soulpot";
+  static String password = "soulpot";
+  static int port = 9443;
+  static late String clientId;
+  static late MqttClient client;
 
-  MQTTManager() {
+  static late final MQTTManager instance = MQTTManager._internal();
+
+  MQTTManager._internal();
+
+  factory MQTTManager() {
     String uuid = GUID.generate();
     clientId = 'sp-app-$uuid';
     initMqttClient();
+    return instance;
   }
 
-  void initMqttClient() {
+  static void initMqttClient() {
     client = MqttServerClient.withPort(host, clientId, port);
     client.logging(on: true);
     client.setProtocolV311();
@@ -24,15 +29,15 @@ class MQTTManager {
     client.onConnected = onConnected;
   }
 
-  void onSubscribed() {
+  static void onSubscribed() {
     print("MQTT SUBSCRIBED");
   }
 
-  void onConnected() {
+  static void onConnected() {
     print('MQTT LOGGED');
   }
 
-  void onDisconnected() {
+  static void onDisconnected() {
     if (client.connectionStatus!.disconnectionOrigin ==
         MqttDisconnectionOrigin.solicited) {
       print('Client disconnect normally.');
@@ -61,12 +66,12 @@ class MQTTManager {
       client.disconnect();
     }
   }
-  void publishMsg(String msg, String deviceId) {
+  void publishMsg(String msg, String deviceId, String topic) {
     final payloadBuilder = MqttClientPayloadBuilder();
     payloadBuilder.addString(msg);
     if (client.connectionStatus!.state == MqttConnectionState.connected) {
       if (payloadBuilder.payload != null) {
-        client.publishMessage('events/$deviceId/sprink',
+        client.publishMessage('c2d/$deviceId$topic',
             MqttQos.atLeastOnce, payloadBuilder.payload!);
       } else {
         throw Exception('Payload cannot be null');
