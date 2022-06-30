@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/utilities/firebase_management/authentication.dart';
+import 'package:soulpot/global/utilities/mqtt_manager.dart';
+import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 
 import '../../../global/models/analyzer.dart';
 
@@ -13,6 +16,25 @@ class DeleteAnalyzerDialog extends StatefulWidget {
 }
 
 class _DeleteAnalyzerDialogState extends State<DeleteAnalyzerDialog> {
+
+  late MQTTManager mqttManager;
+
+  _DeleteAnalyzerDialogState() {
+    mqttManager = MQTTManager();
+    mqttManager.connect();
+  }
+
+  void resetAnalyzer() {
+    String? deviceId = widget.analyzer.id;
+    if (deviceId == null) {
+      print('ERROR: no device id set');
+      return;
+    }
+    String payload = "{\"reset\":\"true\"}";
+    mqttManager.publishMsg(payload, deviceId, "");
+    Navigator.pop(context, true);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -58,6 +80,7 @@ class _DeleteAnalyzerDialogState extends State<DeleteAnalyzerDialog> {
                 ),
                 const Spacer(),
                 TextButton(
+                    onPressed: resetAnalyzer,
                     child: Text(
                       'Supprimer',
                       style: TextStyle(
@@ -66,7 +89,6 @@ class _DeleteAnalyzerDialogState extends State<DeleteAnalyzerDialog> {
                           fontWeight: FontWeight.bold,
                           fontSize: 14.sp),
                     ),
-                  onPressed: () => Navigator.pop(context, true),
                 ),
                 const Spacer(),
               ],
