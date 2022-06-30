@@ -9,8 +9,7 @@ class MQTTManager {
   static int port = 9443;
   static late String clientId;
   static late MqttClient client;
-
-  static late final MQTTManager instance = MQTTManager._internal();
+  static final MQTTManager instance = MQTTManager._internal();
 
   MQTTManager._internal();
 

@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soulpot/analyzers_setup/widgets/analyzer_setup_card.dart';
+import 'package:soulpot/global/utilities/bluetooth_manager.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
+import 'package:soulpot/global/utilities/mqtt_manager.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/analyzers_setup/views/analyzer_count_picker_view.dart';
 import 'package:soulpot/global/utilities/custom_snackbar.dart';
@@ -25,6 +27,31 @@ class AnalyzerSetupView extends StatefulWidget {
 }
 
 class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
+
+  late MQTTManager mqttManager;
+
+  _AnalyzerSetupViewState() {
+    mqttManager = MQTTManager();
+    mqttManager.connect();
+  }
+
+  Future<void> previous() async {
+    const String payload = "{\"reset\":\"true\"}";
+
+    for(var i = 0; i < widget.analyzers.length; i++) {
+      final analyzer = widget.analyzers[i];
+      print(analyzer.id);
+      mqttManager.publishMsg(payload, analyzer.id!, "");
+    }
+
+    await Navigator.of(context).push(
+      PageTransition(
+        type: PageTransitionType.fade,
+        child: AnalyzerCountPickerView(codex: widget.codex),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,14 +78,7 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                   children: [
                     const Spacer(),
                     ElevatedButton(
-                      onPressed: () async {
-                        await Navigator.of(context).push(
-                          PageTransition(
-                            type: PageTransitionType.fade,
-                            child: AnalyzerCountPickerView(codex: widget.codex),
-                          ),
-                        );
-                      },
+                      onPressed: previous,
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0),
