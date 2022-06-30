@@ -4,6 +4,8 @@ import 'package:soulpot/global/utilities/GUID.dart';
 
 class MQTTManager {
   String host = 'alesia-julianitow.ovh';
+  String username = "soulpot";
+  String password = "soulpot";
   int port = 9443;
   late String clientId;
   late MqttClient client;
@@ -41,7 +43,7 @@ class MQTTManager {
 
   Future<void> connect() async {
     try {
-      await client.connect("soulpot", "soulpot");
+      await client.connect(username, password);
       return;
     } on NoConnectionException catch (e) {
       print('Client exception - $e');
