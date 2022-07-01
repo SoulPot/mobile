@@ -159,6 +159,7 @@ class _PlantsViewState extends State<PlantsView> {
                                         wifiName: document["wifiName"],
                                         imageURL: plant.gifURL,
                                         recommendations: plant.recommendations,
+                                        lastUpdateDateTime: document["dateTime"]
                                       ),
                                     );
                                   },

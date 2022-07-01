@@ -57,44 +57,50 @@ class _PlantViewerState extends State<PlantViewer> {
         CachedImage(imageUrl: widget.analyzer.imageURL!, height: 34.h),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 1.h),
-          child: Row(
+          child: Column(
             children: [
-              const Spacer(),
-              widget.analyzer.needSprinkle && widget.analyzer.humidity != -255
-                  ? ElevatedButton(
-                      onPressed: sprink,
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        primary: SoulPotTheme.spPaleGreen,
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(
-                            Icons.shower_rounded,
-                            color: SoulPotTheme.spBT,
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(
-                                vertical: 1.h, horizontal: 3.w),
-                            child: Text(
-                              "M'arroser",
-                              style: TextStyle(
-                                fontSize: 12.sp,
-                                color: SoulPotTheme.spPurple,
-                              ),
+              Row(
+                children: [
+                  const Spacer(),
+                  widget.analyzer.needSprinkle && widget.analyzer.humidity != -255
+                      ? ElevatedButton(
+                          onPressed: sprink,
+                          style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0),
                             ),
+                            primary: SoulPotTheme.spPaleGreen,
                           ),
-                        ],
-                      ),
-                    )
-                  : SizedBox(
-                      width: 0.w,
-                      height: 5.36.h,
-                    ),
-              const Spacer(),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              const Icon(
+                                Icons.shower_rounded,
+                                color: SoulPotTheme.spBT,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 1.h, horizontal: 3.w),
+                                child: Text(
+                                  "M'arroser",
+                                  style: TextStyle(
+                                    fontSize: 12.sp,
+                                    color: SoulPotTheme.spPurple,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      : SizedBox(
+                          width: 0.w,
+                          height: 5.36.h,
+                        ),
+                  const Spacer(),
+                ],
+              ),
+              Text("Dernière mise à jour le ${widget.analyzer.lastUpdateDateTime!.split(" ")[0]} à ${widget.analyzer.lastUpdateDateTime!.split(" ")[1]}",
+              style: TextStyle(fontSize: 9.sp, fontStyle: FontStyle.italic),)
             ],
           ),
         ),
