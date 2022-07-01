@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
-import 'package:soulpot/analyzers_setup/widgets/analyzer_pairing_dialog.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
-import 'package:soulpot/in_app/analyzers_viewer/widgets/plant_card.dart';
-import 'package:soulpot/in_app/analyzers_viewer/widgets/plant_picker_dialog.dart';
+import 'package:soulpot/global/widgets/analyzer_configuration/plant_card.dart';
+import 'package:soulpot/global/widgets/analyzer_configuration/plant_picker_dialog.dart';
 
 import '../../../global/models/analyzer.dart';
 import '../../../global/models/plant.dart';
 import '../../../global/utilities/theme.dart';
+import '../../../global/widgets/analyzer_configuration/analyzer_pairing_dialog.dart';
 
 class AddAnalyzerDialog extends StatefulWidget {
   const AddAnalyzerDialog({required this.codex, Key? key}) : super(key: key);

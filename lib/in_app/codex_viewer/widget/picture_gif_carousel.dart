@@ -3,6 +3,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/widgets/cached_image.dart';
 
 import '../../../global/models/plant.dart';
 import '../../../global/utilities/theme.dart';
@@ -32,23 +33,7 @@ class _PictureGifCarouselState extends State<PictureGifCarousel> {
       items: [widget.plant.gifURL, widget.plant.pictureURL!].map((url) {
         return Builder(
           builder: (BuildContext context) {
-            return Column(
-              children: [
-                CachedNetworkImage(
-                  imageUrl: url,
-                  height: 40.h,
-                  progressIndicatorBuilder: (context, url,
-                      downloadProgress) =>
-                      Center(
-                          child: CircularProgressIndicator(
-                              color: SoulPotTheme.spGreen,
-                              strokeWidth: 1.w)),
-                  errorWidget: (context, url, error) =>
-                  const Center(
-                      child: Icon(Icons.error)),
-                ),
-              ],
-            );
+            return CachedImage(imageUrl: url, height: 40.h);
           },
         );
       }).toList(),

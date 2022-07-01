@@ -4,10 +4,10 @@ import 'package:soulpot/global/utilities/theme.dart';
 
 import '../../global/models/analyzer.dart';
 import '../../global/models/plant.dart';
-import '../../in_app/analyzers_viewer/widgets/plant_card.dart';
-import '../../in_app/analyzers_viewer/widgets/plant_picker_dialog.dart';
-import 'analyzer_pairing_dialog.dart';
-import 'analyzer_rename_dialog.dart';
+import '../../global/widgets/analyzer_configuration/analyzer_pairing_dialog.dart';
+import '../../global/widgets/analyzer_configuration/plant_card.dart';
+import '../../global/widgets/analyzer_configuration/plant_picker_dialog.dart';
+import '../../global/widgets/analyzer_configuration/analyzer_rename_dialog.dart';
 
 class AnalyzerSetupCard extends StatefulWidget {
   const AnalyzerSetupCard(

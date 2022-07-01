@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/widgets/cached_image.dart';
 
 import '../../../global/models/analyzer.dart';
 import '../../../global/utilities/mqtt_manager.dart';
@@ -69,20 +70,7 @@ class _PlantViewerState extends State<PlantViewer> {
             ),
           ],
         ),
-        Center(
-          child: CachedNetworkImage(
-            imageUrl: widget.analyzer.imageURL!,
-            height: 34.h,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                Center(
-                    child: CircularProgressIndicator(
-                        value: downloadProgress.progress,
-                        color: SoulPotTheme.spGreen,
-                        strokeWidth: 1.w)),
-            errorWidget: (context, url, error) =>
-                const Center(child: Icon(Icons.error)),
-          ),
-        ),
+        CachedImage(imageUrl: widget.analyzer.imageURL!, height: 34.h),
         Padding(
           padding: EdgeInsets.symmetric(vertical: 1.h),
           child: Row(

@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/widgets/cached_image.dart';
 
-import '../../../global/models/plant.dart';
-import '../../../global/utilities/theme.dart';
+import '../../models/plant.dart';
+import '../../utilities/theme.dart';
 
 
 class PlantPickerDialog extends StatefulWidget {
@@ -59,18 +60,7 @@ class _PlantPickerDialogState extends State<PlantPickerDialog> {
                           ),
                           child: Row(
                             children: [
-                              CachedNetworkImage(
-                                imageUrl: widget.codex[index].gifURL,
-                                height: 5.h,
-                                progressIndicatorBuilder:
-                                    (context, url, downloadProgress) =>
-                                        CircularProgressIndicator(
-                                  value: downloadProgress.progress,
-                                  color: SoulPotTheme.spGreen,
-                                ),
-                                errorWidget: (context, url, error) =>
-                                    const Center(child: Icon(Icons.error)),
-                              ),
+                              CachedImage(imageUrl: widget.codex[index].gifURL, height: 5.h),
                               const Spacer(),
                               Column(
                                 children: [
