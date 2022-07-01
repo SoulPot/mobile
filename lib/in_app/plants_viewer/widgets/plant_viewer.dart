@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/widgets/cached_image.dart';
@@ -8,7 +7,6 @@ import 'package:soulpot/global/widgets/cached_image.dart';
 import '../../../global/models/analyzer.dart';
 import '../../../global/utilities/mqtt_manager.dart';
 import '../../../global/utilities/theme.dart';
-import 'disconnect_dialog.dart';
 import 'plant_infos_card.dart';
 
 class PlantViewer extends StatefulWidget {
@@ -43,7 +41,7 @@ class _PlantViewerState extends State<PlantViewer> {
                 child: Text(
                   widget.analyzer.name,
                   style: TextStyle(
-                    fontSize: 16.sp,
+                    fontSize: 15.sp,
                     fontWeight: FontWeight.bold,
                     fontFamily: "Greenhouse",
                   ),
@@ -99,8 +97,11 @@ class _PlantViewerState extends State<PlantViewer> {
                   const Spacer(),
                 ],
               ),
-              Text("Dernière mise à jour le ${widget.analyzer.lastUpdateDateTime!.split(" ")[0]} à ${widget.analyzer.lastUpdateDateTime!.split(" ")[1]}",
-              style: TextStyle(fontSize: 9.sp, fontStyle: FontStyle.italic),)
+              Padding(
+                padding: EdgeInsets.only(top: 2.h),
+                child: Text("Dernière mise à jour le ${widget.analyzer.lastUpdateDateTime!.split(" ")[0]} à ${widget.analyzer.lastUpdateDateTime!.split(" ")[1]}",
+                style: TextStyle(fontSize: 9.sp, fontStyle: FontStyle.italic),),
+              )
             ],
           ),
         ),
@@ -148,7 +149,6 @@ class _PlantViewerState extends State<PlantViewer> {
     int maxReco = widget.analyzer.recommendations!.recommendedHumidity[1];
     int medReco = (minReco + maxReco) ~/ 2;
     if (deviceId == null) {
-      print('ERROR: no device id set');
       return;
     }
     String payload = "{\"sprinkle\":\"true\", \"expectedValue\": \"$medReco\"}";

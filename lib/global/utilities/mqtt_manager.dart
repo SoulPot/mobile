@@ -28,20 +28,11 @@ class MQTTManager {
     client.onConnected = onConnected;
   }
 
-  static void onSubscribed() {
-    print("MQTT SUBSCRIBED");
-  }
-
-  static void onConnected() {
-    print('MQTT LOGGED');
-  }
+  static void onConnected() {}
 
   static void onDisconnected() {
     if (client.connectionStatus!.disconnectionOrigin ==
         MqttDisconnectionOrigin.solicited) {
-      print('Client disconnect normally.');
-    } else {
-      print('Error when disconnecting');
     }
   }
 
@@ -49,19 +40,13 @@ class MQTTManager {
     try {
       await client.connect(username, password);
       return;
-    } on NoConnectionException catch (e) {
-      print('Client exception - $e');
+    } on NoConnectionException catch (_) {
       client.disconnect();
-    } on Exception catch (e) {
-      print('Socket exception $e');
+    } on Exception catch (_) {
       client.disconnect();
     }
 
-    if (client.connectionStatus!.state == MqttConnectionState.connected) {
-      print('MQTT client connected');
-    } else {
-      /// Use status here rather than state if you also want the broker return code.
-      print('MQTT connection failed -> status: ${client.connectionStatus}');
+    if (client.connectionStatus!.state != MqttConnectionState.connected) {
       client.disconnect();
     }
   }

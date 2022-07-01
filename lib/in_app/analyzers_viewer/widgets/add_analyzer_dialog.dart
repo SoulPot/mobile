@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/global/widgets/analyzer_configuration/plant_card.dart';

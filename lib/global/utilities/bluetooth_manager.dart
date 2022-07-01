@@ -29,7 +29,6 @@ class BluetoothManager {
           for (BluetoothCharacteristic c in characteristics) {
             if (c.uuid.toString() == espAnalyzerCharacteristic) {
               await c.read().then((value) async {
-                print("VALUE => ${value.first}");
                 if (value.first == 1) {
                   analyzerDevice = r.device;
                 }
@@ -78,7 +77,6 @@ class BluetoothManager {
     BluetoothCharacteristic? characteristic;
 
     if (analyzerDevice == null) {
-      print("in characteristic Analyzer not found");
       return null;
     }
     await analyzerDevice.connect();
