@@ -98,14 +98,14 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                     children: [
                       showErrorWifi
                           ? Text(
-                              "Connexion échouée, veuillez resaisir les informations nécessaires !",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: SoulPotTheme.spRed,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13.sp,
-                                  fontFamily: 'Greenhouse'),
-                            )
+                                  "Connexion échouée, veuillez resaisir les informations nécessaires !",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: SoulPotTheme.spRed,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13.sp,
+                                      fontFamily: 'Greenhouse'),
+                                )
                           : Text(
                               "A quel réseau Wifi souhaitez-vous connecter ${widget.analyzer.name} ?",
                               textAlign: TextAlign.center,
@@ -132,7 +132,6 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                       setState(() {});
                                     },
                                     maxLength: 32,
-
                                     controller: _ssidController,
                                     decoration: InputDecoration(
                                       hintText: 'SSID',
@@ -181,7 +180,12 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                             const Spacer(),
                             ElevatedButton(
                               onPressed: () async {
-                                widget.espDevice.disconnect();
+                                BluetoothManager.writeBLE(
+                                    payload: "reset",
+                                    characteristic: widget.wifiCharacteristic,
+                                    device: widget.espDevice);
+                                await widget.espDevice.disconnect();
+                                if (!mounted) return;
                                 Navigator.of(context).pop();
                               },
                               style: ElevatedButton.styleFrom(
@@ -205,6 +209,13 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                             const Spacer(),
                             ElevatedButton(
                               onPressed: () async {
+                                if ((_ssidController.text == "" && selectedSSID == "") ||
+                                    _wifiPassController.text == "") {
+                                  setState(() {
+                                    showErrorWifi = true;
+                                  });
+                                  return;
+                                }
                                 setState(() {
                                   showLoadingWifi = true;
                                 });
@@ -214,8 +225,8 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                     : _ssidController.text;
 
                                 wifiCredentials[1] = _wifiPassController.text;
-                                await BluetoothManager.sendCredentials(
-                                    credentials:
+                                await BluetoothManager.writeBLE(
+                                    payload:
                                         "${wifiCredentials[0]},${wifiCredentials[1]}",
                                     characteristic: widget.wifiCharacteristic,
                                     device: widget.espDevice);
@@ -230,9 +241,13 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                 BluetoothCharacteristic? newCharacteristic =
                                     await BluetoothManager
                                         .getAnalyzerCharacteristic(newDevice);
-                                espState =
-                                    await BluetoothManager.readCharacteristic(
-                                        newCharacteristic!, newDevice!);
+                                try {
+                                  espState =
+                                      await BluetoothManager.readCharacteristic(
+                                          newCharacteristic!, newDevice!);
+                                } catch (e) {
+                                  espState = 2;
+                                }
                                 if (espState != 0) {
                                   // CASE ERROR WIFI CONNECTION
                                   _ssidController.text = "";
@@ -243,10 +258,10 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                   });
                                 } else if (espState == 0) {
                                   // CASE WIFI CONNECTED
-                                  widget.analyzer.id = newDevice.name;
+                                  widget.analyzer.id = newDevice?.name;
                                   await FirebaseMessaging.instance
                                       .subscribeToTopic(widget.analyzer.id!);
-                                  await newDevice.disconnect();
+                                  await newDevice?.disconnect();
                                   setState(
                                     () {
                                       Navigator.of(context).pop(

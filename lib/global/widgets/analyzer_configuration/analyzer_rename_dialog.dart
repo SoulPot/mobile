@@ -47,10 +47,10 @@ class _RenameDialogState extends State<RenameDialog> {
                 decoration: InputDecoration(
                   hintText: widget.analyzer.name,
                   hintStyle: TextStyle(
-                    color: SoulPotTheme.spBlack,
+                    color: Colors.grey,
                     fontSize: 12.sp,
                     fontFamily: 'Greenhouse',
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w500,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30),

@@ -15,28 +15,30 @@ import '../../global/models/analyzer.dart';
 import '../../global/models/plant.dart';
 
 class AnalyzerSetupView extends StatefulWidget {
-  const AnalyzerSetupView({Key? key, required this.analyzers, required this.codex})
+  const AnalyzerSetupView(
+      {Key? key, required this.analyzers, required this.codex})
       : super(key: key);
 
   final List<Analyzer> analyzers;
   final List<Plant> codex;
+
   @override
   State<AnalyzerSetupView> createState() => _AnalyzerSetupViewState();
 }
 
 class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
+  MQTTManager mqttManager = MQTTManager();
 
-  late MQTTManager mqttManager;
-
-  _AnalyzerSetupViewState() {
-    mqttManager = MQTTManager();
+  @override
+  initState() {
     mqttManager.connect();
+    super.initState();
   }
 
   Future<void> previous() async {
     const String payload = "{\"reset\":\"true\"}";
 
-    for(var i = 0; i < widget.analyzers.length; i++) {
+    for (var i = 0; i < widget.analyzers.length; i++) {
       final analyzer = widget.analyzers[i];
       if (analyzer.id != null) {
         mqttManager.publishMsg(payload, analyzer.id!, "");
@@ -66,7 +68,8 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
               ),
               itemCount: widget.analyzers.length,
               itemBuilder: (context, position) {
-                return AnalyzerSetupCard(analyzer: widget.analyzers[position], codex: widget.codex);
+                return AnalyzerSetupCard(
+                    analyzer: widget.analyzers[position], codex: widget.codex);
               },
             ),
             Align(
@@ -100,7 +103,9 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                       onPressed: () async {
                         bool allArePaired = true;
                         for (var analyzer in widget.analyzers) {
-                          if (!analyzer.paired! || analyzer.paired == null || analyzer.plant == null) {
+                          if (!analyzer.paired! ||
+                              analyzer.paired == null ||
+                              analyzer.plant == null) {
                             allArePaired = false;
                           }
                         }
@@ -110,12 +115,13 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                               "Tous les analyzers n'ont pas été configurés",
                               SoulPotTheme.spPaleRed);
                         } else {
-                          for(Analyzer analyzer in widget.analyzers) {
+                          for (Analyzer analyzer in widget.analyzers) {
                             await FirestoreManager.createAnalyzer(analyzer);
                           }
-                          SharedPreferences prefs = await SharedPreferences.getInstance();
+                          SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
                           prefs.setBool('first_launch', false);
-                          if(!mounted) return;
+                          if (!mounted) return;
                           await Navigator.of(context).push(
                             PageTransition(
                               type: PageTransitionType.fade,

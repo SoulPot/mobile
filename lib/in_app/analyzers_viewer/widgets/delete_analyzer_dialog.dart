@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/utilities/firebase_management/authentication.dart';
+import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/global/utilities/mqtt_manager.dart';
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 

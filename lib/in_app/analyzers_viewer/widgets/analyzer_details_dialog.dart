@@ -164,7 +164,7 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                                 DeleteAnalyzerDialog(analyzer: widget.analyzer))
                         .then((value) async {
                       if (value) {
-                        await FirestoreManager.deletedAnalyzer(
+                        await FirestoreManager.deleteAnalyzer(
                             widget.analyzer.id!);
                         if (!mounted) return;
                         Navigator.pop(context);
