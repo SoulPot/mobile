@@ -22,9 +22,9 @@ class MQTTManager {
 
   static void initMqttClient() {
     client = MqttServerClient.withPort(host, clientId, port);
-    client.logging(on: true);
+    client.logging(on: false);
     client.setProtocolV311();
-    client.keepAlivePeriod = 20;
+    client.keepAlivePeriod = 1000;
     client.onConnected = onConnected;
   }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soulpot/analyzers_setup/widgets/analyzer_setup_card.dart';
-import 'package:soulpot/global/utilities/bluetooth_manager.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/global/utilities/mqtt_manager.dart';
 import 'package:soulpot/global/utilities/theme.dart';
@@ -39,8 +38,9 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
 
     for(var i = 0; i < widget.analyzers.length; i++) {
       final analyzer = widget.analyzers[i];
-      print(analyzer.id);
-      mqttManager.publishMsg(payload, analyzer.id!, "");
+      if (analyzer.id != null) {
+        mqttManager.publishMsg(payload, analyzer.id!, "");
+      }
     }
 
     await Navigator.of(context).push(
