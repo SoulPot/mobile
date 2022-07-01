@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/utilities/firebase_management/analytics.dart';
 import 'package:soulpot/global/widgets/cached_image.dart';
 
 import '../../../global/models/analyzer.dart';
@@ -153,6 +154,7 @@ class _PlantViewerState extends State<PlantViewer> {
     }
     String payload = "{\"sprinkle\":\"true\", \"expectedValue\": \"$medReco\"}";
     mqttManager.publishMsg(payload, deviceId, "/sprink");
+    AnalyticsManager.logSprinkle();
   }
 
   Color getTemperatureColor(Analyzer analyzer) {

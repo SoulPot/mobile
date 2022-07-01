@@ -46,6 +46,7 @@ class _DeleteAnalyzerDialogState extends State<DeleteAnalyzerDialog> {
             const Spacer(),
             Text(
               'Suppression de ${widget.analyzer.name}',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16.sp,
                 fontFamily: 'Greenhouse',
