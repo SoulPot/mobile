@@ -94,26 +94,7 @@ class _PlantsViewState extends State<PlantsView> {
                       )
                     : Stack(
                       children: [
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              await showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (BuildContext context) => const DisconnectDialog());
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: SoulPotTheme.spRed,
-                              fixedSize: Size(5.h, 5.h),
-                              shape: const CircleBorder(),
-                            ),
-                            child: const Icon(
-                              Icons.logout_outlined,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
+
                         Column(
                             children: [
 
@@ -181,6 +162,26 @@ class _PlantsViewState extends State<PlantsView> {
 
                             ],
                           ),
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (BuildContext context) => const DisconnectDialog());
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: SoulPotTheme.spRed,
+                              fixedSize: Size(5.h, 5.h),
+                              shape: const CircleBorder(),
+                            ),
+                            child: const Icon(
+                              Icons.logout_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
                       ],
                     );
             }
