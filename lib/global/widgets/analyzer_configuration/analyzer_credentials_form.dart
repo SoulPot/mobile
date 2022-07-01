@@ -97,15 +97,26 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                 : Column(
                     children: [
                       showErrorWifi
-                          ? Text(
-                              "Connexion échouée, veuillez resaisir les informations nécessaires !",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: SoulPotTheme.spRed,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13.sp,
-                                  fontFamily: 'Greenhouse'),
-                            )
+                          ? _ssidController.text == "" ||
+                                  _wifiPassController.text == ""
+                              ? Text(
+                                  "Les champs SSID et mot de passe sont obligatoires",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: SoulPotTheme.spRed,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13.sp,
+                                      fontFamily: 'Greenhouse'),
+                                )
+                              : Text(
+                                  "Connexion échouée, veuillez resaisir les informations nécessaires !",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                      color: SoulPotTheme.spRed,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13.sp,
+                                      fontFamily: 'Greenhouse'),
+                                )
                           : Text(
                               "A quel réseau Wifi souhaitez-vous connecter ${widget.analyzer.name} ?",
                               textAlign: TextAlign.center,
@@ -208,6 +219,13 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                             const Spacer(),
                             ElevatedButton(
                               onPressed: () async {
+                                if (_ssidController.text == "" ||
+                                    _wifiPassController.text == "") {
+                                  setState(() {
+                                    showErrorWifi = true;
+                                  });
+                                  return;
+                                }
                                 setState(() {
                                   showLoadingWifi = true;
                                 });
