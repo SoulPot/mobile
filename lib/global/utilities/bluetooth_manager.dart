@@ -20,6 +20,7 @@ class BluetoothManager {
     for (ScanResult r in results) {
       if (analyzerDevice != null) break;
       if (r.advertisementData.localName.contains(espDeviceName)) {
+        await r.device.disconnect();
         await r.device.connect();
         List<BluetoothService> analyzerServices =
             await r.device.discoverServices();
@@ -28,6 +29,7 @@ class BluetoothManager {
           for (BluetoothCharacteristic c in characteristics) {
             if (c.uuid.toString() == espAnalyzerCharacteristic) {
               await c.read().then((value) async {
+                print("VALUE => ${value.first}");
                 if (value.first == 1) {
                   analyzerDevice = r.device;
                 }
@@ -76,6 +78,7 @@ class BluetoothManager {
     BluetoothCharacteristic? characteristic;
 
     if (analyzerDevice == null) {
+      print("in characteristic Analyzer not found");
       return null;
     }
     await analyzerDevice.connect();
@@ -84,26 +87,12 @@ class BluetoothManager {
     for (BluetoothService s in analyzerServices) {
       var characteristics = s.characteristics;
       for (BluetoothCharacteristic c in characteristics) {
-        characteristic = c;
+        if(c.uuid.toString() == espAnalyzerCharacteristic) {
+          characteristic = c;
+        }
       }
     }
     return characteristic;
-  }
-
-  static Future<bool> sendCredentials(
-      {required String credentials,
-      required BluetoothCharacteristic characteristic,
-      required BluetoothDevice device}) async {
-    try {
-      Platform.isAndroid
-          ? await characteristic.write(utf8.encode(credentials),
-              withoutResponse: false)
-          : await characteristic.write(utf8.encode(credentials),
-              withoutResponse: true);
-    } catch (error) {
-      return false;
-    }
-    return true;
   }
 
   static Future<int> readCharacteristic(
@@ -111,4 +100,21 @@ class BluetoothManager {
     var data = await characteristic.read();
     return data[0];
   }
+
+  static Future<bool> writeBLE(
+      {required String payload,
+        required BluetoothCharacteristic characteristic,
+        required BluetoothDevice device}) async {
+    try {
+      Platform.isAndroid
+          ? await characteristic.write(utf8.encode(payload),
+          withoutResponse: false)
+          : await characteristic.write(utf8.encode(payload),
+          withoutResponse: true);
+    } catch (error) {
+      return false;
+    }
+    return true;
+  }
+
 }

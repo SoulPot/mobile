@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/global/widgets/analyzer_configuration/plant_card.dart';
@@ -6,6 +7,7 @@ import 'package:soulpot/global/widgets/analyzer_configuration/plant_picker_dialo
 
 import '../../../global/models/analyzer.dart';
 import '../../../global/models/plant.dart';
+import '../../../global/utilities/mqtt_manager.dart';
 import '../../../global/utilities/theme.dart';
 import '../../../global/widgets/analyzer_configuration/analyzer_pairing_dialog.dart';
 
@@ -24,17 +26,27 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
   String? ssid;
   bool paired = false;
   late Analyzer analyzerToCreate;
+  MQTTManager mqttManager = MQTTManager();
 
   bool showError = false;
   final TextEditingController _plantNameController = TextEditingController();
 
   @override
   void initState() {
+    mqttManager.connect();
     analyzerToCreate = Analyzer(
       _plantNameController.text,
       false,
     );
     super.initState();
+  }
+
+  Future<void> previous() async {
+    const String payload = "{\"reset\":\"true\"}";
+    if (analyzerToCreate.id != null) {
+      mqttManager.publishMsg(payload, analyzerToCreate.id!, "");
+    }
+    Navigator.of(context).pop();
   }
 
   @override
@@ -71,8 +83,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                     cursorColor: SoulPotTheme.spPurple,
                     decoration: const InputDecoration(
                       focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(color: SoulPotTheme.spGreen),
+                        borderSide: BorderSide(color: SoulPotTheme.spGreen),
                       ),
                     ),
                     style: TextStyle(
@@ -216,12 +227,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                       children: [
                         const Spacer(),
                         ElevatedButton(
-                          onPressed: () {
-                            if (paired) {
-                              //TODO SEND RESET TRIGGER TO ESP
-                            }
-                            Navigator.pop(context);
-                          },
+                          onPressed: previous,
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0),
