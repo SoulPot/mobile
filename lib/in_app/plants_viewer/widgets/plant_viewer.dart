@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../global/models/analyzer.dart';
+import '../../../global/utilities/mqtt_manager.dart';
 import '../../../global/utilities/theme.dart';
 import 'disconnect_dialog.dart';
 import 'plant_infos_card.dart';
@@ -124,10 +125,6 @@ class _PlantViewerState extends State<PlantViewer> {
               const Spacer(),
             ],
           ),
-        ),
-        const Divider(
-          thickness: 2,
-          color: Colors.grey,
         ),
         Row(
           children: [
