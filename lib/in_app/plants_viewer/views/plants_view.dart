@@ -92,65 +92,96 @@ class _PlantsViewState extends State<PlantsView> {
                           ],
                         ),
                       )
-                    : PageView.builder(
-                        controller: _pageController,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: snapshot.data?.docs.length,
-                        pageSnapping: true,
-                        onPageChanged: (index) {
-                          _pageNotifier.value = index;
-                        },
-                        itemBuilder: (context, position) {
-                          final document = snapshot.data!.docs[position];
-                          Plant plant = widget.codex
-                              .where((element) =>
-                                  element.plantID == document["plantID"])
-                              .first;
-                          return Column(
+                    : Stack(
+                      children: [
+                        Align(
+                          alignment: Alignment.topRight,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              await showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (BuildContext context) => const DisconnectDialog());
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: SoulPotTheme.spRed,
+                              fixedSize: Size(5.h, 5.h),
+                              shape: const CircleBorder(),
+                            ),
+                            child: const Icon(
+                              Icons.logout_outlined,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                        Column(
                             children: [
-                              PlantViewer(
-                                analyzer: Analyzer(
-                                  document["name"],
-                                  true,
-                                  id: document.id,
-                                  temperature: document
-                                          .data()
-                                          .toString()
-                                          .contains("temperature")
-                                      ? document["temperature"].toInt()
-                                      : -255,
-                                  humidity: document
-                                          .data()
-                                          .toString()
-                                          .contains("humidity")
-                                      ? document["humidity"].toInt()
-                                      : -255,
-                                  luminosity: document
-                                          .data()
-                                          .toString()
-                                          .contains("luminosity")
-                                      ? document["luminosity"].toInt()
-                                      : -255,
-                                  wifiName: document["wifiName"],
-                                  imageURL: plant.gifURL,
-                                  recommendations: plant.recommendations,
+
+                              SizedBox(
+                                height: 80.h,
+                                child: PageView.builder(
+                                  controller: _pageController,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: snapshot.data?.docs.length,
+                                  pageSnapping: true,
+                                  onPageChanged: (index) {
+                                    _pageNotifier.value = index;
+                                  },
+                                  itemBuilder: (context, position) {
+                                    final document = snapshot.data!.docs[position];
+                                    Plant plant = widget.codex
+                                        .where((element) =>
+                                            element.plantID == document["plantID"])
+                                        .first;
+                                    return PlantViewer(
+                                      analyzer: Analyzer(
+                                        document["name"],
+                                        true,
+                                        id: document.id,
+                                        temperature: document
+                                                .data()
+                                                .toString()
+                                                .contains("temperature")
+                                            ? document["temperature"].toInt()
+                                            : -255,
+                                        humidity: document
+                                                .data()
+                                                .toString()
+                                                .contains("humidity")
+                                            ? document["humidity"].toInt()
+                                            : -255,
+                                        luminosity: document
+                                                .data()
+                                                .toString()
+                                                .contains("luminosity")
+                                            ? document["luminosity"].toInt()
+                                            : -255,
+                                        wifiName: document["wifiName"],
+                                        imageURL: plant.gifURL,
+                                        recommendations: plant.recommendations,
+                                      ),
+                                    );
+                                  },
                                 ),
                               ),
                               const Spacer(),
                               Padding(
                                 padding: EdgeInsets.only(bottom: 1.h),
-                              child: Row(
+                                child: Row(
                                   children: [
                                     const Spacer(),
-                                   PageIndicator(pageNotifier: _pageNotifier, itemCount: snapshot.data!.docs.length),
+                                    PageIndicator(
+                                        pageNotifier: _pageNotifier,
+                                        itemCount: snapshot.data!.docs.length),
                                     const Spacer(),
                                   ],
                                 ),
                               ),
+
                             ],
-                          );
-                        },
-                      );
+                          ),
+                      ],
+                    );
             }
           },
         ),

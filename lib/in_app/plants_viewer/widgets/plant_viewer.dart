@@ -51,23 +51,7 @@ class _PlantViewerState extends State<PlantViewer> {
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                await showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (BuildContext context) => const DisconnectDialog());
-              },
-              style: ElevatedButton.styleFrom(
-                primary: SoulPotTheme.spRed,
-                fixedSize: Size(5.h, 5.h),
-                shape: const CircleBorder(),
-              ),
-              child: const Icon(
-                Icons.logout_outlined,
-                color: Colors.white,
-              ),
-            ),
+            const Spacer(),
           ],
         ),
         CachedImage(imageUrl: widget.analyzer.imageURL!, height: 34.h),
