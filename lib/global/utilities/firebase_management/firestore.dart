@@ -161,7 +161,12 @@ class FirestoreManager {
     });
   }
 
-  static Future<void> deletedAnalyzer(String analyzerID) async {
+  static Future<void> deleteAnalyzer(String analyzerID) async {
+    await firestore.collection("analyzers/$analyzerID/logs").get().then((logs) {
+      for (var log in logs.docs) {
+        firestore.collection("logs").doc(log.id).delete();
+      }
+    });
     await firestore.collection("analyzers").doc(analyzerID).delete();
   }
 }
