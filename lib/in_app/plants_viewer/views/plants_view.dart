@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
@@ -12,7 +13,6 @@ import '../widgets/plant_viewer.dart';
 
 class PlantsView extends StatefulWidget {
   const PlantsView({Key? key, required this.codex}) : super(key: key);
-
   final List<Plant> codex;
 
   @override
@@ -20,11 +20,9 @@ class PlantsView extends StatefulWidget {
 }
 
 class _PlantsViewState extends State<PlantsView> {
-  List<Analyzer> userAnalyzers = [];
-  List<Widget> viewers = [];
   final PageController _pageController = PageController();
-  List<Plant> userPlants = [];
   final ValueNotifier<int> _pageNotifier = ValueNotifier<int>(0);
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +38,10 @@ class _PlantsViewState extends State<PlantsView> {
               case ConnectionState.waiting:
                 return const Text('Loading...');
               default:
+                for(var doc in snapshot.data!.docs) {
+                  FirebaseMessaging.instance.subscribeToTopic(doc.id);
+                }
+
                 return snapshot.data!.docs.isEmpty
                     ? Center(
                         child: Column(
@@ -64,11 +66,15 @@ class _PlantsViewState extends State<PlantsView> {
                             ),
                             ElevatedButton(
                               onPressed: () async {
+                                List<String> userAnalyzersIDs = [];
+                                for(var analyzer in snapshot.data!.docs) {
+                                  userAnalyzersIDs.add(analyzer.id);
+                                }
                                 await showDialog(
                                     barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) =>
-                                        const DisconnectDialog());
+                                        DisconnectDialog(userAnalyzersIDs: userAnalyzersIDs));
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -166,10 +172,14 @@ class _PlantsViewState extends State<PlantsView> {
                           alignment: Alignment.topRight,
                           child: ElevatedButton(
                             onPressed: () async {
+                              List<String> userAnalyzersIDs = [];
+                              for(var analyzer in snapshot.data!.docs) {
+                                userAnalyzersIDs.add(analyzer.id);
+                              }
                               await showDialog(
                                   barrierDismissible: false,
                                   context: context,
-                                  builder: (BuildContext context) => const DisconnectDialog());
+                                  builder: (BuildContext context) => DisconnectDialog(userAnalyzersIDs: userAnalyzersIDs));
                             },
                             style: ElevatedButton.styleFrom(
                               primary: SoulPotTheme.spRed,

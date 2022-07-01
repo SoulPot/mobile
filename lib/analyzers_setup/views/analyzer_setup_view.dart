@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -41,6 +42,7 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
     for (var i = 0; i < widget.analyzers.length; i++) {
       final analyzer = widget.analyzers[i];
       if (analyzer.id != null) {
+        FirebaseMessaging.instance.unsubscribeFromTopic(analyzer.id!);
         mqttManager.publishMsg(payload, analyzer.id!, "");
       }
     }

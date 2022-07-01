@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:soulpot/global/widgets/analyzer_configuration/analyzer_rename_dialog.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
@@ -168,6 +169,7 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                         AnalyticsManager.logDeletePlant();
                         await FirestoreManager.deleteAnalyzer(
                             widget.analyzer.id!);
+                        FirebaseMessaging.instance.unsubscribeFromTopic(widget.analyzer.id!);
                         if (!mounted) return;
                         Navigator.pop(context);
                       }
