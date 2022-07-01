@@ -3,6 +3,8 @@ import 'package:im_stepper/stepper.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:soulpot/analyzers_setup/views/app_infos_view.dart';
+import 'package:soulpot/global/utilities/ConnectivityManager.dart';
+import 'package:soulpot/global/utilities/custom_snackbar.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/analyzers_setup/widgets/analyzer_count_printer.dart';
 import 'package:sizer/sizer.dart';
@@ -13,7 +15,8 @@ import '../../global/models/plant.dart';
 import 'analyzer_setup_view.dart';
 
 class AnalyzerCountPickerView extends StatefulWidget {
-  const AnalyzerCountPickerView({Key? key, required this.codex}) : super(key: key);
+  const AnalyzerCountPickerView({Key? key, required this.codex})
+      : super(key: key);
 
   final List<Plant> codex;
 
@@ -204,24 +207,30 @@ class _AnalyzerCountPickerViewState extends State<AnalyzerCountPickerView> {
                         EdgeInsets.symmetric(vertical: 1.h, horizontal: 1.w),
                     child: ElevatedButton(
                       onPressed: () async {
-                        for (int i = 0; i < _currentAnalyzerCount + 1; i++) {
-                          _analyzers.add(Analyzer("Analyzer ${i + 1}", false));
+                        if (await ConnectivityManager
+                            .checkPeripheralConnection()) {
+                          for (int i = 0; i < _currentAnalyzerCount + 1; i++) {
+                            _analyzers
+                                .add(Analyzer("Analyzer ${i + 1}", false));
+                          }
+                          Navigator.push(
+                            context,
+                            PageTransition(
+                                alignment: Alignment.bottomCenter,
+                                curve: Curves.easeInOut,
+                                duration: const Duration(milliseconds: 600),
+                                reverseDuration:
+                                    const Duration(milliseconds: 600),
+                                type: PageTransitionType.fade,
+                                child: AnalyzerSetupView(
+                                  analyzers: _analyzers,
+                                  codex: widget.codex,
+                                ),
+                                childCurrent: context.widget),
+                          );
+                        } else {
+                          snackBarCreator(context, "Une connexion internet est nécessaire !", SoulPotTheme.spRed);
                         }
-                        Navigator.push(
-                          context,
-                          PageTransition(
-                              alignment: Alignment.bottomCenter,
-                              curve: Curves.easeInOut,
-                              duration: const Duration(milliseconds: 600),
-                              reverseDuration:
-                                  const Duration(milliseconds: 600),
-                              type: PageTransitionType.fade,
-                              child: AnalyzerSetupView(
-                                analyzers: _analyzers,
-                                codex: widget.codex,
-                              ),
-                              childCurrent: context.widget),
-                        );
                       },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(

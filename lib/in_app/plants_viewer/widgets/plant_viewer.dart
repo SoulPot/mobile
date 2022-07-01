@@ -126,10 +126,6 @@ class _PlantViewerState extends State<PlantViewer> {
             ],
           ),
         ),
-        const Divider(
-          thickness: 2,
-          color: Colors.grey,
-        ),
         Row(
           children: [
             CardInfoPlant(
