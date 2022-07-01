@@ -97,18 +97,7 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                 : Column(
                     children: [
                       showErrorWifi
-                          ? _ssidController.text == "" ||
-                                  _wifiPassController.text == ""
-                              ? Text(
-                                  "Les champs SSID et mot de passe sont obligatoires",
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: SoulPotTheme.spRed,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 13.sp,
-                                      fontFamily: 'Greenhouse'),
-                                )
-                              : Text(
+                          ? Text(
                                   "Connexion échouée, veuillez resaisir les informations nécessaires !",
                                   textAlign: TextAlign.center,
                                   style: TextStyle(
@@ -191,10 +180,11 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                             const Spacer(),
                             ElevatedButton(
                               onPressed: () async {
-                                await BluetoothManager.writeBLE(
+                                BluetoothManager.writeBLE(
                                     payload: "reset",
                                     characteristic: widget.wifiCharacteristic,
                                     device: widget.espDevice);
+                                await widget.espDevice.disconnect();
                                 if (!mounted) return;
                                 Navigator.of(context).pop();
                               },
@@ -219,7 +209,7 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                             const Spacer(),
                             ElevatedButton(
                               onPressed: () async {
-                                if (_ssidController.text == "" ||
+                                if ((_ssidController.text == "" && selectedSSID == "") ||
                                     _wifiPassController.text == "") {
                                   setState(() {
                                     showErrorWifi = true;
