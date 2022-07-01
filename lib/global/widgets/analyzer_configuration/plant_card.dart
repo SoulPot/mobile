@@ -2,8 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
 import 'package:soulpot/global/utilities/theme.dart';
+import 'package:soulpot/global/widgets/cached_image.dart';
 
-import '../../../global/models/plant.dart';
+import '../../models/plant.dart';
 
 class PlantCard extends StatefulWidget {
   const PlantCard({Key? key, required this.plant}) : super(key: key);
@@ -24,17 +25,7 @@ class _PlantCardState extends State<PlantCard> {
       ),
       child: Row(
         children: [
-          CachedNetworkImage(
-            imageUrl: widget.plant.gifURL,
-            height: 5.h,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                CircularProgressIndicator(
-                  value: downloadProgress.progress,
-                  color: SoulPotTheme.spGreen,
-                ),
-            errorWidget: (context, url, error) =>
-                const Center(child: Icon(Icons.error)),
-          ),
+          CachedImage(imageUrl: widget.plant.gifURL, height: 5.h),
           const Spacer(),
           Padding(
             padding: EdgeInsets.symmetric(vertical: 1.h),

@@ -6,10 +6,10 @@ import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 import 'package:loading_animation_widget/loading_animation_widget.dart';
 import 'package:sizer/sizer.dart';
 
-import '../../global/models/analyzer.dart';
-import '../../global/utilities/bluetooth_manager.dart';
-import '../../global/utilities/theme.dart';
-import '../../global/widgets/dropdown_wifi_picker.dart';
+import '../../models/analyzer.dart';
+import '../../utilities/bluetooth_manager.dart';
+import '../../utilities/theme.dart';
+import '../dropdown_wifi_picker.dart';
 
 class AnalyzerCredentialsForm extends StatefulWidget {
   const AnalyzerCredentialsForm(
