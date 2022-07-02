@@ -146,7 +146,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
   displayObjectiveType() {
     if (widget.objective.type == "easy") {
       return difficultyStar();
-    } else if (widget.objective.type == "advanced") {
+    } else if (widget.objective.type == "hard") {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

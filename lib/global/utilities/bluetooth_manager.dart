@@ -7,14 +7,17 @@ import 'package:soulpot/global/utilities/config.dart';
 class BluetoothManager {
   static FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
 
+  static Future<void> triggerBLE() async {
+    flutterBlue.scan();
+    await flutterBlue.stopScan();
+  }
+
   static Future<BluetoothDevice?> getFirstAnalyzerDeviceFound() async {
     BluetoothDevice? analyzerDevice;
 
     if (Platform.isIOS) {
-      flutterBlue.scan();
-      await flutterBlue.stopScan();
+      triggerBLE();
     }
-
     var results =
         await flutterBlue.startScan(timeout: const Duration(seconds: 4));
     for (ScanResult r in results) {
@@ -47,7 +50,7 @@ class BluetoothManager {
     BluetoothDevice? analyzerDevice;
 
     if (Platform.isIOS) {
-      flutterBlue.scan();
+      triggerBLE();
     }
 
     var results =

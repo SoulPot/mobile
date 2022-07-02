@@ -29,23 +29,27 @@ class _AppInfosViewState extends State<AppInfosView> {
                 scrollDirection: Axis.horizontal,
                 pageSnapping: true,
                 children: [
-                  GeneralAppInfos(swipePageButton: swipePageButton ),
-                  PairingInfos(swipePageButton: swipePageButton,),
-                  ComplementaryInfos(swipePageButton: swipePageButton,),
+                  GeneralAppInfos(swipePageButton: swipePageButton),
+                  PairingInfos(
+                    swipePageButton: swipePageButton,
+                  ),
+                  ComplementaryInfos(
+                    swipePageButton: swipePageButton,
+                  ),
                 ],
               ),
-
               Align(
                 alignment: Alignment.topLeft,
                 child: IconButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    icon: Icon(
-                      Icons.arrow_circle_left_outlined,
-                      color: SoulPotTheme.spGreen,
-                      size: 10.w,
-                    )),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(
+                    Icons.arrow_circle_left_outlined,
+                    color: SoulPotTheme.spGreen,
+                    size: 10.w,
+                  ),
+                ),
               ),
             ],
           ),

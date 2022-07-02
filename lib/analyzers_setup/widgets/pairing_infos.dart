@@ -5,20 +5,21 @@ import 'package:sizer/sizer.dart';
 import '../../global/utilities/theme.dart';
 
 class PairingInfos extends StatefulWidget {
-  const PairingInfos({Key? key, required this.swipePageButton}) : super(key: key);
+  const PairingInfos({Key? key, required this.swipePageButton})
+      : super(key: key);
 
   final void Function(int) swipePageButton;
-
-  static const monsteraGif =
-      "https://firebasestorage.googleapis.com/v0/b/soulpot-5fbe6.appspot.com/o/plants_gifs%2F11_Monstera.gif?alt=media&token=3cc93ddd-74b8-4f10-be1a-8519e208f556";
-  static const orchideeGif =
-      "https://firebasestorage.googleapis.com/v0/b/soulpot-5fbe6.appspot.com/o/plants_gifs%2F10_Orchidee.gif?alt=media&token=6ac34508-e6c8-40a2-b83c-1f0739887890";
 
   @override
   State<PairingInfos> createState() => _PairingInfosState();
 }
 
 class _PairingInfosState extends State<PairingInfos> {
+  static const _monsteraGif =
+      "https://firebasestorage.googleapis.com/v0/b/soulpot-5fbe6.appspot.com/o/plants_gifs%2F11_Monstera.gif?alt=media&token=3cc93ddd-74b8-4f10-be1a-8519e208f556";
+  static const _orchideeGif =
+      "https://firebasestorage.googleapis.com/v0/b/soulpot-5fbe6.appspot.com/o/plants_gifs%2F10_Orchidee.gif?alt=media&token=6ac34508-e6c8-40a2-b83c-1f0739887890";
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -187,7 +188,7 @@ class _PairingInfosState extends State<PairingInfos> {
           child: Text(
             "Le paramétrage est terminé !",
             style: TextStyle(
-              fontFamily: "Greenhouse",
+                fontFamily: "Greenhouse",
                 color: SoulPotTheme.spGreen,
                 fontSize: 14.sp,
                 fontWeight: FontWeight.bold),
@@ -199,7 +200,7 @@ class _PairingInfosState extends State<PairingInfos> {
           children: [
             const Spacer(),
             CachedNetworkImage(
-              imageUrl: PairingInfos.monsteraGif,
+              imageUrl: _monsteraGif,
               height: 13.h,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   Center(
@@ -207,12 +208,13 @@ class _PairingInfosState extends State<PairingInfos> {
                           value: downloadProgress.progress,
                           color: SoulPotTheme.spGreen,
                           strokeWidth: 1.w)),
-              errorWidget: (context, url, error) =>
-                  const Center(child: Icon(Icons.error)),
+              errorWidget: (context, url, error) => const Center(
+                child: Icon(Icons.error),
+              ),
             ),
             const Spacer(),
             CachedNetworkImage(
-              imageUrl: PairingInfos.orchideeGif,
+              imageUrl: _orchideeGif,
               height: 13.h,
               progressIndicatorBuilder: (context, url, downloadProgress) =>
                   Center(
@@ -220,8 +222,9 @@ class _PairingInfosState extends State<PairingInfos> {
                           value: downloadProgress.progress,
                           color: SoulPotTheme.spGreen,
                           strokeWidth: 1.w)),
-              errorWidget: (context, url, error) =>
-                  const Center(child: Icon(Icons.error)),
+              errorWidget: (context, url, error) => const Center(
+                child: Icon(Icons.error),
+              ),
             ),
             const Spacer(),
           ],
@@ -231,7 +234,7 @@ class _PairingInfosState extends State<PairingInfos> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
               child: IconButton(
-                onPressed: () => { widget.swipePageButton(0)},
+                onPressed: () => {widget.swipePageButton(0)},
                 icon: Icon(
                   Icons.keyboard_arrow_left_rounded,
                   size: 30.sp,
@@ -243,7 +246,7 @@ class _PairingInfosState extends State<PairingInfos> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 1.h),
               child: IconButton(
-                onPressed: () => { widget.swipePageButton(2)},
+                onPressed: () => {widget.swipePageButton(2)},
                 icon: Icon(
                   Icons.keyboard_arrow_right_rounded,
                   size: 30.sp,
@@ -253,7 +256,6 @@ class _PairingInfosState extends State<PairingInfos> {
             )
           ],
         ),
-
       ],
     );
   }

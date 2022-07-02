@@ -10,6 +10,7 @@ import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:soulpot/global/utilities/bluetooth_manager.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 
@@ -83,6 +84,7 @@ class SoulPotApp extends StatelessWidget {
     if (firstTime == null) {
       List<Plant> codex = await FirestoreManager.getCodex();
       codex.sort((a, b) => a.alias.compareTo(b.alias));
+      BluetoothManager.triggerBLE();
       return AnalyzerCountPickerView(codex: codex);
     } else if (firstTime == false) {
       if (user != null) {

@@ -153,7 +153,7 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
