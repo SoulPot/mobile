@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -83,9 +84,12 @@ class AuthenticationManager {
   }
 
   static Future<void> signOut(List<String> userAnalyzerIDs) async {
-    await auth.signOut();
-
+    userAnalyzerIDs.forEach((id) async {
+      await FirebaseMessaging.instance.unsubscribeFromTopic(id);
+    });
+    await FirebaseMessaging.instance.unsubscribeFromTopic(AuthenticationManager.auth.currentUser!.uid);
     await GoogleSignIn().signOut();
     await FacebookAuth.instance.logOut();
+    await auth.signOut();
   }
 }

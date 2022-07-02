@@ -258,7 +258,7 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                 } else if (_espState == 0) {
                                   // CASE WIFI CONNECTED
                                   widget.analyzer.id = newDevice?.name;
-                                  await FirebaseMessaging.instance
+                                  FirebaseMessaging.instance
                                       .subscribeToTopic(widget.analyzer.id!);
                                   await newDevice?.disconnect();
                                   setState(
