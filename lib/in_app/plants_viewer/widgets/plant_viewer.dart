@@ -62,47 +62,51 @@ class _PlantViewerState extends State<PlantViewer> {
                 children: [
                   const Spacer(),
                   widget.analyzer.needSprinkle &&
-                          widget.analyzer.humidity != -255
+                      widget.analyzer.humidity != -255
                       ? ElevatedButton(
-                          onPressed: sprink,
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(30.0),
-                            ),
-                            primary: SoulPotTheme.spPaleGreen,
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Icon(
-                                Icons.shower_rounded,
-                                color: SoulPotTheme.spBT,
-                              ),
-                              Padding(
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 1.h, horizontal: 3.w),
-                                child: Text(
-                                  "M'arroser",
-                                  style: TextStyle(
-                                    fontSize: 12.sp,
-                                    color: SoulPotTheme.spPurple,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      : SizedBox(
-                          width: 0.w,
-                          height: 5.36.h,
+                    onPressed: sprink,
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                      primary: SoulPotTheme.spPaleGreen,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Icons.shower_rounded,
+                          color: SoulPotTheme.spBT,
                         ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 1.h, horizontal: 3.w),
+                          child: Text(
+                            "M'arroser",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: SoulPotTheme.spPurple,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                      : SizedBox(
+                    width: 0.w,
+                    height: 5.36.h,
+                  ),
                   const Spacer(),
                 ],
               ),
               Padding(
                 padding: EdgeInsets.only(top: 2.h),
                 child: Text(
-                  "Dernière mise à jour le ${widget.analyzer.lastUpdateDateTime!.split(" ")[0]} à ${widget.analyzer.lastUpdateDateTime!.split(" ")[1]}",
+                  widget.analyzer.lastUpdateDateTime == "Aucune"
+                      ? "Jamais mis à jour"
+                      : "Dernière mise à jour le ${widget.analyzer
+                      .lastUpdateDateTime!.split(" ")[0]} à ${widget.analyzer
+                      .lastUpdateDateTime!.split(" ")[1]}",
                   style: TextStyle(fontSize: 9.sp, fontStyle: FontStyle.italic),
                 ),
               )
@@ -119,7 +123,7 @@ class _PlantViewerState extends State<PlantViewer> {
               backgroundColor: getLuminosityColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
-                  widget.analyzer.recommendations!.recommendedLuminosity,
+              widget.analyzer.recommendations!.recommendedLuminosity,
             ),
             CardInfoPlant(
               label: "Température",
@@ -129,7 +133,7 @@ class _PlantViewerState extends State<PlantViewer> {
               backgroundColor: getTemperatureColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
-                  widget.analyzer.recommendations!.recommendedTemperature,
+              widget.analyzer.recommendations!.recommendedTemperature,
             ),
           ],
         ),
@@ -144,7 +148,7 @@ class _PlantViewerState extends State<PlantViewer> {
               backgroundColor: getHumidityColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
-                  widget.analyzer.recommendations!.recommendedHumidity,
+              widget.analyzer.recommendations!.recommendedHumidity,
             ),
             const Spacer(),
           ],

@@ -150,6 +150,7 @@ class FirestoreManager {
         await firestore.collection("analyzers").doc(document.id).update({
           "userID": userID,
           "deviceID": FieldValue.delete(),
+          "dateTime": "Aucune"
         });
       }
     }
