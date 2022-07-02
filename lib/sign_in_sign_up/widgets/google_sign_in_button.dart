@@ -1,6 +1,7 @@
 import 'package:auth_buttons/auth_buttons.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:sizer/sizer.dart';
 
 import '../../global/models/objective.dart';
 import '../../global/models/plant.dart';
@@ -62,6 +63,7 @@ class _GoogleSignInButtonState extends State<GoogleSignInButton> {
       style: AuthButtonStyle(
         buttonType: buttonType,
         iconType: iconType,
+        width: 75.w,
       ),
     );
   }

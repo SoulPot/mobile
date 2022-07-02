@@ -23,7 +23,6 @@ class _PlantsViewState extends State<PlantsView> {
   final PageController _pageController = PageController();
   final ValueNotifier<int> _pageNotifier = ValueNotifier<int>(0);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,7 +37,7 @@ class _PlantsViewState extends State<PlantsView> {
               case ConnectionState.waiting:
                 return const Text('Loading...');
               default:
-                for(var doc in snapshot.data!.docs) {
+                for (var doc in snapshot.data!.docs) {
                   FirebaseMessaging.instance.subscribeToTopic(doc.id);
                 }
 
@@ -67,14 +66,16 @@ class _PlantsViewState extends State<PlantsView> {
                             ElevatedButton(
                               onPressed: () async {
                                 List<String> userAnalyzersIDs = [];
-                                for(var analyzer in snapshot.data!.docs) {
+                                for (var analyzer in snapshot.data!.docs) {
                                   userAnalyzersIDs.add(analyzer.id);
                                 }
                                 await showDialog(
                                     barrierDismissible: false,
                                     context: context,
                                     builder: (BuildContext context) =>
-                                        DisconnectDialog(userAnalyzersIDs: userAnalyzersIDs));
+                                        DisconnectDialog(
+                                            userAnalyzersIDs:
+                                                userAnalyzersIDs));
                               },
                               style: ElevatedButton.styleFrom(
                                 shape: RoundedRectangleBorder(
@@ -99,11 +100,9 @@ class _PlantsViewState extends State<PlantsView> {
                         ),
                       )
                     : Stack(
-                      children: [
-
-                        Column(
+                        children: [
+                          Column(
                             children: [
-
                               SizedBox(
                                 height: 80.h,
                                 child: PageView.builder(
@@ -115,39 +114,44 @@ class _PlantsViewState extends State<PlantsView> {
                                     _pageNotifier.value = index;
                                   },
                                   itemBuilder: (context, position) {
-                                    final document = snapshot.data!.docs[position];
+                                    final document =
+                                        snapshot.data!.docs[position];
                                     Plant plant = widget.codex
                                         .where((element) =>
-                                            element.plantID == document["plantID"])
+                                            element.plantID ==
+                                            document["plantID"])
                                         .first;
                                     return PlantViewer(
-                                      analyzer: Analyzer(
-                                        document["name"],
-                                        true,
-                                        id: document.id,
-                                        temperature: document
-                                                .data()
-                                                .toString()
-                                                .contains("temperature")
-                                            ? document["temperature"].toInt()
-                                            : -255,
-                                        humidity: document
-                                                .data()
-                                                .toString()
-                                                .contains("humidity")
-                                            ? document["humidity"].toInt()
-                                            : -255,
-                                        luminosity: document
-                                                .data()
-                                                .toString()
-                                                .contains("luminosity")
-                                            ? document["luminosity"].toInt()
-                                            : -255,
-                                        wifiName: document["wifiName"],
-                                        imageURL: plant.gifURL,
-                                        recommendations: plant.recommendations,
-                                        lastUpdateDateTime: document["dateTime"]
-                                      ),
+                                      analyzer: Analyzer(document["name"], true,
+                                          id: document.id,
+                                          temperature: document
+                                                  .data()
+                                                  .toString()
+                                                  .contains("temperature")
+                                              ? document["temperature"].toInt()
+                                              : -255,
+                                          humidity: document
+                                                  .data()
+                                                  .toString()
+                                                  .contains("humidity")
+                                              ? document["humidity"].toInt()
+                                              : -255,
+                                          luminosity: document
+                                                  .data()
+                                                  .toString()
+                                                  .contains("luminosity")
+                                              ? document["luminosity"].toInt()
+                                              : -255,
+                                          wifiName: document["wifiName"],
+                                          imageURL: plant.gifURL,
+                                          recommendations:
+                                              plant.recommendations,
+                                          lastUpdateDateTime: document
+                                                  .data()
+                                                  .toString()
+                                                  .contains("dateTime")
+                                              ? document["dateTime"]
+                                              : "Aucune"),
                                     );
                                   },
                                 ),
@@ -165,35 +169,37 @@ class _PlantsViewState extends State<PlantsView> {
                                   ],
                                 ),
                               ),
-
                             ],
                           ),
-                        Align(
-                          alignment: Alignment.topRight,
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              List<String> userAnalyzersIDs = [];
-                              for(var analyzer in snapshot.data!.docs) {
-                                userAnalyzersIDs.add(analyzer.id);
-                              }
-                              await showDialog(
-                                  barrierDismissible: false,
-                                  context: context,
-                                  builder: (BuildContext context) => DisconnectDialog(userAnalyzersIDs: userAnalyzersIDs));
-                            },
-                            style: ElevatedButton.styleFrom(
-                              primary: SoulPotTheme.spRed,
-                              fixedSize: Size(5.h, 5.h),
-                              shape: const CircleBorder(),
-                            ),
-                            child: const Icon(
-                              Icons.logout_outlined,
-                              color: Colors.white,
+                          Align(
+                            alignment: Alignment.topRight,
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                List<String> userAnalyzersIDs = [];
+                                for (var analyzer in snapshot.data!.docs) {
+                                  userAnalyzersIDs.add(analyzer.id);
+                                }
+                                await showDialog(
+                                    barrierDismissible: false,
+                                    context: context,
+                                    builder: (BuildContext context) =>
+                                        DisconnectDialog(
+                                            userAnalyzersIDs:
+                                                userAnalyzersIDs));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: SoulPotTheme.spRed,
+                                fixedSize: Size(5.h, 5.h),
+                                shape: const CircleBorder(),
+                              ),
+                              child: const Icon(
+                                Icons.logout_outlined,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
-                    );
+                        ],
+                      );
             }
           },
         ),

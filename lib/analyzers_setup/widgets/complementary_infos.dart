@@ -131,7 +131,7 @@ class _ComplementaryInfosState extends State<ComplementaryInfos> {
               padding: EdgeInsets.symmetric(
                   vertical: 1.h, horizontal: 3.w),
               child: const Text(
-                "Si vous souhaitez changer la plante de votre Analyzer, vous pouvez le faire en le réinitialisant dans les paramètres.",
+                "Si vous souhaitez changer la plante de votre Analyzer, supprimez l'analyzer et réajoutez-le.",
                 style: TextStyle(
                   fontFamily: "Greenhouse",
                 ),

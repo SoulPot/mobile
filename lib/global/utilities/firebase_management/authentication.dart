@@ -7,6 +7,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:soulpot/global/utilities/theme.dart';
 import 'package:soulpot/global/utilities/firebase_management/analytics.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
+import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 import '../custom_snackbar.dart';
 import '../error_thrower.dart';
@@ -47,9 +48,9 @@ class AuthenticationManager {
 
   static Future<bool> signInWithGoogle(BuildContext context) async {
     try {
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      final GoogleSignInAuthentication? googleAuth =
+          await googleUser?.authentication;
       final credential = GoogleAuthProvider.credential(
         accessToken: googleAuth?.accessToken,
         idToken: googleAuth?.idToken,
@@ -70,15 +71,41 @@ class AuthenticationManager {
       final LoginResult loginResult = await FacebookAuth.instance.login();
 
       final OAuthCredential facebookAuthCredential =
-      FacebookAuthProvider.credential(loginResult.accessToken!.token);
+          FacebookAuthProvider.credential(loginResult.accessToken!.token);
       var userCredentials =
-      await auth.signInWithCredential(facebookAuthCredential);
+          await auth.signInWithCredential(facebookAuthCredential);
       if (userCredentials.additionalUserInfo!.isNewUser) {
         await FirestoreManager.addUser(userCredentials.user!.uid);
         await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
       }
       return true;
-    } catch(error) {
+    } catch (error) {
+      return false;
+    }
+  }
+
+  static Future<bool> signInWithApple(BuildContext context) async {
+    try {
+      final AuthorizationResult appleResult =
+          await TheAppleSignIn.performRequests([
+        const AppleIdRequest(requestedScopes: [Scope.email])
+      ]);
+
+      if (appleResult.error != null) {
+        return false;
+      }
+      final AuthCredential credential = OAuthProvider('apple.com').credential(
+        accessToken:
+            String.fromCharCodes(appleResult.credential!.authorizationCode!),
+        idToken: String.fromCharCodes(appleResult.credential!.identityToken!),
+      );
+      var userCredentials = await auth.signInWithCredential(credential);
+      if (userCredentials.additionalUserInfo!.isNewUser) {
+        await FirestoreManager.addUser(userCredentials.user!.uid);
+        await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
+      }
+      return true;
+    } catch (error) {
       return false;
     }
   }
@@ -87,7 +114,8 @@ class AuthenticationManager {
     userAnalyzerIDs.forEach((id) async {
       await FirebaseMessaging.instance.unsubscribeFromTopic(id);
     });
-    await FirebaseMessaging.instance.unsubscribeFromTopic(AuthenticationManager.auth.currentUser!.uid);
+    await FirebaseMessaging.instance
+        .unsubscribeFromTopic(AuthenticationManager.auth.currentUser!.uid);
     await GoogleSignIn().signOut();
     await FacebookAuth.instance.logOut();
     await auth.signOut();

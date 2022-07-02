@@ -9,39 +9,32 @@ import '../../global/utilities/firebase_management/authentication.dart';
 import '../../global/utilities/firebase_management/firestore.dart';
 import '../../home_view.dart';
 
-
-class FacebookSignInButton extends StatefulWidget {
-  const FacebookSignInButton({Key? key}) : super(key: key);
+class AppleSignInButton extends StatefulWidget {
+  const AppleSignInButton({Key? key}) : super(key: key);
 
   @override
-  State<FacebookSignInButton> createState() => _FacebookSignInButtonState();
+  State<AppleSignInButton> createState() => _AppleSignInButtonState();
 }
 
-class _FacebookSignInButtonState extends State<FacebookSignInButton> {
+class _AppleSignInButtonState extends State<AppleSignInButton> {
+
   bool _isLoading = false;
-
-  @override
-  initState() {
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     AuthButtonType? buttonType;
     AuthIconType? iconType;
 
-    return FacebookAuthButton(
+    return AppleAuthButton(
       onPressed: () async {
         setState(() {
           _isLoading = true;
         });
-        bool connected = await AuthenticationManager.signInWithFacebook(
-            context);
+        bool connected = await AuthenticationManager.signInWithApple(context);
         if (connected) {
           List<Plant> codex = await FirestoreManager.getCodex();
-          codex.sort((a, b) => a.alias.compareTo(b.alias));
           List<Objective> objectives =
-          await FirestoreManager.getStaticObjectives();
+              await FirestoreManager.getStaticObjectives();
+          codex.sort((a, b) => a.alias.compareTo(b.alias));
           setState(() {
             _isLoading = false;
           });
@@ -63,14 +56,13 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
           });
         }
       },
-      text: _isLoading ? "Connexion avec Facebook" : "Se connecter avec Facebook",
+      text: _isLoading ? "Connexion avec Apple" : "Se connecter avec Apple  ",
       themeMode: ThemeMode.dark,
       isLoading: _isLoading,
       style: AuthButtonStyle(
         buttonType: buttonType,
         iconType: iconType,
         width: 75.w,
-
       ),
     );
   }

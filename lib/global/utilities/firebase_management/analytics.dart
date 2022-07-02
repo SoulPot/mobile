@@ -51,7 +51,7 @@ class AnalyticsManager {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
     await analytics.logEvent(
-      name: "new account",
+      name: "new_account",
       parameters: {
         "date": formattedDate,
         "platform": Platform.isIOS ? "ios" : "android",
@@ -63,7 +63,7 @@ class AnalyticsManager {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
     await analytics.logEvent(
-      name: "new plant",
+      name: "new_plant",
       parameters: {
         "date": formattedDate,
         "platform": Platform.isIOS ? "ios" : "android",
@@ -76,7 +76,7 @@ class AnalyticsManager {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
     await analytics.logEvent(
-      name: "new plant",
+      name: "sprinkle",
       parameters: {
         "date": formattedDate,
         "platform": Platform.isIOS ? "ios" : "android",
@@ -88,7 +88,7 @@ class AnalyticsManager {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
     await analytics.logEvent(
-      name: "delete plant",
+      name: "delete_plant",
       parameters: {
         "date": formattedDate,
         "platform": Platform.isIOS ? "ios" : "android",

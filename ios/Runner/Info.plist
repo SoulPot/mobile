@@ -76,15 +76,15 @@
 		<true/>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Need BLE permission</string>
+	<string>Soulpot utilise le bluetooth pour configurer les analyzers</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Need BLE permission</string>
+	<string>Soulpot utilise le bluetooth pour configurer les analyzers</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Need Location permission</string>
+	<string>La localisation est nécessaire pour l'utilisation du Bluetooth, mais elle n'est pas utilisée ou collectée par Soulpot</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Need Location permission</string>
+	<string>La localisation est nécessaire pour l'utilisation du Bluetooth, mais elle n'est pas utilisée ou collectée par Soulpot</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Need Location permission</string>
+	<string>La localisation est nécessaire pour l'utilisation du Bluetooth, mais elle n'est pas utilisée ou collectée par Soulpot</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

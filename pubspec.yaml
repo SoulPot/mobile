@@ -2,7 +2,7 @@ name: soulpot
 description: An application to control your connected plant with a SoulPot Analyzer.
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.1+1
+version: 1.0.1+5
 
 environment:
   sdk: ">=2.16.2 <=3.0.0"
@@ -33,6 +33,7 @@ dependencies:
   mqtt_client: ^9.6.8
   carousel_slider: ^4.1.1
   flutter_local_notifications: 9.6.1
+  the_apple_sign_in: ^1.1.1
 
 
 dev_dependencies:
