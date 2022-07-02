@@ -20,12 +20,12 @@ class PlantViewer extends StatefulWidget {
 }
 
 class _PlantViewerState extends State<PlantViewer> {
+  final MQTTManager _mqttManager = MQTTManager();
 
-  late MQTTManager mqttManager;
-
-  _PlantViewerState() {
-    mqttManager = MQTTManager();
-    mqttManager.connect();
+  @override
+  void initState() {
+    _mqttManager.connect();
+    super.initState();
   }
 
   @override
@@ -61,7 +61,8 @@ class _PlantViewerState extends State<PlantViewer> {
               Row(
                 children: [
                   const Spacer(),
-                  widget.analyzer.needSprinkle && widget.analyzer.humidity != -255
+                  widget.analyzer.needSprinkle &&
+                          widget.analyzer.humidity != -255
                       ? ElevatedButton(
                           onPressed: sprink,
                           style: ElevatedButton.styleFrom(
@@ -100,8 +101,10 @@ class _PlantViewerState extends State<PlantViewer> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 2.h),
-                child: Text("Dernière mise à jour le ${widget.analyzer.lastUpdateDateTime!.split(" ")[0]} à ${widget.analyzer.lastUpdateDateTime!.split(" ")[1]}",
-                style: TextStyle(fontSize: 9.sp, fontStyle: FontStyle.italic),),
+                child: Text(
+                  "Dernière mise à jour le ${widget.analyzer.lastUpdateDateTime!.split(" ")[0]} à ${widget.analyzer.lastUpdateDateTime!.split(" ")[1]}",
+                  style: TextStyle(fontSize: 9.sp, fontStyle: FontStyle.italic),
+                ),
               )
             ],
           ),
@@ -110,7 +113,9 @@ class _PlantViewerState extends State<PlantViewer> {
           children: [
             CardInfoPlant(
               label: "Luminosité",
-              value: widget.analyzer.luminosity! == -255 ? "Aucune donnée" : "${widget.analyzer.luminosity!} lux",
+              value: widget.analyzer.luminosity! == -255
+                  ? "Aucune donnée"
+                  : "${widget.analyzer.luminosity!} lux",
               backgroundColor: getLuminosityColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
@@ -118,7 +123,9 @@ class _PlantViewerState extends State<PlantViewer> {
             ),
             CardInfoPlant(
               label: "Température",
-              value: widget.analyzer.temperature! == -255 ? "Aucune donnée" : "${widget.analyzer.temperature!}°C",
+              value: widget.analyzer.temperature! == -255
+                  ? "Aucune donnée"
+                  : "${widget.analyzer.temperature!}°C",
               backgroundColor: getTemperatureColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
@@ -131,7 +138,9 @@ class _PlantViewerState extends State<PlantViewer> {
             const Spacer(),
             CardInfoPlant(
               label: "Humidité",
-              value: widget.analyzer.humidity! == -255 ? "Aucune donnée" : "${widget.analyzer.humidity!}%",
+              value: widget.analyzer.humidity! == -255
+                  ? "Aucune donnée"
+                  : "${widget.analyzer.humidity!}%",
               backgroundColor: getHumidityColor(widget.analyzer),
               fontColor: Colors.black,
               recommendedValue:
@@ -153,7 +162,7 @@ class _PlantViewerState extends State<PlantViewer> {
       return;
     }
     String payload = "{\"sprinkle\":\"true\", \"expectedValue\": \"$medReco\"}";
-    mqttManager.publishMsg(payload, deviceId, "/sprink");
+    _mqttManager.publishMsg(payload, deviceId, "/sprink");
     AnalyticsManager.logSprinkle();
   }
 

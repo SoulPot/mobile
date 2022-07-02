@@ -73,7 +73,8 @@ class _ObjectivesViewState extends State<ObjectivesView> {
                   availableObjectives = widget.objectives
                       .where((element) => !ownedObjectives.contains(element))
                       .toList();
-                  availableObjectives.sort((b, a) => a.stateValue!.compareTo(b.stateValue!));
+                  availableObjectives
+                      .sort((b, a) => a.stateValue!.compareTo(b.stateValue!));
 
                   return Column(
                     children: [

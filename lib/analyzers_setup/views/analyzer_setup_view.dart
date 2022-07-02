@@ -28,11 +28,11 @@ class AnalyzerSetupView extends StatefulWidget {
 }
 
 class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
-  MQTTManager mqttManager = MQTTManager();
+  final MQTTManager _mqttManager = MQTTManager();
 
   @override
   initState() {
-    mqttManager.connect();
+    _mqttManager.connect();
     super.initState();
   }
 
@@ -43,7 +43,7 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
       final analyzer = widget.analyzers[i];
       if (analyzer.id != null) {
         FirebaseMessaging.instance.unsubscribeFromTopic(analyzer.id!);
-        mqttManager.publishMsg(payload, analyzer.id!, "");
+        _mqttManager.publishMsg(payload, analyzer.id!, "");
       }
     }
 

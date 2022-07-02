@@ -21,16 +21,16 @@ class DropdownWidget extends StatefulWidget {
 }
 
 class _DropdownState extends State<DropdownWidget> {
-  List<DropdownMenuItem<String>> dropDownItems = [];
-  String currentItem;
+  final List<DropdownMenuItem<String>> _dropDownItems = [];
 
+  String currentItem;
   _DropdownState(this.currentItem);
 
   @override
   void initState() {
     super.initState();
     for (String item in widget.items) {
-      dropDownItems.add(DropdownMenuItem(
+      _dropDownItems.add(DropdownMenuItem(
         value: item,
         child: Text(
           item,
@@ -71,7 +71,7 @@ class _DropdownState extends State<DropdownWidget> {
               child: DropdownButton(
                 value: currentItem,
                 isExpanded: true,
-                items: dropDownItems,
+                items: _dropDownItems,
                 onChanged: (selectedItem) => setState(() {
                   currentItem = selectedItem as String;
                   widget.itemCallBack(currentItem);

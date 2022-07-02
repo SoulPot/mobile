@@ -17,11 +17,10 @@ class FacebookSignInButton extends StatefulWidget {
 }
 
 class _FacebookSignInButtonState extends State<FacebookSignInButton> {
-  late bool isLoading;
+  bool _isLoading = false;
 
   @override
   initState() {
-    isLoading = false;
     super.initState();
   }
 
@@ -33,7 +32,7 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
     return FacebookAuthButton(
       onPressed: () async {
         setState(() {
-          isLoading = true;
+          _isLoading = true;
         });
         bool connected = await AuthenticationManager.signInWithFacebook(
             context);
@@ -43,7 +42,7 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
           List<Objective> objectives =
           await FirestoreManager.getStaticObjectives();
           setState(() {
-            isLoading = false;
+            _isLoading = false;
           });
           if (!mounted) return;
           Navigator.pushReplacement(
@@ -59,13 +58,13 @@ class _FacebookSignInButtonState extends State<FacebookSignInButton> {
           );
         } else {
           setState(() {
-            isLoading = false;
+            _isLoading = false;
           });
         }
       },
-      text: isLoading ? "Connexion avec Facebook" : "Se connecter avec Facebook",
+      text: _isLoading ? "Connexion avec Facebook" : "Se connecter avec Facebook",
       themeMode: ThemeMode.dark,
-      isLoading: isLoading,
+      isLoading: _isLoading,
       style: AuthButtonStyle(
         buttonType: buttonType,
         iconType: iconType,

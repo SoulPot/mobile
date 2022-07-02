@@ -5,9 +5,11 @@ import '../../../global/models/plant.dart';
 import '../../../global/utilities/theme.dart';
 
 class PlantDetailsRecommendations extends StatelessWidget {
-  const PlantDetailsRecommendations({Key? key, required this.plant}) : super(key: key);
+  const PlantDetailsRecommendations({Key? key, required this.plant})
+      : super(key: key);
 
   final Plant plant;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -32,8 +34,7 @@ class PlantDetailsRecommendations extends StatelessWidget {
           ),
         ),
         Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: 7.w, vertical: 2.h),
+          padding: EdgeInsets.symmetric(horizontal: 7.w, vertical: 2.h),
           child: Container(
             decoration: const BoxDecoration(
               borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -43,8 +44,7 @@ class PlantDetailsRecommendations extends StatelessWidget {
               padding: EdgeInsets.all(3.w),
               child: Table(
                 border: TableBorder.symmetric(
-                    inside:
-                    const BorderSide(color: Colors.black54)),
+                    inside: const BorderSide(color: Colors.black54)),
                 children: [
                   const TableRow(children: [
                     Text(
@@ -70,11 +70,9 @@ class PlantDetailsRecommendations extends StatelessWidget {
                     )
                   ]),
                   TableRow(children: [
-                    Text(
-                      "Humidité ",
-                      textAlign: TextAlign.center,
-                        style: SoulPotTheme.codexDataTextStyle
-                    ),
+                    Text("Humidité ",
+                        textAlign: TextAlign.center,
+                        style: SoulPotTheme.codexDataTextStyle),
                     Text(
                       "${plant.recommendations.recommendedHumidity[0]}%",
                       textAlign: TextAlign.center,
@@ -89,16 +87,13 @@ class PlantDetailsRecommendations extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: "Greenhouse",
                           fontWeight: FontWeight.bold,
-                          color:
-                          SoulPotTheme.humidityColors["Wet"]),
+                          color: SoulPotTheme.humidityColors["Wet"]),
                     )
                   ]),
                   TableRow(children: [
-                    Text(
-                      "Température ",
-                      textAlign: TextAlign.center,
-                        style: SoulPotTheme.codexDataTextStyle
-                    ),
+                    Text("Température ",
+                        textAlign: TextAlign.center,
+                        style: SoulPotTheme.codexDataTextStyle),
                     Text(
                       "${plant.recommendations.recommendedTemperature[0]}°C",
                       textAlign: TextAlign.center,
@@ -113,24 +108,20 @@ class PlantDetailsRecommendations extends StatelessWidget {
                       style: TextStyle(
                           fontFamily: "Greenhouse",
                           fontWeight: FontWeight.bold,
-                          color: SoulPotTheme
-                              .temperatureColors["Hot"]),
+                          color: SoulPotTheme.temperatureColors["Hot"]),
                     )
                   ]),
                   TableRow(children: [
-                    Text(
-                      "Luminosité ",
-                      textAlign: TextAlign.center,
-                        style: SoulPotTheme.codexDataTextStyle
-                    ),
+                    Text("Luminosité ",
+                        textAlign: TextAlign.center,
+                        style: SoulPotTheme.codexDataTextStyle),
                     Text(
                       "${plant.recommendations.recommendedLuminosity[0]} lux",
                       textAlign: TextAlign.center,
                       style: TextStyle(
                           fontFamily: "Greenhouse",
                           fontWeight: FontWeight.bold,
-                          color: SoulPotTheme
-                              .luminosityColors["Low"]),
+                          color: SoulPotTheme.luminosityColors["Low"]),
                     ),
                     Text(
                       "${plant.recommendations.recommendedLuminosity[1]} lux",
@@ -146,32 +137,27 @@ class PlantDetailsRecommendations extends StatelessWidget {
             ),
           ),
         ),
-
         plant.recoText != null
             ? Padding(
-          padding: EdgeInsets.only(
-              left: 5.w, right: 5.w, bottom: 5.w),
-          child: Container(
-            decoration: const BoxDecoration(
-              borderRadius:
-              BorderRadius.all(Radius.circular(20)),
-              color: SoulPotTheme.spPalePurple,
-            ),
-            child: Padding(
-              padding: EdgeInsets.all(3.w),
-              child: SizedBox(
-                child: Text(
-                  plant.recoText!,
-                    style: SoulPotTheme.codexDataTextStyle
+                padding: EdgeInsets.only(left: 5.w, right: 5.w, bottom: 5.w),
+                child: Container(
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    color: SoulPotTheme.spPalePurple,
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(3.w),
+                    child: SizedBox(
+                      child: Text(plant.recoText!,
+                          style: SoulPotTheme.codexDataTextStyle),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-        )
+              )
             : const SizedBox(
-          width: 0,
-          height: 0,
-        ),
+                width: 0,
+                height: 0,
+              ),
       ],
     );
   }
