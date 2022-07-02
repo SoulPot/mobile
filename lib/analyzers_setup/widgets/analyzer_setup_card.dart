@@ -77,7 +77,6 @@ class _AnalyzerSetupCardState extends State<AnalyzerSetupCard> {
                   child: PlantCard(plant: selectedPlant!),
                   onTap: () async {
                     await showDialog(
-
                         context: context,
                         builder: (BuildContext context) => PlantPickerDialog(
                               codex: widget.codex,

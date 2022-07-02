@@ -5,8 +5,9 @@ import 'package:soulpot/global/utilities/firebase_management/authentication.dart
 import 'package:soulpot/sign_in_sign_up/views/sign_in_view.dart';
 
 class DisconnectDialog extends StatefulWidget {
-  const DisconnectDialog({Key? key}) : super(key: key);
+  const DisconnectDialog({Key? key, required this.userAnalyzersIDs}) : super(key: key);
 
+  final List<String> userAnalyzersIDs;
   @override
   State<DisconnectDialog> createState() => _DisconnectDialogState();
 }
@@ -65,7 +66,7 @@ class _DisconnectDialogState extends State<DisconnectDialog> {
                           fontSize: 14.sp),
                     ),
                     onPressed: () {
-                      AuthenticationManager.signOut().then((_) {
+                      AuthenticationManager.signOut(widget.userAnalyzersIDs).then((_) {
                         Navigator.pushAndRemoveUntil(
                             context,
                             PageTransition(

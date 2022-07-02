@@ -16,7 +16,7 @@ class ObjectiveCard extends StatefulWidget {
 }
 
 class _ObjectiveCardState extends State<ObjectiveCard> {
-  bool displayFront = true;
+  bool _displayFront = true;
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +50,11 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
 
   Widget _buildFlipAnimation() {
     return GestureDetector(
-      onTap: () => setState(() => displayFront = !displayFront),
+      onTap: () => setState(() => _displayFront = !_displayFront),
       child: AnimatedSwitcher(
         transitionBuilder: __transitionBuilder,
         duration: const Duration(milliseconds: 600),
-        child: displayFront ?  buildCard(const ValueKey(true)) :  buildCard(const ValueKey(false)),
+        child: _displayFront ?  buildCard(const ValueKey(true)) :  buildCard(const ValueKey(false)),
       ),
     );
   }
@@ -92,7 +92,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              displayFront
+              _displayFront
                   ? Text(
                       widget.objective.label,
                       textAlign: TextAlign.center,
@@ -110,7 +110,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
                           color: widget.objective.fontColor,
                           fontFamily: "Greenhouse"),
                     ),
-              widget.objective.owned == true || !displayFront
+              widget.objective.owned == true || !_displayFront
                   ? widget.objective.owned == true
                       ? Text(
                           "Obtenu le ${widget.objective.ownedDate}",
@@ -135,7 +135,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
                           fontFamily: "Greenhouse",
                           fontWeight: FontWeight.w500),
                     ),
-              !displayFront ? displayObjectiveType() : Container(),
+              !_displayFront ? displayObjectiveType() : Container(),
             ],
           ),
         ),
@@ -146,7 +146,7 @@ class _ObjectiveCardState extends State<ObjectiveCard> {
   displayObjectiveType() {
     if (widget.objective.type == "easy") {
       return difficultyStar();
-    } else if (widget.objective.type == "advanced") {
+    } else if (widget.objective.type == "hard") {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

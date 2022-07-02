@@ -24,7 +24,7 @@ class FirestoreManager {
         if (element["type"] == "easy") {
           backgroundColor = SoulPotTheme.spPaleGreen;
           fontColor = SoulPotTheme.spBlack;
-        } else if (element["type"] == "advanced") {
+        } else if (element["type"] == "hard") {
           backgroundColor = SoulPotTheme.spPaleRed;
           fontColor = SoulPotTheme.spBlack;
         } else {

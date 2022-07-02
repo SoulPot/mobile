@@ -24,16 +24,10 @@ class AnalyzerPairingDialog extends StatefulWidget {
 }
 
 class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
-  //BLE
   BluetoothCharacteristic? wifiCharacteristic;
   BluetoothDevice? espDevice;
-
   FlutterBluePlus flutterBlue = FlutterBluePlus.instance;
-
-  bool? deviceFound;
-
-  bool showLoadingBluetooth = true;
-
+  bool? _deviceFound;
   List<String> scannedSSIDs = [];
 
   @override
@@ -56,7 +50,7 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
         width: 90.w,
         child: Padding(
           padding: EdgeInsets.fromLTRB(2.w, 2.h, 2.w, 0),
-          child: deviceFound != null
+          child: _deviceFound != null
               ? AnalyzerCredentialsForm(
                       analyzer: widget.analyzer,
                       scannedSSIDs: scannedSSIDs,
@@ -99,12 +93,10 @@ class _AnalyzerPairingDialogState extends State<AnalyzerPairingDialog> {
     if (wifiCharacteristic == null) {
       cancelBluetoothScan();
       setState(() {
-        showLoadingBluetooth = false;
       });
     } else {
       setState(() {
-        deviceFound = true;
-        showLoadingBluetooth = false;
+        _deviceFound = true;
       });
     }
   }

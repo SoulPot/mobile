@@ -15,11 +15,12 @@ class DeleteAnalyzerDialog extends StatefulWidget {
 
 class _DeleteAnalyzerDialogState extends State<DeleteAnalyzerDialog> {
 
-  late MQTTManager mqttManager;
+  final MQTTManager _mqttManager = MQTTManager();
 
-  _DeleteAnalyzerDialogState() {
-    mqttManager = MQTTManager();
-    mqttManager.connect();
+  @override
+  void initState() {
+    _mqttManager.connect();
+    super.initState();
   }
 
   void resetAnalyzer() {
@@ -28,7 +29,7 @@ class _DeleteAnalyzerDialogState extends State<DeleteAnalyzerDialog> {
       return;
     }
     String payload = "{\"reset\":\"true\"}";
-    mqttManager.publishMsg(payload, deviceId, "");
+    _mqttManager.publishMsg(payload, deviceId, "");
     Navigator.pop(context, true);
   }
 
@@ -46,6 +47,7 @@ class _DeleteAnalyzerDialogState extends State<DeleteAnalyzerDialog> {
             const Spacer(),
             Text(
               'Suppression de ${widget.analyzer.name}',
+              textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16.sp,
                 fontFamily: 'Greenhouse',

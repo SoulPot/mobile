@@ -21,13 +21,7 @@ class EmailPwdSignIn extends StatefulWidget {
 class _EmailPwdSignInState extends State<EmailPwdSignIn> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  late bool isLoading;
-
-  @override
-  initState() {
-    isLoading = false;
-    super.initState();
-  }
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -80,10 +74,10 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
           ),
           Padding(
             padding: EdgeInsets.only(top: 2.h),
-            child: isLoading ? LoadingAnimationWidget.discreteCircle(color: SoulPotTheme.spGreen, size: 5.h) : ElevatedButton(
+            child: _isLoading ? LoadingAnimationWidget.discreteCircle(color: SoulPotTheme.spGreen, size: 5.h) : ElevatedButton(
               onPressed: () async {
                 setState(() {
-                  isLoading = true;
+                  _isLoading = true;
                 });
                 bool connected = await AuthenticationManager.signInWithPwd(
                     context, _emailController.text, _passwordController.text);
@@ -93,7 +87,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                       await FirestoreManager.getStaticObjectives();
                   codex.sort((a, b) => a.alias.compareTo(b.alias));
                   setState(() {
-                    isLoading = false;
+                    _isLoading = false;
                   });
                   if (!mounted) return;
                   Navigator.pushReplacement(
@@ -109,7 +103,7 @@ class _EmailPwdSignInState extends State<EmailPwdSignIn> {
                   );
                 } else {
                   setState(() {
-                    isLoading = false;
+                    _isLoading = false;
                   });
                 }
               },

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,11 +28,11 @@ class AnalyzerSetupView extends StatefulWidget {
 }
 
 class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
-  MQTTManager mqttManager = MQTTManager();
+  final MQTTManager _mqttManager = MQTTManager();
 
   @override
   initState() {
-    mqttManager.connect();
+    _mqttManager.connect();
     super.initState();
   }
 
@@ -41,7 +42,8 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
     for (var i = 0; i < widget.analyzers.length; i++) {
       final analyzer = widget.analyzers[i];
       if (analyzer.id != null) {
-        mqttManager.publishMsg(payload, analyzer.id!, "");
+        FirebaseMessaging.instance.unsubscribeFromTopic(analyzer.id!);
+        _mqttManager.publishMsg(payload, analyzer.id!, "");
       }
     }
 
@@ -151,7 +153,7 @@ class _AnalyzerSetupViewState extends State<AnalyzerSetupView> {
                   ],
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),

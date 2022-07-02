@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sizer/sizer.dart';
+import 'package:soulpot/global/utilities/firebase_management/analytics.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
 import 'package:soulpot/global/widgets/analyzer_configuration/plant_card.dart';
 import 'package:soulpot/global/widgets/analyzer_configuration/plant_picker_dialog.dart';
@@ -20,19 +21,19 @@ class AddAnalyzerDialog extends StatefulWidget {
 }
 
 class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
-  Plant? selectedPlant;
-  String? plantName;
-  String? ssid;
-  bool paired = false;
-  late Analyzer analyzerToCreate;
-  MQTTManager mqttManager = MQTTManager();
-
-  bool showError = false;
   final TextEditingController _plantNameController = TextEditingController();
+  final MQTTManager _mqttManager = MQTTManager();
+
+  Plant? _selectedPlant;
+  String? _ssid;
+  bool _paired = false;
+  bool _showError = false;
+
+  late Analyzer analyzerToCreate;
 
   @override
   void initState() {
-    mqttManager.connect();
+    _mqttManager.connect();
     analyzerToCreate = Analyzer(
       _plantNameController.text,
       false,
@@ -43,7 +44,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
   Future<void> previous() async {
     const String payload = "{\"reset\":\"true\"}";
     if (analyzerToCreate.id != null) {
-      mqttManager.publishMsg(payload, analyzerToCreate.id!, "");
+      _mqttManager.publishMsg(payload, analyzerToCreate.id!, "");
     }
     Navigator.of(context).pop();
   }
@@ -55,7 +56,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
         borderRadius: BorderRadius.circular(12),
       ),
       child: SizedBox(
-          height: showError ? 55.h : 50.h,
+          height: _showError ? 55.h : 50.h,
           width: 90.w,
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 1.h),
@@ -106,8 +107,8 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
               Padding(
                 padding: EdgeInsets.symmetric(
                     vertical: 1.h,
-                    horizontal: selectedPlant != null ? 1.w : 15.w),
-                child: selectedPlant != null
+                    horizontal: _selectedPlant != null ? 1.w : 15.w),
+                child: _selectedPlant != null
                     ? GestureDetector(
                         onTap: () {
                           showDialog(
@@ -117,11 +118,11 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                                     codex: widget.codex,
                                   )).then(
                             (value) => setState(() {
-                              selectedPlant = value;
+                              _selectedPlant = value;
                             }),
                           );
                         },
-                        child: PlantCard(plant: selectedPlant!))
+                        child: PlantCard(plant: _selectedPlant!))
                     : ElevatedButton(
                         onPressed: () {
                           FocusManager.instance.primaryFocus?.unfocus();
@@ -132,7 +133,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                                     codex: widget.codex,
                                   )).then(
                             (value) => setState(() {
-                              selectedPlant = value;
+                              _selectedPlant = value;
                             }),
                           );
                         },
@@ -156,9 +157,9 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                       ),
               ),
               const Spacer(),
-              paired
+              _paired
                   ? Text(
-                      "Analyzer connecté au réseau $ssid",
+                      "Analyzer connecté au réseau $_ssid",
                       style: TextStyle(
                         fontSize: 10.sp,
                         fontWeight: FontWeight.bold,
@@ -177,8 +178,8 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                                   analyzer: analyzerToCreate,
                                 )).then(
                           (value) => setState(() {
-                            ssid = value;
-                            paired = value != null;
+                            _ssid = value;
+                            _paired = value != null;
                           }),
                         );
                       },
@@ -205,7 +206,7 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                 padding: EdgeInsets.symmetric(vertical: 1.h),
                 child: Column(
                   children: [
-                    showError
+                    _showError
                         ? Padding(
                             padding: EdgeInsets.symmetric(vertical: 1.h),
                             child: Text(
@@ -249,17 +250,18 @@ class _AddAnalyzerDialogState extends State<AddAnalyzerDialog> {
                         ElevatedButton(
                           onPressed: () {
                             if (_plantNameController.text != "" &&
-                                selectedPlant != null &&
-                                paired) {
+                                _selectedPlant != null &&
+                                _paired) {
                               analyzerToCreate.name = _plantNameController.text;
                               analyzerToCreate.paired = true;
-                              analyzerToCreate.plant = selectedPlant;
-                              analyzerToCreate.wifiName = ssid;
+                              analyzerToCreate.plant = _selectedPlant;
+                              analyzerToCreate.wifiName = _ssid;
                               FirestoreManager.createAnalyzer(analyzerToCreate);
+                              AnalyticsManager.logNewPlantAdded(analyzerToCreate.plant!.alias);
                               Navigator.pop(context);
                             } else {
                               setState(() {
-                                showError = true;
+                                _showError = true;
                               });
                             }
                           },

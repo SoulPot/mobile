@@ -31,16 +31,15 @@ class AnalyzerCredentialsForm extends StatefulWidget {
 }
 
 class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
-  int? espState;
-
-  List<String> wifiCredentials = ["SSID", "PASSWORD"];
-  late String selectedSSID;
   final TextEditingController _wifiPassController = TextEditingController();
   final TextEditingController _ssidController = TextEditingController();
 
-  bool showLoadingWifi = false;
-  bool showErrorWifi = false;
-  bool espConnectedToWifi = false;
+  int? _espState;
+  List<String> wifiCredentials = ["SSID", "PASSWORD"];
+  bool _showLoadingWifi = false;
+  bool _showErrorWifi = false;
+
+  late String selectedSSID;
 
   @override
   void initState() {
@@ -55,12 +54,12 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
         padding: EdgeInsets.symmetric(horizontal: 5.w),
         child: Column(
           children: [
-            showErrorWifi
+            _showErrorWifi
                 ? SizedBox(
                     width: 0.w,
                     height: 0.h,
                   )
-                : showLoadingWifi
+                : _showLoadingWifi
                     ? SizedBox(
                         width: 0.w,
                         height: 0.h,
@@ -73,7 +72,7 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                             fontSize: 15.sp,
                             fontFamily: 'Greenhouse'),
                       ),
-            showLoadingWifi
+            _showLoadingWifi
                 ? Column(
                     children: [
                       Text(
@@ -96,7 +95,7 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                   )
                 : Column(
                     children: [
-                      showErrorWifi
+                      _showErrorWifi
                           ? Text(
                                   "Connexion échouée, veuillez resaisir les informations nécessaires !",
                                   textAlign: TextAlign.center,
@@ -212,12 +211,12 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                 if ((_ssidController.text == "" && selectedSSID == "") ||
                                     _wifiPassController.text == "") {
                                   setState(() {
-                                    showErrorWifi = true;
+                                    _showErrorWifi = true;
                                   });
                                   return;
                                 }
                                 setState(() {
-                                  showLoadingWifi = true;
+                                  _showLoadingWifi = true;
                                 });
 
                                 wifiCredentials[0] = Platform.isAndroid
@@ -242,21 +241,21 @@ class _AnalyzerCredentialsFormState extends State<AnalyzerCredentialsForm> {
                                     await BluetoothManager
                                         .getAnalyzerCharacteristic(newDevice);
                                 try {
-                                  espState =
+                                  _espState =
                                       await BluetoothManager.readCharacteristic(
                                           newCharacteristic!, newDevice!);
                                 } catch (e) {
-                                  espState = 2;
+                                  _espState = 2;
                                 }
-                                if (espState != 0) {
+                                if (_espState != 0) {
                                   // CASE ERROR WIFI CONNECTION
                                   _ssidController.text = "";
                                   _wifiPassController.text = "";
                                   setState(() {
-                                    showLoadingWifi = false;
-                                    showErrorWifi = true;
+                                    _showLoadingWifi = false;
+                                    _showErrorWifi = true;
                                   });
-                                } else if (espState == 0) {
+                                } else if (_espState == 0) {
                                   // CASE WIFI CONNECTED
                                   widget.analyzer.id = newDevice?.name;
                                   await FirebaseMessaging.instance

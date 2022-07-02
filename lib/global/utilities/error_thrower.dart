@@ -58,7 +58,7 @@ class ErrorThrower {
         {
           snackBarCreator(
               context,
-              "Opération interrompue. Veuillez réessayer plus tard.",
+              "Une erreur inconnue s'est produite !",
               SoulPotTheme.spPaleRed);
           break;
         }

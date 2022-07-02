@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:soulpot/global/widgets/analyzer_configuration/analyzer_rename_dialog.dart';
 import 'package:soulpot/global/utilities/firebase_management/firestore.dart';
@@ -7,6 +8,7 @@ import 'package:soulpot/global/utilities/wifi_manager.dart';
 import 'package:sizer/sizer.dart';
 
 import '../../../global/models/analyzer.dart';
+import '../../../global/utilities/firebase_management/analytics.dart';
 import '../../../global/utilities/theme.dart';
 import '../../../global/widgets/analyzer_configuration/analyzer_pairing_dialog.dart';
 import 'delete_analyzer_dialog.dart';
@@ -164,8 +166,10 @@ class _AnalyzerDetailsDialogState extends State<AnalyzerDetailsDialog> {
                                 DeleteAnalyzerDialog(analyzer: widget.analyzer))
                         .then((value) async {
                       if (value) {
+                        AnalyticsManager.logDeletePlant();
                         await FirestoreManager.deleteAnalyzer(
                             widget.analyzer.id!);
+                        FirebaseMessaging.instance.unsubscribeFromTopic(widget.analyzer.id!);
                         if (!mounted) return;
                         Navigator.pop(context);
                       }

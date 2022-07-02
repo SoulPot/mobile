@@ -83,5 +83,17 @@ class AnalyticsManager {
       },
     );
   }
+
+  static void logDeletePlant() async {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('dd-MM-yyyy hh:mm:ss').format(now);
+    await analytics.logEvent(
+      name: "delete plant",
+      parameters: {
+        "date": formattedDate,
+        "platform": Platform.isIOS ? "ios" : "android",
+      },
+    );
+  }
   
 }

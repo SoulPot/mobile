@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -20,7 +19,6 @@ class AuthenticationManager {
     try {
       await AuthenticationManager.auth
           .signInWithEmailAndPassword(email: email, password: password);
-      await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
       AnalyticsManager.logEmailPwdAuth();
       return true;
     } on FirebaseAuthException catch (e) {
@@ -56,7 +54,6 @@ class AuthenticationManager {
         idToken: googleAuth?.idToken,
       );
       var userCredentials = await auth.signInWithCredential(credential);
-      await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
       if (userCredentials.additionalUserInfo!.isNewUser) {
         await FirestoreManager.addUser(userCredentials.user!.uid);
         await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
@@ -75,7 +72,6 @@ class AuthenticationManager {
       FacebookAuthProvider.credential(loginResult.accessToken!.token);
       var userCredentials =
       await auth.signInWithCredential(facebookAuthCredential);
-      await FirebaseMessaging.instance.subscribeToTopic(auth.currentUser!.uid);
       if (userCredentials.additionalUserInfo!.isNewUser) {
         await FirestoreManager.addUser(userCredentials.user!.uid);
         await FirestoreManager.assignAnalyzers(userCredentials.user!.uid);
@@ -86,9 +82,7 @@ class AuthenticationManager {
     }
   }
 
-  static Future<void> signOut() async {
-    await FirebaseMessaging.instance
-        .unsubscribeFromTopic(auth.currentUser!.uid);
+  static Future<void> signOut(List<String> userAnalyzerIDs) async {
     await auth.signOut();
 
     await GoogleSignIn().signOut();
