@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sizer/sizer.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -76,9 +77,23 @@ class SoulPotApp extends StatelessWidget {
       sound: true,
     );
 
+    const AndroidNotificationChannel channel = AndroidNotificationChannel(
+      'high_importance_channel',
+      'High importance channel',
+      description: 'High importance channel',
+      importance: Importance.max,
+    );
+
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+    await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
+        ?.createNotificationChannel(channel);
+
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool? firstTime = prefs.getBool('first_launch');
-    //prefs.remove("first_launch"); // DECOMMENTER POUR ACCEDER AU SETUP
+    // prefs.remove("first_launch"); // DECOMMENTER POUR ACCEDER AU SETUP
 
     if (firstTime == null) {
       List<Plant> codex = await FirestoreManager.getCodex();
